@@ -46,7 +46,14 @@ export function mergeWith<T extends Record<string, unknown>>(
         const objValue = (object as Record<string, unknown>)[key];
 
         if (isCustomizer) {
-          const customValue = (customizer as Function)(objValue, srcValue, key, object, source);
+          const customFn = customizer as (
+            objValue: unknown,
+            srcValue: unknown,
+            key: string,
+            object: Record<string, unknown>,
+            source: Record<string, unknown>,
+          ) => unknown;
+          const customValue = customFn(objValue, srcValue, key, object, source);
           if (customValue !== undefined) {
             (object as Record<string, unknown>)[key] = customValue;
           } else if (
@@ -60,7 +67,7 @@ export function mergeWith<T extends Record<string, unknown>>(
             (object as Record<string, unknown>)[key] = mergeWith(
               objValue as Record<string, unknown>,
               srcValue as Record<string, unknown>,
-              customizer as Function,
+              customFn,
             ) as unknown;
           } else if (objValue === undefined) {
             (object as Record<string, unknown>)[key] = srcValue;

@@ -71,7 +71,8 @@ function toFinite(value: unknown): number {
   if (value === null || value === undefined) return 0;
   if (typeof value === 'bigint') {
     const n = Number(value);
-    return Number.isFinite(n) ? n : value > 0n ? Number.MAX_VALUE : -Number.MAX_VALUE;
+    if (Number.isFinite(n)) return n;
+    return n > 0 ? Number.MAX_VALUE : -Number.MAX_VALUE;
   }
   if (typeof value === 'object') {
     const primitive = (value as any).valueOf?.() ?? value;

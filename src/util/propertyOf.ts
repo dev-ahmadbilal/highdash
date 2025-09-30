@@ -41,5 +41,5 @@ export function propertyOf<T = unknown>(object: unknown, path?: string | string[
     return () => resolve(object as any, path) as T;
   }
 
-  return (dynamicPath: string | string[]) => resolve(object as any, dynamicPath) as T;
+  return (...args: unknown[]) => resolve(object as any, args[0] as string | string[]) as T;
 }

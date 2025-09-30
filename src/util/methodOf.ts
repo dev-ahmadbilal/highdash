@@ -38,10 +38,11 @@ export function methodOf(object: unknown, path?: string | string[]): (...args: u
   };
 
   if (path !== undefined) {
-    // Return a zero-arg function that resolves a fixed path on the object
     return () => resolve(object as any, path);
   }
 
-  // Classic behavior: returned function accepts path
-  return (dynamicPath: string | string[]) => resolve(object as any, dynamicPath);
+  return (...args: unknown[]) => {
+    const dynamicPath = args[0] as string | string[];
+    return resolve(object as any, dynamicPath);
+  };
 }
