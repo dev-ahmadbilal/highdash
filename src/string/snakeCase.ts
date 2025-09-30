@@ -25,5 +25,6 @@ export function snakeCase(string: string): string {
     .replace(/([a-z])([A-Z])/g, '$1_$2')
     .replace(/[\s-]+/g, '_')
     .replace(/[^\w_]/g, '')
+    .replace(/^_+|_+$/g, '') // Remove leading/trailing underscores
     .toLowerCase();
 }

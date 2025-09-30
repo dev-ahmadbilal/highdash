@@ -2,9 +2,9 @@ import { kebabCase } from '../../src/string/kebabCase';
 
 describe('kebabCase', () => {
   it('should convert string to kebab case', () => {
-    expect(kebabCase('--foo-bar--')).toBe('--foo-bar--');
+    expect(kebabCase('--foo-bar--')).toBe('foo-bar');
     expect(kebabCase('fooBar')).toBe('foo-bar');
-    expect(kebabCase('__FOO_BAR__')).toBe('-foo-bar-');
+    expect(kebabCase('__FOO_BAR__')).toBe('foo-bar');
   });
 
   it('should handle empty string', () => {

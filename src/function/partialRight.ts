@@ -1,0 +1,23 @@
+/**
+ * This method is like `partial` except that partially applied arguments are appended to the arguments it receives.
+ *
+ * @param func - The function to partially apply arguments to
+ * @param partials - The arguments to be partially applied
+ * @returns Returns the new partially applied function
+ *
+ * @example
+ * ```typescript
+ * const greet = (greeting: string, name: string) => `${greeting} ${name}`;
+ * const greetFred = partialRight(greet, 'fred');
+ * greetFred('hi');
+ * // => 'hi fred'
+ * ```
+ */
+export function partialRight<T extends (...args: unknown[]) => unknown>(
+  func: T,
+  ...partials: unknown[]
+): (...args: unknown[]) => ReturnType<T> {
+  return (...args: unknown[]) => {
+    return func(...args, ...partials) as ReturnType<T>;
+  };
+}

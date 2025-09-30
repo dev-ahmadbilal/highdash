@@ -4,7 +4,7 @@ describe('camelCase', () => {
   it('should convert string to camel case', () => {
     expect(camelCase('--foo-bar--')).toBe('fooBar');
     expect(camelCase('fooBar')).toBe('fooBar');
-    expect(camelCase('__FOO_BAR__')).toBe('fOOBAR');
+    expect(camelCase('__FOO_BAR__')).toBe('fooBar');
   });
 
   it('should handle empty string', () => {

@@ -25,5 +25,6 @@ export function kebabCase(string: string): string {
     .replace(/([a-z])([A-Z])/g, '$1-$2')
     .replace(/[\s_]+/g, '-')
     .replace(/[^\w-]/g, '')
+    .replace(/^-+|-+$/g, '') // Remove leading/trailing hyphens
     .toLowerCase();
 }

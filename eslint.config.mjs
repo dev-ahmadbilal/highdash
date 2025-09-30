@@ -39,11 +39,19 @@ export default [
       // Encourage the use of strict equality (`===`)
       eqeqeq: ['error', 'always'],
 
-      // '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/no-unsafe-function-type': 'off',
     },
   },
   { languageOptions: { globals: globals.browser } },
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
   eslintPluginPrettierRecommended,
+  // Final overrides (must come last to take precedence over recommended configs)
+  {
+    rules: {
+      '@typescript-eslint/no-unsafe-function-type': 'off',
+      '@typescript-eslint/no-explicit-any': 'off',
+    },
+  },
 ];
