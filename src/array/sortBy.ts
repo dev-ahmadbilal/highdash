@@ -35,9 +35,9 @@ export function sortBy<T>(
 
   // Process iteratees
   const flatIteratees: ((value: T) => unknown)[] = [];
-  for (const iteratee of iteratees) {
+  for (const iter of iteratees) {
     flatIteratees.push(
-      typeof iteratee === 'string' ? (obj: T) => (obj as Record<string, unknown>)[iteratee] : iteratee,
+      typeof iter === 'string' ? (obj: T) => get(obj as unknown as Record<string, unknown>, iter) : iter,
     );
   }
 
@@ -54,3 +54,5 @@ export function sortBy<T>(
     return 0;
   });
 }
+
+import { get } from '../object/get';

@@ -26,7 +26,15 @@ export function groupBy<T>(
     return result;
   }
 
-  const getValue = typeof iteratee === 'function' ? iteratee : (item: T) => (item as Record<string, unknown>)[iteratee];
+  const getValue =
+    typeof iteratee === 'function'
+      ? iteratee
+      : (item: T) => {
+          if (item !== null && typeof item === 'object') {
+            return get(item as unknown as Record<string, unknown>, iteratee as string);
+          }
+          return (item as any)?.[iteratee as string];
+        };
 
   const items = Array.isArray(collection) ? collection : Object.values(collection);
 
@@ -40,3 +48,5 @@ export function groupBy<T>(
 
   return result;
 }
+
+import { get } from '../object/get';

@@ -24,7 +24,7 @@ export function debounce<T extends (...args: unknown[]) => unknown>(
     trailing?: boolean;
     maxWait?: number;
   } = {},
-): T & { cancel: () => void; flush: () => ReturnType<T> | undefined } {
+): T & { cancel: () => void; flush: () => ReturnType<T> | undefined; pending: () => boolean } {
   const { leading = false, trailing = true, maxWait } = options;
 
   let lastCallTime: number | undefined;
@@ -32,7 +32,7 @@ export function debounce<T extends (...args: unknown[]) => unknown>(
   let lastArgs: Parameters<T> | undefined;
   let lastThis: unknown;
   let result: ReturnType<T> | undefined;
-  let timerId: NodeJS.Timeout | undefined;
+  let timerId: ReturnType<typeof setTimeout> | undefined;
   let maxing = false;
 
   if (typeof maxWait === 'number') {
@@ -120,6 +120,10 @@ export function debounce<T extends (...args: unknown[]) => unknown>(
     return timerId === undefined ? result : trailingEdge(Date.now());
   }
 
+  function pending(): boolean {
+    return timerId !== undefined;
+  }
+
   function debounced(this: unknown, ...args: Parameters<T>): ReturnType<T> | undefined {
     const time = Date.now();
     const isInvoking = shouldInvoke(time);
@@ -148,5 +152,11 @@ export function debounce<T extends (...args: unknown[]) => unknown>(
   debounced.cancel = cancel;
   debounced.flush = flush;
 
-  return debounced as T & { cancel: () => void; flush: () => ReturnType<T> | undefined };
+  debounced.pending = pending;
+
+  return debounced as T & {
+    cancel: () => void;
+    flush: () => ReturnType<T> | undefined;
+    pending: () => boolean;
+  };
 }

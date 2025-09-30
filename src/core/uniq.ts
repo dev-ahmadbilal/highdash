@@ -46,7 +46,10 @@ export function uniqBy<T>(array: T[], iteratee: ((value: T) => unknown) | string
 
   const seen = new Set();
   const result: T[] = [];
-  const getValue = typeof iteratee === 'function' ? iteratee : (item: T) => (item as Record<string, unknown>)[iteratee];
+  const getValue =
+    typeof iteratee === 'function'
+      ? iteratee
+      : (item: T) => get(item as unknown as Record<string, unknown>, iteratee as string);
 
   for (const item of array) {
     const key = getValue(item);
@@ -58,3 +61,5 @@ export function uniqBy<T>(array: T[], iteratee: ((value: T) => unknown) | string
 
   return result;
 }
+
+import { get } from '../object/get';

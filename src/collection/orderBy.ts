@@ -46,7 +46,10 @@ export function orderBy<T>(
       const iteratee = iterateesArray[i];
       const order = ordersArray[i] || 'asc';
 
-      const getValue = typeof iteratee === 'function' ? iteratee : (item: T) => (item as any)[iteratee];
+      const getValue =
+        typeof iteratee === 'function'
+          ? iteratee
+          : (item: T) => get(item as unknown as Record<string, unknown>, iteratee as string);
 
       const aValue = getValue(a);
       const bValue = getValue(b);
@@ -59,3 +62,5 @@ export function orderBy<T>(
     return 0;
   });
 }
+
+import { get } from '../object/get';

@@ -25,7 +25,7 @@ export function throttle<T extends (...args: unknown[]) => unknown>(
     leading?: boolean;
     trailing?: boolean;
   } = {},
-): T & { cancel: () => void; flush: () => ReturnType<T> | undefined } {
+): T & { cancel: () => void; flush: () => ReturnType<T> | undefined; pending: () => boolean } {
   const { leading = true, trailing = true } = options;
 
   return debounce(func, wait, {
