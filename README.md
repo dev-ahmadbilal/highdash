@@ -1,4 +1,4 @@
-# islam.js
+# neodash
 [![npm package][npm-img]][npm-url]
 [![Build Status][build-img]][build-url]
 [![Issues][issues-img]][issues-url]
@@ -50,13 +50,13 @@ This package utilizes the following resources:
 List down the resources here
 
 
-[build-img]:https://github.com/dev-ahmadbilal/islam.js/actions/workflows/release.yml/badge.svg
-[build-url]:https://github.com/dev-ahmadbilal/islam.js/actions/workflows/release.yml
-[npm-img]:https://img.shields.io/npm/v/islam.js
-[npm-url]:https://www.npmjs.com/package/islam.js
-[issues-img]:https://img.shields.io/github/issues/dev-ahmadbilal/islam.js
-[issues-url]:https://github.com/dev-ahmadbilal/islam.js/issues
-[codecov-img]:https://codecov.io/gh/dev-ahmadbilal/islam.js/branch/main/graph/badge.svg
-[codecov-url]:https://codecov.io/gh/dev-ahmadbilal/islam.js
+[build-img]:https://github.com/dev-ahmadbilal/neodash/actions/workflows/release.yml/badge.svg
+[build-url]:https://github.com/dev-ahmadbilal/neodash/actions/workflows/release.yml
+[npm-img]:https://img.shields.io/npm/v/neodash
+[npm-url]:https://www.npmjs.com/package/neodash
+[issues-img]:https://img.shields.io/github/issues/dev-ahmadbilal/neodash
+[issues-url]:https://github.com/dev-ahmadbilal/neodash/issues
+[codecov-img]:https://codecov.io/gh/dev-ahmadbilal/neodash/branch/main/graph/badge.svg
+[codecov-url]:https://codecov.io/gh/dev-ahmadbilal/neodash
 [semantic-release-img]:https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg
 [semantic-release-url]:https://github.com/semantic-release/semantic-release

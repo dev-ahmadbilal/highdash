@@ -9,8 +9,8 @@ CHANGED_FILES=$(git diff --cached --name-only)
 if echo "$CHANGED_FILES" | grep -q '^src/'; then
   echo "Changes detected in the src folder. Running unit tests..."
 
-  # Run islam.js unit tests
-  echo "Running islam.js unit tests..."
+  # Run neodash unit tests
+  echo "Running neodash unit tests..."
   npm run test
 
   # Capture the exit code of the tests
