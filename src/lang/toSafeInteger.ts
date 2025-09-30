@@ -48,7 +48,8 @@ function toInteger(value: unknown): number {
     return sign * Number.MAX_VALUE;
   }
 
-  return Math.floor(Math.abs(finite)) * (finite < 0 ? -1 : 1);
+  const int = finite < 0 ? -Math.floor(Math.abs(finite)) : Math.floor(finite);
+  return Object.is(int, -0) ? 0 : int;
 }
 
 /**
@@ -56,42 +57,26 @@ function toInteger(value: unknown): number {
  */
 function toFinite(value: unknown): number {
   if (typeof value === 'number') {
-    if (isFinite(value)) {
-      return value;
-    }
+    if (Number.isNaN(value)) return 0;
+    if (isFinite(value)) return Object.is(value, -0) ? 0 : value;
     return value > 0 ? Number.MAX_VALUE : -Number.MAX_VALUE;
   }
-
   if (typeof value === 'string') {
-    const parsed = parseFloat(value);
-    if (isFinite(parsed)) {
-      return parsed;
-    }
+    const trimmed = value.trim();
+    if (trimmed.length === 0) return 0;
+    const parsed = Number(trimmed);
+    if (Number.isFinite(parsed)) return parsed;
   }
-
-  if (typeof value === 'boolean') {
-    return value ? 1 : 0;
+  if (typeof value === 'boolean') return value ? 1 : 0;
+  if (value === null || value === undefined) return 0;
+  if (typeof value === 'bigint') {
+    const n = Number(value);
+    return Number.isFinite(n) ? n : value > 0n ? Number.MAX_VALUE : -Number.MAX_VALUE;
   }
-
-  if (value === null || value === undefined) {
-    return 0;
+  if (typeof value === 'object') {
+    const primitive = (value as any).valueOf?.() ?? value;
+    const num = typeof primitive === 'object' ? Number(String(primitive)) : Number(primitive);
+    if (Number.isFinite(num)) return num;
   }
-
-  if (typeof value === 'object' && value !== null) {
-    // Try valueOf first, then toString
-    if (typeof (value as any).valueOf === 'function') {
-      const valueOfResult = (value as any).valueOf();
-      if (typeof valueOfResult === 'number' && isFinite(valueOfResult)) {
-        return valueOfResult;
-      }
-    }
-
-    const stringValue = String(value);
-    const parsed = parseFloat(stringValue);
-    if (isFinite(parsed)) {
-      return parsed;
-    }
-  }
-
   return 0;
 }

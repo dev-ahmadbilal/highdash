@@ -17,8 +17,15 @@
  * // => false
  * ```
  */
-export function overEvery<T extends unknown[]>(predicates: Array<(...args: T) => boolean>): (...args: T) => boolean {
-  return (...args: T): boolean => {
-    return predicates.every((predicate) => predicate(...args));
+export function overEvery<T extends unknown[]>(predicates: Array<(...args: T) => unknown>): (...args: T) => any {
+  return (...args: T): any => {
+    if (predicates.length === 0) return true;
+    const results = predicates.map((predicate) => predicate(...args));
+    if (results.some((r) => r instanceof Promise)) {
+      return Promise.all(results.map((r) => (r instanceof Promise ? r : Promise.resolve(r)))).then((vals) =>
+        vals.every((v) => Boolean(v)),
+      );
+    }
+    return results.every((v) => Boolean(v));
   };
 }

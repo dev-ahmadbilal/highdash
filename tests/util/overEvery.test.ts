@@ -15,11 +15,7 @@ describe('overEvery', () => {
   });
 
   it('should work with multiple predicates', () => {
-    const func = overEvery([
-      (x: number) => x > 0,
-      (x: number) => x < 10,
-      (x: number) => x % 2 === 0
-    ]);
+    const func = overEvery([(x: number) => x > 0, (x: number) => x < 10, (x: number) => x % 2 === 0]);
     expect(func(2)).toBe(true);
     expect(func(4)).toBe(true);
     expect(func(1)).toBe(false); // not even
@@ -31,7 +27,7 @@ describe('overEvery', () => {
     const func = overEvery([
       (a: number, b: number) => a > 0,
       (a: number, b: number) => b > 0,
-      (a: number, b: number) => a + b > 0
+      (a: number, b: number) => a + b > 0,
     ]);
     expect(func(1, 2)).toBe(true);
     expect(func(-1, 2)).toBe(false);
@@ -43,10 +39,10 @@ describe('overEvery', () => {
     const func = overEvery([
       (str: string) => str.length > 0,
       (str: string) => str.includes('a'),
-      (str: string) => str.length < 10
+      (str: string) => str.length < 10,
     ]);
     expect(func('apple')).toBe(true);
-    expect(func('banana')).toBe(false); // too long
+    expect(func('banana')).toBe(true);
     expect(func('hello')).toBe(false); // no 'a'
     expect(func('')).toBe(false); // empty
   });
@@ -54,8 +50,8 @@ describe('overEvery', () => {
   it('should work with array predicates', () => {
     const func = overEvery([
       (arr: number[]) => arr.length > 0,
-      (arr: number[]) => arr.every(n => n > 0),
-      (arr: number[]) => arr.length < 5
+      (arr: number[]) => arr.every((n) => n > 0),
+      (arr: number[]) => arr.length < 5,
     ]);
     expect(func([1, 2, 3])).toBe(true);
     expect(func([1, 2, 3, 4, 5])).toBe(false); // too long
@@ -64,22 +60,14 @@ describe('overEvery', () => {
   });
 
   it('should work with object predicates', () => {
-    const func = overEvery([
-      (obj: any) => obj.a > 0,
-      (obj: any) => obj.b > 0,
-      (obj: any) => obj.a + obj.b > 0
-    ]);
+    const func = overEvery([(obj: any) => obj.a > 0, (obj: any) => obj.b > 0, (obj: any) => obj.a + obj.b > 0]);
     expect(func({ a: 1, b: 2 })).toBe(true);
     expect(func({ a: -1, b: 2 })).toBe(false);
     expect(func({ a: 1, b: -2 })).toBe(false);
   });
 
   it('should work with mixed predicates', () => {
-    const func = overEvery([
-      (x: number) => x > 0,
-      (x: number) => x.toString().length > 0,
-      (x: number) => x < 100
-    ]);
+    const func = overEvery([(x: number) => x > 0, (x: number) => x.toString().length > 0, (x: number) => x < 100]);
     expect(func(5)).toBe(true);
     expect(func(150)).toBe(false); // not < 100
     expect(func(-5)).toBe(false); // not > 0
@@ -95,17 +83,14 @@ describe('overEvery', () => {
       (x: number) => x > 0,
       (x: number) => x < 10,
       (x: number) => null, // falsy
-      (x: number) => x % 2 === 0
+      (x: number) => x % 2 === 0,
     ]);
     expect(func(2)).toBe(false); // null is falsy
     expect(func(4)).toBe(false); // null is falsy
   });
 
   it('should work with async predicates', async () => {
-    const func = overEvery([
-      async (x: number) => x > 0,
-      async (x: number) => x < 10
-    ]);
+    const func = overEvery([async (x: number) => x > 0, async (x: number) => x < 10]);
     const result = await func(5);
     expect(result).toBe(true);
   });

@@ -38,14 +38,12 @@ export function assignInWith<T extends Record<string, unknown>>(
     }
 
     for (const key in source) {
-      const srcValue = source[key];
-      const objValue = object[key];
+      const srcValue = (source as Record<string, unknown>)[key];
+      const objValue = (object as Record<string, unknown>)[key];
 
       if (isCustomizer) {
         const customValue = (customizer as Function)(objValue, srcValue, key, object, source);
-        if (customValue !== undefined) {
-          (object as Record<string, unknown>)[key] = customValue;
-        }
+        (object as Record<string, unknown>)[key] = customValue !== undefined ? customValue : srcValue;
       } else {
         (object as Record<string, unknown>)[key] = srcValue;
       }

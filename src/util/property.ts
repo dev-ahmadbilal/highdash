@@ -16,27 +16,23 @@
  * ```
  */
 export function property<T = unknown>(path: string | string[]): (object: unknown) => T {
-  const pathParts = Array.isArray(path)
+  const parts = Array.isArray(path)
     ? path
     : String(path)
         .replace(/\[(\d+)\]/g, '.$1')
         .split('.')
-        .filter(Boolean);
+        .filter((x) => x.length > 0);
 
   return (object: unknown): T => {
-    if (!object || typeof object !== 'object') {
+    if (object === null || object === undefined || typeof object !== 'object') {
       return undefined as T;
     }
-
-    let current: unknown = object;
-
-    for (const part of pathParts) {
-      if (current === null || typeof current !== 'object' || !(part in current)) {
-        return undefined as T;
-      }
-      current = (current as Record<string, unknown>)[part];
+    if (parts.length === 0) return undefined as T;
+    let cur: any = object;
+    for (const p of parts) {
+      if (cur === null) return undefined as T;
+      cur = cur[p];
     }
-
-    return current as T;
+    return cur as T;
   };
 }

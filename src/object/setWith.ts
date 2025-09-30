@@ -31,20 +31,40 @@ export function setWith<T extends Record<string, unknown>>(
         .split('.')
         .filter(Boolean);
 
-  let current: Record<string, unknown> = object;
+  let current: any = object;
 
   for (let i = 0; i < pathParts.length - 1; i++) {
     const key = pathParts[i];
+    const nextKey = pathParts[i + 1];
 
     if (!(key in current) || current[key] === null || typeof current[key] !== 'object') {
-      const newValue = customizer ? customizer(current[key], key, current) : {};
-      current[key] = newValue !== undefined ? newValue : {};
+      const isNextIndex = nextKey !== undefined && /^\d+$/.test(String(nextKey));
+      const customized = customizer ? customizer(current[key], key, current) : undefined;
+      if (customized !== undefined) {
+        // If next is a property (non-index), ensure object container
+        current[key] = isNextIndex ? customized : {};
+      } else {
+        current[key] = isNextIndex ? [] : {};
+      }
     }
 
-    current = current[key] as Record<string, unknown>;
+    // Move down one level, ensuring array index parent is array
+    let nextContainer = current[key] as any;
+    if (/^\d+$/.test(String(nextKey)) && !Array.isArray(nextContainer)) {
+      // Replace with array when next segment is an index
+      current[key] = [];
+      nextContainer = current[key];
+    }
+    current = nextContainer;
   }
 
   const lastKey = pathParts[pathParts.length - 1];
+  if (Array.isArray(current) && /^\d+$/.test(String(lastKey))) {
+    const idx = Number(lastKey);
+    if (current[idx] === undefined || typeof current[idx] !== 'object') {
+      current[idx] = {};
+    }
+  }
   current[lastKey] = value;
 
   return object;

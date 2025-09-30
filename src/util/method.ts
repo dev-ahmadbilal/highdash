@@ -19,32 +19,24 @@
  * // => [2, 1]
  * ```
  */
-export function method<T extends unknown[]>(path: string | string[], ...args: T): (object: unknown) => unknown {
+export function method(path: string | string[]): (object: unknown) => unknown {
+  const parts = Array.isArray(path)
+    ? path
+    : String(path)
+        .replace(/\[(\d+)\]/g, '.$1')
+        .split('.')
+        .filter((x) => x.length > 0);
+
   return (object: unknown): unknown => {
-    if (!object || typeof object !== 'object') {
+    if (object === null || object === undefined || typeof object !== 'object') {
       return undefined;
     }
-
-    const pathParts = Array.isArray(path)
-      ? path
-      : String(path)
-          .replace(/\[(\d+)\]/g, '.$1')
-          .split('.')
-          .filter(Boolean);
-
-    let current: unknown = object;
-
-    for (const part of pathParts) {
-      if (current === null || typeof current !== 'object' || !(part in current)) {
-        return undefined;
-      }
-      current = (current as Record<string, unknown>)[part];
+    if (parts.length === 0) return undefined;
+    let cur: any = object;
+    for (const p of parts) {
+      if (cur === null) return undefined;
+      cur = cur[p];
     }
-
-    if (typeof current === 'function') {
-      return (current as Function).apply(object, args);
-    }
-
-    return undefined;
+    return cur;
   };
 }

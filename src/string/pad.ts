@@ -19,17 +19,30 @@
  * // => 'abc'
  * ```
  */
-export function pad(string: string, length: number = 0, chars: string = ' '): string {
+export function pad(string: string, length: number = 0, chars: any = ' '): string {
   if (typeof string !== 'string' || length <= string.length) {
     return string;
   }
 
   const padLength = length - string.length;
-  const leftPadLength = Math.floor(padLength / 2);
+  // Coerce chars; default to single space if not a non-empty string
+  const padCharsStr = typeof chars === 'string' && chars.length > 0 ? chars : ' ';
+  const units = Array.from(padCharsStr);
+
+  const leftPadLength = Math.ceil(padLength / 2);
   const rightPadLength = padLength - leftPadLength;
 
-  const leftPad = chars.repeat(Math.ceil(leftPadLength / chars.length)).slice(0, leftPadLength);
-  const rightPad = chars.repeat(Math.ceil(rightPadLength / chars.length)).slice(0, rightPadLength);
+  const build = (count: number): string => {
+    if (count <= 0) return '';
+    let out = '';
+    for (let i = 0; i < count; i++) {
+      out += units[i % units.length];
+    }
+    return out;
+  };
+
+  const leftPad = build(leftPadLength);
+  const rightPad = build(rightPadLength);
 
   return leftPad + string + rightPad;
 }

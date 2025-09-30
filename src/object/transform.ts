@@ -17,14 +17,17 @@
  */
 export function transform<T, R>(
   object: T[] | Record<string, T> | null | undefined,
-  iteratee: (accumulator: R, value: T, key: number | string, object: T[] | Record<string, T>) => R | false,
-  accumulator: R,
+  iteratee: (accumulator: R, value: T, key: number | string, object: T[] | Record<string, T>) => any,
+  accumulator?: R,
 ): R {
   if (!object) {
-    return accumulator;
+    return accumulator as R;
   }
 
-  let result = accumulator;
+  let result: any = accumulator;
+  if (result === undefined) {
+    result = Array.isArray(object) ? [] : {};
+  }
 
   if (Array.isArray(object)) {
     for (let i = 0; i < object.length; i++) {
@@ -33,7 +36,10 @@ export function transform<T, R>(
       if (newResult === false) {
         break;
       }
-      result = newResult;
+      // iteratee may mutate result; if it returned a truthy object, update reference
+      if (newResult !== undefined && newResult !== true) {
+        result = newResult;
+      }
     }
   } else if (typeof object === 'object') {
     for (const key in object) {
@@ -43,10 +49,12 @@ export function transform<T, R>(
         if (newResult === false) {
           break;
         }
-        result = newResult;
+        if (newResult !== undefined && newResult !== true) {
+          result = newResult;
+        }
       }
     }
   }
 
-  return result;
+  return result as R;
 }

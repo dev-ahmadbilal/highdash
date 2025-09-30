@@ -17,31 +17,38 @@
  * ```
  */
 export function toPlainObject(value: unknown): Record<string, unknown> {
-  if (value === null || typeof value !== 'object') {
-    return {};
+  if (value === null || value === undefined) return {};
+
+  if (typeof value === 'string') {
+    const obj: Record<string, unknown> = {};
+    const str = String(value);
+    for (let i = 0; i < str.length; i++) {
+      obj[String(i)] = str[i];
+    }
+    return obj;
   }
 
   const result: Record<string, unknown> = {};
 
-  // Copy own properties
-  for (const key in value) {
-    if (Object.prototype.hasOwnProperty.call(value, key)) {
-      result[key] = (value as Record<string, unknown>)[key];
-    }
-  }
-
-  // Copy inherited enumerable properties
-  let current = value;
-  while (current && current !== Object.prototype) {
-    const proto = Object.getPrototypeOf(current);
-    if (proto && proto !== Object.prototype) {
-      for (const key in proto) {
-        if (Object.prototype.hasOwnProperty.call(proto, key)) {
-          result[key] = (proto as Record<string, unknown>)[key];
-        }
+  // Copy own enumerable properties (including symbol)
+  if (typeof value === 'object') {
+    for (const key of Reflect.ownKeys(value as object)) {
+      const desc = Object.getOwnPropertyDescriptor(value as object, key);
+      if (desc && desc.enumerable) {
+        result[key as any] = (value as any)[key as any];
       }
     }
-    current = proto;
+
+    // Copy inherited enumerable string-keyed properties
+    let proto = Object.getPrototypeOf(value as object);
+    while (proto && proto !== Object.prototype) {
+      for (const key in proto as any) {
+        if (Object.prototype.hasOwnProperty.call(proto, key)) {
+          result[key] = (proto as any)[key];
+        }
+      }
+      proto = Object.getPrototypeOf(proto);
+    }
   }
 
   return result;

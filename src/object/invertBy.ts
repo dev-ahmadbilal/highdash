@@ -17,7 +17,7 @@
  */
 export function invertBy<T extends Record<string, unknown>>(
   object: T,
-  iteratee?: (value: T[keyof T]) => string,
+  iteratee?: ((value: T[keyof T]) => string) | keyof T,
 ): Record<string, string[]> {
   if (!object || typeof object !== 'object') {
     return {};
@@ -28,7 +28,15 @@ export function invertBy<T extends Record<string, unknown>>(
   for (const key in object) {
     if (Object.prototype.hasOwnProperty.call(object, key)) {
       const value = object[key];
-      const invertedKey = iteratee ? String(iteratee(value)) : String(value);
+      let invertedKey: string;
+      if (typeof iteratee === 'function') {
+        invertedKey = String((iteratee as (v: T[keyof T]) => string)(value));
+      } else if (iteratee) {
+        const v = (value as any)[iteratee as string];
+        invertedKey = String(v);
+      } else {
+        invertedKey = String(value);
+      }
 
       if (!result[invertedKey]) {
         result[invertedKey] = [];

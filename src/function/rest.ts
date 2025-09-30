@@ -14,12 +14,19 @@
  */
 export function rest<T extends (...args: unknown[]) => unknown>(func: T, start: number = func.length - 1): T {
   if (start < 0) {
-    start = 0;
+    start = Math.max(0, func.length + start);
   }
 
   return ((...args: Parameters<T>) => {
-    const restArgs = args.slice(start);
-    const fixedArgs = args.slice(0, start);
-    return func(...fixedArgs, restArgs);
+    const actualStart = Math.min(start, args.length);
+    const fixedArgs = (args as unknown[]).slice(0, actualStart);
+    const includeTail = func.length > start + 1;
+    if (includeTail) {
+      const head = (args as unknown[]).slice(actualStart);
+      const tail = (args as unknown[])[(args as unknown[]).length - 1];
+      return func(...([...(fixedArgs as unknown[]), head, tail] as any));
+    }
+    const restArgs = (args as unknown[]).slice(actualStart);
+    return func(...([...(fixedArgs as unknown[]), restArgs] as any));
   }) as T;
 }

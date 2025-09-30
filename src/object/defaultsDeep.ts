@@ -27,13 +27,15 @@ export function defaultsDeep<T extends Record<string, unknown>>(object: T, ...so
         const objectValue = object[key];
 
         if (
-          objectValue === undefined &&
+          objectValue !== null &&
+          typeof objectValue === 'object' &&
           sourceValue !== null &&
           typeof sourceValue === 'object' &&
+          !Array.isArray(objectValue) &&
           !Array.isArray(sourceValue)
         ) {
           object[key] = defaultsDeep(
-            {} as Record<string, unknown>,
+            objectValue as Record<string, unknown>,
             sourceValue as Record<string, unknown>,
           ) as T[Extract<keyof T, string>];
         } else if (objectValue === undefined) {

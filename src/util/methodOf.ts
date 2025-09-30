@@ -17,32 +17,31 @@
  * // => 'b'
  * ```
  */
-export function methodOf<T extends unknown[]>(object: unknown, ...args: T): (path: string | string[]) => unknown {
-  return (path: string | string[]): unknown => {
-    if (!object || typeof object !== 'object') {
-      return undefined;
-    }
-
-    const pathParts = Array.isArray(path)
-      ? path
-      : String(path)
+export function methodOf(object: unknown, path?: string | string[]): (...args: unknown[]) => unknown {
+  const resolve = (obj: any, p: string | string[] | undefined): any => {
+    // eslint-disable-next-line eqeqeq
+    if (obj == null || p === undefined) return undefined;
+    const parts = Array.isArray(p)
+      ? p
+      : String(p)
           .replace(/\[(\d+)\]/g, '.$1')
           .split('.')
-          .filter(Boolean);
-
-    let current: unknown = object;
-
-    for (const part of pathParts) {
-      if (current === null || typeof current !== 'object' || !(part in current)) {
-        return undefined;
-      }
-      current = (current as Record<string, unknown>)[part];
+          .filter((x) => x.length > 0);
+    if (parts.length === 0) return undefined;
+    let cur: any = obj;
+    for (const part of parts) {
+      // eslint-disable-next-line eqeqeq
+      if (cur == null) return undefined;
+      cur = cur[part];
     }
-
-    if (typeof current === 'function') {
-      return (current as Function).apply(object, args);
-    }
-
-    return current;
+    return cur;
   };
+
+  if (path !== undefined) {
+    // Return a zero-arg function that resolves a fixed path on the object
+    return () => resolve(object as any, path);
+  }
+
+  // Classic behavior: returned function accepts path
+  return (dynamicPath: string | string[]) => resolve(object as any, dynamicPath);
 }

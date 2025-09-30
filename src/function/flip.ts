@@ -14,6 +14,8 @@
  */
 export function flip<T extends (...args: unknown[]) => unknown>(func: T): T {
   return ((...args: Parameters<T>) => {
-    return func(...args.reverse());
+    if (args.length < 2) return func(...(args as any));
+    const [first, second, ...rest] = args as unknown[];
+    return func(...([second, first, ...rest] as any));
   }) as T;
 }

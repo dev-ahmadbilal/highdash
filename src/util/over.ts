@@ -11,8 +11,12 @@
  * // => [4, 1]
  * ```
  */
-export function over<T extends unknown[]>(iteratees: Array<(...args: T) => unknown>): (...args: T) => unknown[] {
-  return (...args: T): unknown[] => {
-    return iteratees.map((iteratee) => iteratee(...args));
+export function over<T extends unknown[]>(iteratees: Array<(...args: T) => unknown>): (...args: T) => any {
+  return (...args: T): any => {
+    const results = iteratees.map((fn) => fn(...args));
+    if (results.some((r) => r instanceof Promise)) {
+      return Promise.all(results.map((r) => (r instanceof Promise ? r : Promise.resolve(r))));
+    }
+    return results;
   };
 }

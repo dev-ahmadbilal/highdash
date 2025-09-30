@@ -25,7 +25,7 @@
  * // => true
  * ```
  */
-export function isEqualWith(
+function baseIsEqualWith(
   value: unknown,
   other: unknown,
   customizer?: (
@@ -36,20 +36,19 @@ export function isEqualWith(
     other: unknown,
     stack: unknown,
   ) => boolean | undefined,
+  key?: string | number | symbol,
+  parentA?: unknown,
+  parentB?: unknown,
 ): boolean {
-  if (value === other) {
-    return true;
+  if (customizer) {
+    const custom = customizer(value, other, (key as any) ?? ('' as any), parentA ?? value, parentB ?? other, undefined);
+    if (custom !== undefined) return custom;
   }
+
+  if (value === other) return true;
 
   if (value === null || other === null || typeof value !== 'object' || typeof other !== 'object') {
     return false;
-  }
-
-  if (customizer) {
-    const result = customizer(value, other, '', value, other, undefined);
-    if (result !== undefined) {
-      return result;
-    }
   }
 
   if (Array.isArray(value) !== Array.isArray(other)) {
@@ -62,7 +61,7 @@ export function isEqualWith(
     }
 
     for (let i = 0; i < value.length; i++) {
-      if (!isEqualWith(value[i], other[i], customizer)) {
+      if (!baseIsEqualWith(value[i], other[i], customizer, i, value, other)) {
         return false;
       }
     }
@@ -79,14 +78,29 @@ export function isEqualWith(
     return false;
   }
 
-  for (const key of valueKeys) {
-    if (!otherKeys.includes(key)) {
+  for (const k of valueKeys) {
+    if (!otherKeys.includes(k)) {
       return false;
     }
-    if (!isEqualWith(valueObj[key], otherObj[key], customizer)) {
+    if (!baseIsEqualWith(valueObj[k], otherObj[k], customizer, k, valueObj, otherObj)) {
       return false;
     }
   }
 
   return true;
+}
+
+export function isEqualWith(
+  value: unknown,
+  other: unknown,
+  customizer?: (
+    objValue: unknown,
+    othValue: unknown,
+    key: string | number | symbol,
+    object: unknown,
+    other: unknown,
+    stack: unknown,
+  ) => boolean | undefined,
+): boolean {
+  return baseIsEqualWith(value, other, customizer);
 }

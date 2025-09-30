@@ -22,7 +22,15 @@ export function isNative(value: unknown): value is Function {
   }
 
   const func = value as Function;
-  const funcString = func.toString();
+  const funcString = Function.prototype.toString.call(func);
+  // Bound functions include 'native code' sometimes; detect bound by presence of 'bound '
+  if (
+    /^bound\s/.test(func.name) ||
+    funcString.startsWith('function bound ') ||
+    (funcString.includes('native code') && funcString.includes('bound '))
+  ) {
+    return false;
+  }
 
   // Check for native function patterns
   return (

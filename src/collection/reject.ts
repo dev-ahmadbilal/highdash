@@ -18,14 +18,27 @@
  */
 export function reject<T>(
   collection: T[] | Record<string, T>,
-  predicate: ((value: T, index: number, collection: T[] | Record<string, T>) => boolean) | string,
+  predicate:
+    | ((value: T, index: number, collection: T[] | Record<string, T>) => boolean)
+    | string
+    | Record<string, unknown>,
 ): T[] {
   if (!collection) {
     return [];
   }
 
-  const getValue =
-    typeof predicate === 'function' ? predicate : (item: T) => Boolean((item as Record<string, unknown>)[predicate]);
+  const getValue = (() => {
+    if (typeof predicate === 'function') return predicate;
+    if (typeof predicate === 'string') {
+      // For reject, treat string predicate as truthiness check and exclude truthy ones
+      return (item: T) => Boolean((item as Record<string, unknown>)[predicate]);
+    }
+    if (predicate && typeof predicate === 'object') {
+      const entries = Object.entries(predicate as Record<string, unknown>);
+      return (item: T) => entries.every(([k, v]) => (item as any)[k] === v);
+    }
+    return () => false;
+  })();
 
   const items = Array.isArray(collection) ? collection : Object.values(collection);
   const result: T[] = [];

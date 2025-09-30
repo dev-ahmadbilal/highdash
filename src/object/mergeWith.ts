@@ -49,11 +49,36 @@ export function mergeWith<T extends Record<string, unknown>>(
           const customValue = (customizer as Function)(objValue, srcValue, key, object, source);
           if (customValue !== undefined) {
             (object as Record<string, unknown>)[key] = customValue;
+          } else if (
+            objValue &&
+            typeof objValue === 'object' &&
+            srcValue &&
+            typeof srcValue === 'object' &&
+            !Array.isArray(objValue) &&
+            !Array.isArray(srcValue)
+          ) {
+            (object as Record<string, unknown>)[key] = mergeWith(
+              objValue as Record<string, unknown>,
+              srcValue as Record<string, unknown>,
+              customizer as Function,
+            ) as unknown;
           } else if (objValue === undefined) {
             (object as Record<string, unknown>)[key] = srcValue;
           }
         } else {
-          if (objValue === undefined) {
+          if (
+            objValue &&
+            typeof objValue === 'object' &&
+            srcValue &&
+            typeof srcValue === 'object' &&
+            !Array.isArray(objValue) &&
+            !Array.isArray(srcValue)
+          ) {
+            (object as Record<string, unknown>)[key] = mergeWith(
+              objValue as Record<string, unknown>,
+              srcValue as Record<string, unknown>,
+            ) as unknown;
+          } else if (objValue === undefined) {
             (object as Record<string, unknown>)[key] = srcValue;
           }
         }

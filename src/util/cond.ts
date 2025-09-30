@@ -23,20 +23,13 @@
  * ```
  */
 export function cond<T extends unknown[], R>(
-  pairs: Array<[((...args: T) => boolean) | ((...args: T) => boolean)[], (...args: T) => R]>,
+  pairs: Array<[((...args: T) => unknown) | boolean, (...args: T) => R]>,
 ): (...args: T) => R | undefined {
   return (...args: T): R | undefined => {
     for (const [predicate, func] of pairs) {
-      if (Array.isArray(predicate)) {
-        // Multiple predicates (AND condition)
-        if (predicate.every((pred) => pred(...args))) {
-          return func(...args);
-        }
-      } else {
-        // Single predicate
-        if (predicate(...args)) {
-          return func(...args);
-        }
+      const predVal = typeof predicate === 'function' ? (predicate as (...a: T) => unknown)(...args) : predicate;
+      if (predVal) {
+        return func(...args);
       }
     }
     return undefined;

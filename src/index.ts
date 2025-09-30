@@ -8,6 +8,7 @@
 export { debounce } from './core/debounce';
 export { throttle } from './core/throttle';
 export { cloneDeep } from './core/cloneDeep';
+export { cloneDeepWith } from './core/cloneDeepWith';
 export { merge } from './core/merge';
 export { uniq } from './core/uniq';
 export { groupBy } from './core/groupBy';
@@ -241,6 +242,7 @@ export { subtract } from './math/subtract';
 
 // Number utilities
 export { clamp } from './number/clamp';
+export { inRange } from './number/inRange';
 
 // Utility functions
 export { random } from './util/random';

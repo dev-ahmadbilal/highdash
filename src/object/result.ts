@@ -35,13 +35,20 @@ export function result<T = unknown>(object: unknown, path: string | string[], de
 
   for (const part of pathParts) {
     if (current === null || typeof current !== 'object' || !(part in current)) {
-      return defaultValue as T;
+      // Missing path → if defaultValue is a function, invoke it
+      return (
+        typeof defaultValue === 'function' ? (defaultValue as unknown as Function).call(object) : (defaultValue as T)
+      ) as T;
     }
     current = (current as Record<string, unknown>)[part];
   }
 
   if (typeof current === 'function') {
     return (current as Function).call(object) as T;
+  }
+
+  if (current === undefined && typeof defaultValue === 'function') {
+    return (defaultValue as unknown as Function).call(object) as T;
   }
 
   return (current as T) ?? (defaultValue as T);

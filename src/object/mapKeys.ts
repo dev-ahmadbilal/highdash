@@ -14,7 +14,7 @@
  */
 export function mapKeys<T extends Record<string, unknown>>(
   object: T,
-  iteratee: (value: T[keyof T], key: keyof T, object: T) => string,
+  iteratee: ((value: T[keyof T], key: keyof T, object: T) => string) | keyof T,
 ): Record<string, T[keyof T]> {
   if (!object || typeof object !== 'object') {
     return {};
@@ -25,7 +25,10 @@ export function mapKeys<T extends Record<string, unknown>>(
   for (const key in object) {
     if (Object.prototype.hasOwnProperty.call(object, key)) {
       const value = object[key];
-      const newKey = iteratee(value, key, object);
+      const newKey =
+        typeof iteratee === 'function'
+          ? (iteratee as (v: T[keyof T], k: keyof T, o: T) => string)(value, key as keyof T, object)
+          : String((value as any)[iteratee as string]);
       result[newKey] = value;
     }
   }
