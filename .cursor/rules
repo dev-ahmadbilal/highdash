@@ -1,4 +1,4 @@
-# Cursor Rules for neodash (Modern Lodash Alternative)
+# Cursor Rules for highdash (Modern Lodash Alternative)
 
 ## Project Vision
 We are rebuilding lodash from scratch with the help of AI coding agents.  
@@ -7,7 +7,7 @@ The goal is not a 1:1 clone, but a **modern, type-safe, tree-shakable, and perfo
 ## General Guidelines
 - **Language:** TypeScript (strict mode ON).
 - **Imports:** All functions must be **modular** and support tree-shaking.  
-  - Example: `import { debounce } from "neodash"`.
+  - Example: `import { debounce } from "highdash"`.
 - **Compatibility:** Functions should be **API-compatible with lodash** where it makes sense.  
 - **Modern JS:** Prefer ES6+ built-ins (`Array.from`, `Object.entries`, `flatMap`, etc.) over re-implementing them.  
 - **Benchmarks:** For performance-sensitive functions, add benchmarks and compare with lodash.  

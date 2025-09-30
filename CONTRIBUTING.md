@@ -1,12 +1,12 @@
-# Contributing to neodash
+# Contributing to highdash
 
-Thank you for your interest in contributing to neodash! We welcome contributions from the community to help improve the library. Please follow the guidelines below to get started.
+Thank you for your interest in contributing to highdash! We welcome contributions from the community to help improve the library. Please follow the guidelines below to get started.
 
 ## How to Contribute
 
 ### 1. Reporting Issues
 
-If you encounter any bugs or have suggestions for improvements, please open an issue on our [GitHub repository](https://github.com/dev-ahmadbilal/neodash/issues). Provide a clear description of the problem and, if possible, steps to reproduce it. Please check our templates for [Bug Report](./.github/ISSUE_TEMPLATE/bug_report.md) and [Feature Request](./.github/ISSUE_TEMPLATE/feature_request.md).
+If you encounter any bugs or have suggestions for improvements, please open an issue on our [GitHub repository](https://github.com/dev-ahmadbilal/highdash/issues). Provide a clear description of the problem and, if possible, steps to reproduce it. Please check our templates for [Bug Report](./.github/ISSUE_TEMPLATE/bug_report.md) and [Feature Request](./.github/ISSUE_TEMPLATE/feature_request.md).
 
 ### 2. Submitting Pull Requests
 
@@ -17,8 +17,8 @@ To contribute code, follow these steps:
 
 2. **Clone Your Fork:**
    ```bash
-   git clone https://github.com/dev-ahmadbilal/neodash.git
-   cd neodash
+   git clone https://github.com/dev-ahmadbilal/highdash.git
+   cd highdash
    ```
 
 3. **Create a Branch:**
@@ -58,4 +58,4 @@ To contribute code, follow these steps:
 ### 5. License
 By contributing to this project, you agree that your contributions will be licensed under the [MIT License](LICENSE).
 
-Thank you for helping us make neodash better!
+Thank you for helping us make highdash better!
