@@ -1,7 +1,7 @@
 {
   "name": "highdash",
-  "version": "0.0.x",
-  "description": "A boilerplate project for npm packages",
+  "version": "0.1.0",
+  "description": "A modern TypeScript-first reimplementation of Lodash with better performance and type safety",
   "main": "./lib/index.js",
   "files": [
     "lib/**/*"
@@ -14,18 +14,24 @@
     "lint": "eslint ./src/",
     "lint:fix": "eslint ./src/ --fix",
     "start": "npx ts-node src/index.ts",
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "benchmark": "node benchmarks/performance.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dev-ahmadbilal/highdash.git"
   },
   "keywords": [
-    "nodejs",
+    "lodash",
+    "utility",
     "typescript",
     "javascript",
-    "npm-package",
-    "open-source"
+    "functional-programming",
+    "immutable",
+    "tree-shakable",
+    "modern",
+    "performance",
+    "type-safe"
   ],
   "author": {
     "name": "Ahmad Bilal",
