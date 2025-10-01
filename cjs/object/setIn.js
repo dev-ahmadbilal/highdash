@@ -2,20 +2,42 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setIn = setIn;
 /**
- * Immutable set at deep path. Creates missing containers (array/object) based on the next key.
+ * Sets the value at `path` of `object`. If a portion of `path` doesn't exist, it's created.
+ * Arrays are created for missing index properties, objects are created for all other missing properties.
+ *
+ * @param object - The object to modify
+ * @param path - The path of the property to set
+ * @param value - The value to set
+ * @returns Returns the new object
  *
  * @example
- * setIn({ a: [{ b: { c: 3 } }] }, 'a[0].b.c', 4) // { a: [{ b: { c: 4 } }] }
+ * ```typescript
+ * const object = { 'a': [{ 'b': { 'c': 3 } }] };
+ * setIn(object, 'a[0].b.c', 4);
+ * // => { 'a': [{ 'b': { 'c': 4 } }] }
+ *
+ * setIn(object, ['x', '0', 'y', 'z'], 5);
+ * // => { 'a': [{ 'b': { 'c': 4 } }], 'x': [{ 'y': { 'z': 5 } }] }
+ * ```
  */
 function setIn(object, path, value) {
-    const keys = Array.isArray(path)
-        ? path.slice()
-        : String(path)
-            .replace(/\[(\d+)\]/g, '.$1')
-            .split('.')
-            .filter(Boolean);
-    if (!object || typeof object !== 'object' || keys.length === 0)
+    if (!object || typeof object !== 'object') {
         return object;
+    }
+    let keys;
+    if (Array.isArray(path)) {
+        keys = path;
+    }
+    else {
+        if (path === '') {
+            return value;
+        }
+        // eslint-disable-next-line no-useless-escape
+        keys = path.split(/[\.\[\]]+/).filter(Boolean);
+    }
+    if (keys.length === 0) {
+        return value;
+    }
     function cloneShallow(obj) {
         return Array.isArray(obj) ? obj.slice() : Object.assign({}, obj);
     }

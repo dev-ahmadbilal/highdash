@@ -68,7 +68,7 @@ export function groupToMap<T, K>(
       // Complex path
       for (let i = 0; i < length; i++) {
         const item = items[i];
-        const key = get(item as unknown as Record<string, unknown>, path);
+        const key = get(item as unknown as Record<string, unknown>, path) as K;
         const group = map.get(key);
         if (group) {
           group.push(item);

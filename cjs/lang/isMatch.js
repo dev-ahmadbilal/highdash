@@ -27,6 +27,7 @@ function isMatch(object, source) {
     }
     const sourceObj = source;
     const objectObj = object;
+    // Check string keys
     for (const key in sourceObj) {
         if (Object.prototype.hasOwnProperty.call(sourceObj, key)) {
             const sourceValue = sourceObj[key];
@@ -39,6 +40,20 @@ function isMatch(object, source) {
                     !isMatch(objectValue, sourceValue))) {
                 return false;
             }
+        }
+    }
+    // Check symbol keys
+    const sourceSymbols = Object.getOwnPropertySymbols(sourceObj);
+    for (const symbol of sourceSymbols) {
+        const sourceValue = sourceObj[symbol];
+        const objectValue = objectObj[symbol];
+        if (sourceValue !== objectValue &&
+            (sourceValue === null ||
+                typeof sourceValue !== 'object' ||
+                objectValue === null ||
+                typeof objectValue !== 'object' ||
+                !isMatch(objectValue, sourceValue))) {
+            return false;
         }
     }
     return true;

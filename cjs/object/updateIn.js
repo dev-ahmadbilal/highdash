@@ -2,20 +2,42 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateIn = updateIn;
 /**
- * Immutable update at deep path with updater(value) -> newValue. Creates path as needed.
+ * Updates the value at `path` of `object` using an updater function. If a portion of `path` doesn't exist, it's created.
+ * Arrays are created for missing index properties, objects are created for all other missing properties.
+ *
+ * @param object - The object to modify
+ * @param path - The path of the property to update
+ * @param updater - The function to produce the updated value
+ * @returns Returns the new object
  *
  * @example
- * updateIn({ a: [ { b: 1 } ] }, 'a[0].b', (v) => (v as number) + 1) // { a: [ { b: 2 } ] }
+ * ```typescript
+ * const object = { 'a': [{ 'b': { 'c': 3 } }] };
+ * updateIn(object, 'a[0].b.c', (n) => (n as number) * 2);
+ * // => { 'a': [{ 'b': { 'c': 6 } }] }
+ *
+ * updateIn(object, ['x', '0', 'y', 'z'], (val) => val || 5);
+ * // => { 'a': [{ 'b': { 'c': 6 } }], 'x': [{ 'y': { 'z': 5 } }] }
+ * ```
  */
 function updateIn(object, path, updater) {
-    const keys = Array.isArray(path)
-        ? path.slice()
-        : String(path)
-            .replace(/\[(\d+)\]/g, '.$1')
-            .split('.')
-            .filter(Boolean);
-    if (!object || typeof object !== 'object' || keys.length === 0)
+    if (!object || typeof object !== 'object') {
         return object;
+    }
+    let keys;
+    if (Array.isArray(path)) {
+        keys = path;
+    }
+    else {
+        if (path === '') {
+            return updater(object, '', object);
+        }
+        // eslint-disable-next-line no-useless-escape
+        keys = path.split(/[\.\[\]]+/).filter(Boolean);
+    }
+    if (keys.length === 0) {
+        return updater(object, '', object);
+    }
     function cloneShallow(obj) {
         return Array.isArray(obj) ? obj.slice() : Object.assign({}, obj);
     }
@@ -35,6 +57,6 @@ function updateIn(object, path, updater) {
     }
     const last = keys[keys.length - 1];
     const prev = src !== null && src !== undefined ? src[last] : undefined;
-    cur[last] = updater(prev);
+    cur[last] = updater(prev, path, object);
     return result;
 }

@@ -25,9 +25,7 @@ function omit(object, paths) {
     const pathsSet = useSet ? new Set(paths) : null;
     for (const key in object) {
         if (Object.prototype.hasOwnProperty.call(object, key)) {
-            const shouldOmit = useSet
-                ? pathsSet.has(key)
-                : paths.indexOf(key) !== -1;
+            const shouldOmit = useSet ? pathsSet.has(key) : paths.indexOf(key) !== -1;
             if (!shouldOmit) {
                 result[key] = object[key];
             }

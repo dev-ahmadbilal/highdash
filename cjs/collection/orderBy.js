@@ -37,8 +37,8 @@ function orderBy(collection, iteratees = [], orders = []) {
         return [...items];
     }
     // Simple approach - pre-compute values for each item
-    const itemsWithValues = items.map(item => {
-        const values = iterateesArray.map(iteratee => {
+    const itemsWithValues = items.map((item) => {
+        const values = iterateesArray.map((iteratee) => {
             if (typeof iteratee === 'function') {
                 return iteratee(item);
             }
@@ -54,7 +54,8 @@ function orderBy(collection, iteratees = [], orders = []) {
         });
         return { item, values };
     });
-    return itemsWithValues.sort((a, b) => {
+    return itemsWithValues
+        .sort((a, b) => {
         for (let i = 0; i < a.values.length; i++) {
             const aValue = a.values[i];
             const bValue = b.values[i];
@@ -65,6 +66,7 @@ function orderBy(collection, iteratees = [], orders = []) {
             return order === 'desc' ? -comparison : comparison;
         }
         return 0;
-    }).map(({ item }) => item);
+    })
+        .map(({ item }) => item);
 }
 const get_js_1 = require("../object/get.js");

@@ -17,7 +17,7 @@
  * // => { 'a': [{ 'b': { 'c': 6 } }], 'x': [{ 'y': { 'z': 5 } }] }
  * ```
  */
-export function updateIn<T extends Record<string, unknown>, R = unknown>(
+export function updateIn<T extends Record<string, unknown>, R extends T = T>(
   object: T,
   path: string | string[],
   updater: (current: unknown, path: string, obj: T) => R,

@@ -60,7 +60,7 @@ export function countByToMap<T, K>(
       // Complex path
       for (let i = 0; i < length; i++) {
         const item = items[i];
-        const key = get(item as unknown as Record<string, unknown>, path);
+        const key = get(item as unknown as Record<string, unknown>, path) as K;
         const count = map.get(key) || 0;
         map.set(key, count + 1);
       }
