@@ -91,7 +91,7 @@ While Lodash has been the go-to utility library for JavaScript developers, it wa
 
 </div>
 
-*Benchmarks run on Node.js 18, 1000 iterations*
+*Benchmarks run on Node.js 18+, 1000 iterations*
 
 > 💡 **Want to verify these results?** Run the benchmarks yourself:
 > ```bash
