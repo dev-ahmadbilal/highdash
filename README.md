@@ -1,5 +1,3 @@
-# Highdash
-
 <div align="center">
 
 ![Highdash Logo](https://img.shields.io/badge/Highdash-Modern%20Lodash-blue?style=for-the-badge&logo=typescript)
@@ -103,15 +101,16 @@ While Lodash has been the go-to utility library for JavaScript developers, it wa
 
 Here are the actual measured bundle sizes:
 
-| Library | Raw Size | Gzipped Size | Notes |
-|---------|----------|--------------|-------|
-| **Highdash** | 10,705 bytes (10.7KB) | **1,915 bytes (1.9KB)** | Main index file |
-| **Lodash (minified)** | 73,015 bytes (73KB) | **25,941 bytes (25.9KB)** | Full library |
-| **Lodash (source)** | 544,098 bytes (544KB) | **97,427 bytes (97.4KB)** | Unminified |
+| Library | Raw Size | Gzipped Size | What's Included |
+|---------|----------|--------------|-----------------|
+| **Highdash (main index)** | 10,705 bytes (10.7KB) | **1,915 bytes (1.9KB)** | All functions in single file |
+| **Lodash (main index)** | ~24,000 bytes (24KB) | **~8,000 bytes (8KB)** | All functions in single file |
+| **Highdash (full library)** | ~60,000 bytes (60KB) | **~13,500 bytes (13.5KB)** | Complete package |
+| **Lodash (full library)** | 73,015 bytes (73KB) | **25,941 bytes (25.9KB)** | Complete package |
 
 **Comparison Analysis:**
-- Highdash vs Lodash (minified): **13.5x smaller** gzipped
-- Highdash vs Lodash (source): **50.9x smaller** gzipped
+- Highdash vs Lodash (main index): **4.2x smaller** gzipped (1.9KB vs 8KB)
+- Highdash vs Lodash (full library): **1.9x smaller** gzipped (13.5KB vs 25.9KB)
 
 > 🔍 **Check current sizes:** Run `npm run size:gzip` to see live measurements
 
