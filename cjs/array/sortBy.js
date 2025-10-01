@@ -31,10 +31,28 @@ function sortBy(collection, ...iteratees) {
     if (items.length === 0) {
         return [];
     }
-    // Process iteratees
+    // Process iteratees with optimization
     const flatIteratees = [];
     for (const iter of iteratees) {
-        flatIteratees.push(typeof iter === 'string' ? (obj) => (0, get_js_1.get)(obj, iter) : iter);
+        if (typeof iter === 'string') {
+            const path = iter;
+            if (path.indexOf('.') === -1 && path.indexOf('[') === -1) {
+                // Simple property access - avoid get() overhead
+                flatIteratees.push((obj) => {
+                    if (obj !== null && typeof obj === 'object') {
+                        return obj[path];
+                    }
+                    return undefined;
+                });
+            }
+            else {
+                // Complex path - use get()
+                flatIteratees.push((obj) => (0, get_js_1.get)(obj, path));
+            }
+        }
+        else {
+            flatIteratees.push(iter);
+        }
     }
     return [...items].sort((a, b) => {
         for (const iteratee of flatIteratees) {

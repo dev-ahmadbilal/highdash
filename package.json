@@ -80,7 +80,7 @@
     "lint": "eslint ./src/",
     "lint:fix": "eslint ./src/ --fix",
     "start": "npx ts-node src/index.ts",
-    "test": "jest --coverage",
+    "test": "jest --config jest.config.cjs --coverage",
     "benchmark": "node benchmarks/performance.js",
     "benchmark:compare": "npm run build && npm --prefix benchmarks install --no-audit --no-fund --silent && node benchmarks/compare.js"
   },

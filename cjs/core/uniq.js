@@ -19,8 +19,19 @@ exports.uniqBy = uniqBy;
  * ```
  */
 function uniq(array) {
-    if (!Array.isArray(array)) {
+    if (!Array.isArray(array) || array.length === 0) {
         return [];
+    }
+    // Optimize for small arrays
+    if (array.length < 10) {
+        const result = [];
+        for (let i = 0; i < array.length; i++) {
+            const item = array[i];
+            if (result.indexOf(item) === -1) {
+                result.push(item);
+            }
+        }
+        return result;
     }
     return [...new Set(array)];
 }
@@ -42,15 +53,33 @@ function uniq(array) {
  * ```
  */
 function uniqBy(array, iteratee) {
-    if (!Array.isArray(array)) {
+    if (!Array.isArray(array) || array.length === 0) {
         return [];
     }
     const seen = new Set();
     const result = [];
-    const getValue = typeof iteratee === 'function'
-        ? iteratee
-        : (item) => (0, get_js_1.get)(item, iteratee);
-    for (const item of array) {
+    let getValue;
+    if (typeof iteratee === 'function') {
+        getValue = iteratee;
+    }
+    else {
+        const path = iteratee;
+        if (path.indexOf('.') === -1 && path.indexOf('[') === -1) {
+            // Simple property access - avoid get() overhead
+            getValue = (item) => item === null || item === void 0 ? void 0 : item[path];
+        }
+        else {
+            // Complex path - use get()
+            getValue = (item) => {
+                if (item !== null && typeof item === 'object') {
+                    return (0, get_js_1.get)(item, path);
+                }
+                return undefined;
+            };
+        }
+    }
+    for (let i = 0; i < array.length; i++) {
+        const item = array[i];
         const key = getValue(item);
         if (!seen.has(key)) {
             seen.add(key);

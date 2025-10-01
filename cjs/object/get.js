@@ -26,8 +26,20 @@ function get(object, path, defaultValue) {
     if (!object || typeof object !== 'object') {
         return defaultValue;
     }
-    // eslint-disable-next-line no-useless-escape
-    const keys = Array.isArray(path) ? path : path.split(/[\.\[\]]+/).filter(Boolean);
+    let keys;
+    if (Array.isArray(path)) {
+        keys = path;
+    }
+    else {
+        // Optimize for simple property access
+        if (path.indexOf('.') === -1 && path.indexOf('[') === -1) {
+            keys = [path];
+        }
+        else {
+            // eslint-disable-next-line no-useless-escape
+            keys = path.split(/[\.\[\]]+/).filter(Boolean);
+        }
+    }
     let result = object;
     for (const key of keys) {
         if (result === null || result === undefined || typeof result !== 'object') {

@@ -25,11 +25,39 @@ function keyBy(collection, iteratee) {
     if (!collection) {
         return result;
     }
-    const getValue = typeof iteratee === 'function' ? iteratee : (item) => item[iteratee];
     const items = Array.isArray(collection) ? collection : Object.values(collection);
-    for (const item of items) {
-        const key = String(getValue(item));
-        result[key] = item;
+    const length = items.length;
+    if (length === 0) {
+        return result;
+    }
+    if (typeof iteratee === 'function') {
+        // Function iteratee
+        for (let i = 0; i < length; i++) {
+            const item = items[i];
+            const key = String(iteratee(item));
+            result[key] = item;
+        }
+    }
+    else {
+        // String iteratee
+        const path = iteratee;
+        if (path.indexOf('.') === -1 && path.indexOf('[') === -1) {
+            // Simple property access
+            for (let i = 0; i < length; i++) {
+                const item = items[i];
+                const key = String(item === null || item === void 0 ? void 0 : item[path]);
+                result[key] = item;
+            }
+        }
+        else {
+            // Complex path
+            for (let i = 0; i < length; i++) {
+                const item = items[i];
+                const key = String((0, get_js_1.get)(item, path));
+                result[key] = item;
+            }
+        }
     }
     return result;
 }
+const get_js_1 = require("../object/get.js");

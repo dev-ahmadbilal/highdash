@@ -20,10 +20,17 @@ function omit(object, paths) {
     if (!object || typeof object !== 'object') {
         return result;
     }
-    const pathsSet = new Set(paths);
+    // Optimize for small arrays - use indexOf instead of Set
+    const useSet = paths.length > 10;
+    const pathsSet = useSet ? new Set(paths) : null;
     for (const key in object) {
-        if (Object.prototype.hasOwnProperty.call(object, key) && !pathsSet.has(key)) {
-            result[key] = object[key];
+        if (Object.prototype.hasOwnProperty.call(object, key)) {
+            const shouldOmit = useSet
+                ? pathsSet.has(key)
+                : paths.indexOf(key) !== -1;
+            if (!shouldOmit) {
+                result[key] = object[key];
+            }
         }
     }
     return result;

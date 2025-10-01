@@ -33,12 +33,26 @@ export function sortBy<T>(
     return [];
   }
 
-  // Process iteratees
+  // Process iteratees with optimization
   const flatIteratees: ((value: T) => unknown)[] = [];
   for (const iter of iteratees) {
-    flatIteratees.push(
-      typeof iter === 'string' ? (obj: T) => get(obj as unknown as Record<string, unknown>, iter) : iter,
-    );
+    if (typeof iter === 'string') {
+      const path = iter;
+      if (path.indexOf('.') === -1 && path.indexOf('[') === -1) {
+        // Simple property access - avoid get() overhead
+        flatIteratees.push((obj: T) => {
+          if (obj !== null && typeof obj === 'object') {
+            return (obj as any)[path];
+          }
+          return undefined;
+        });
+      } else {
+        // Complex path - use get()
+        flatIteratees.push((obj: T) => get(obj as unknown as Record<string, unknown>, path));
+      }
+    } else {
+      flatIteratees.push(iter);
+    }
   }
 
   return [...items].sort((a, b) => {

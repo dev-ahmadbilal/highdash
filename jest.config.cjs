@@ -9,7 +9,10 @@ module.exports = {
       'ts-jest',
       {
         diagnostics: false,
+        useESM: true,
       },
     ],
   },
+  extensionsToTreatAsEsm: ['.ts'],
+  resolver: './jest-resolver.cjs',
 };

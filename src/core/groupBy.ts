@@ -20,30 +20,59 @@ export function groupBy<T>(
   collection: T[] | Record<string, T>,
   iteratee: ((value: T) => unknown) | string,
 ): Record<string, T[]> {
-  const result: Record<string, T[]> = {};
-
   if (!collection) {
-    return result;
+    return {};
   }
 
-  const getValue =
-    typeof iteratee === 'function'
-      ? iteratee
-      : (item: T) => {
-          if (item !== null && typeof item === 'object') {
-            return get(item as unknown as Record<string, unknown>, iteratee as string);
-          }
-          return (item as any)?.[iteratee as string];
-        };
-
   const items = Array.isArray(collection) ? collection : Object.values(collection);
+  const length = items.length;
 
-  for (const item of items) {
-    const key = String(getValue(item));
-    if (!result[key]) {
-      result[key] = [];
+  if (length === 0) {
+    return {};
+  }
+
+  const result: Record<string, T[]> = {};
+
+  if (typeof iteratee === 'function') {
+    // Function iteratee
+    for (let i = 0; i < length; i++) {
+      const item = items[i];
+      const key = String(iteratee(item));
+      const group = result[key];
+      if (group) {
+        group.push(item);
+      } else {
+        result[key] = [item];
+      }
     }
-    result[key].push(item);
+  } else {
+    // String iteratee
+    const path = iteratee as string;
+    if (path.indexOf('.') === -1 && path.indexOf('[') === -1) {
+      // Simple property access
+      for (let i = 0; i < length; i++) {
+        const item = items[i];
+        const key = String((item as any)?.[path]);
+        const group = result[key];
+        if (group) {
+          group.push(item);
+        } else {
+          result[key] = [item];
+        }
+      }
+    } else {
+      // Complex path
+      for (let i = 0; i < length; i++) {
+        const item = items[i];
+        const key = String(get(item as unknown as Record<string, unknown>, path));
+        const group = result[key];
+        if (group) {
+          group.push(item);
+        } else {
+          result[key] = [item];
+        }
+      }
+    }
   }
 
   return result;

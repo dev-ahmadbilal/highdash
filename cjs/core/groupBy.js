@@ -20,25 +20,60 @@ exports.groupBy = groupBy;
  * ```
  */
 function groupBy(collection, iteratee) {
-    const result = {};
     if (!collection) {
-        return result;
+        return {};
     }
-    const getValue = typeof iteratee === 'function'
-        ? iteratee
-        : (item) => {
-            if (item !== null && typeof item === 'object') {
-                return (0, get_js_1.get)(item, iteratee);
-            }
-            return item === null || item === void 0 ? void 0 : item[iteratee];
-        };
     const items = Array.isArray(collection) ? collection : Object.values(collection);
-    for (const item of items) {
-        const key = String(getValue(item));
-        if (!result[key]) {
-            result[key] = [];
+    const length = items.length;
+    if (length === 0) {
+        return {};
+    }
+    const result = {};
+    if (typeof iteratee === 'function') {
+        // Function iteratee
+        for (let i = 0; i < length; i++) {
+            const item = items[i];
+            const key = String(iteratee(item));
+            const group = result[key];
+            if (group) {
+                group.push(item);
+            }
+            else {
+                result[key] = [item];
+            }
         }
-        result[key].push(item);
+    }
+    else {
+        // String iteratee
+        const path = iteratee;
+        if (path.indexOf('.') === -1 && path.indexOf('[') === -1) {
+            // Simple property access
+            for (let i = 0; i < length; i++) {
+                const item = items[i];
+                const key = String(item === null || item === void 0 ? void 0 : item[path]);
+                const group = result[key];
+                if (group) {
+                    group.push(item);
+                }
+                else {
+                    result[key] = [item];
+                }
+            }
+        }
+        else {
+            // Complex path
+            for (let i = 0; i < length; i++) {
+                const item = items[i];
+                const key = String((0, get_js_1.get)(item, path));
+                const group = result[key];
+                if (group) {
+                    group.push(item);
+                }
+                else {
+                    result[key] = [item];
+                }
+            }
+        }
     }
     return result;
 }

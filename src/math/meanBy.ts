@@ -1,3 +1,5 @@
+import { get } from '../object/get.js';
+
 /**
  * This method is like `mean` except that it accepts `iteratee` which is invoked for each element in `array` to generate the value to be averaged.
  *
@@ -17,9 +19,27 @@ export function meanBy<T>(array: T[], iteratee: ((value: T) => number) | string)
     return NaN;
   }
 
-  const getValue =
-    typeof iteratee === 'function' ? iteratee : (item: T) => (item as Record<string, unknown>)[iteratee] as number;
+  let getValue: (item: T) => unknown;
+  if (typeof iteratee === 'function') {
+    getValue = iteratee;
+  } else {
+    const path = iteratee as string;
+    if (path.indexOf('.') === -1 && path.indexOf('[') === -1) {
+      // Simple property access
+      getValue = (item: T) => (item as Record<string, unknown>)[path];
+    } else {
+      // Complex path
+      getValue = (item: T) => get(item as unknown as Record<string, unknown>, path);
+    }
+  }
 
-  const sum = array.reduce((acc, value) => acc + getValue(value), 0);
+  const sum = array.reduce((acc, value) => {
+    const val = getValue(value);
+    // Handle undefined as 0, non-numeric values as NaN
+    if (val === undefined) return acc + 0;
+    if (typeof val !== 'number' || isNaN(val)) return NaN;
+    return acc + val;
+  }, 0);
+
   return sum / array.length;
 }

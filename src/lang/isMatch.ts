@@ -24,9 +24,10 @@ export function isMatch(object: unknown, source: unknown): boolean {
     return false;
   }
 
-  const sourceObj = source as Record<string, unknown>;
-  const objectObj = object as Record<string, unknown>;
+  const sourceObj = source as Record<string | symbol, unknown>;
+  const objectObj = object as Record<string | symbol, unknown>;
 
+  // Check string keys
   for (const key in sourceObj) {
     if (Object.prototype.hasOwnProperty.call(sourceObj, key)) {
       const sourceValue = sourceObj[key];
@@ -42,6 +43,24 @@ export function isMatch(object: unknown, source: unknown): boolean {
       ) {
         return false;
       }
+    }
+  }
+
+  // Check symbol keys
+  const sourceSymbols = Object.getOwnPropertySymbols(sourceObj);
+  for (const symbol of sourceSymbols) {
+    const sourceValue = sourceObj[symbol];
+    const objectValue = objectObj[symbol];
+
+    if (
+      sourceValue !== objectValue &&
+      (sourceValue === null ||
+        typeof sourceValue !== 'object' ||
+        objectValue === null ||
+        typeof objectValue !== 'object' ||
+        !isMatch(objectValue, sourceValue))
+    ) {
+      return false;
     }
   }
 

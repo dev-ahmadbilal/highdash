@@ -27,14 +27,41 @@ export function keyBy<T>(
     return result;
   }
 
-  const getValue = typeof iteratee === 'function' ? iteratee : (item: T) => (item as Record<string, unknown>)[iteratee];
-
   const items = Array.isArray(collection) ? collection : Object.values(collection);
+  const length = items.length;
 
-  for (const item of items) {
-    const key = String(getValue(item));
-    result[key] = item;
+  if (length === 0) {
+    return result;
+  }
+
+  if (typeof iteratee === 'function') {
+    // Function iteratee
+    for (let i = 0; i < length; i++) {
+      const item = items[i];
+      const key = String(iteratee(item));
+      result[key] = item;
+    }
+  } else {
+    // String iteratee
+    const path = iteratee as string;
+    if (path.indexOf('.') === -1 && path.indexOf('[') === -1) {
+      // Simple property access
+      for (let i = 0; i < length; i++) {
+        const item = items[i];
+        const key = String((item as any)?.[path]);
+        result[key] = item;
+      }
+    } else {
+      // Complex path
+      for (let i = 0; i < length; i++) {
+        const item = items[i];
+        const key = String(get(item as unknown as Record<string, unknown>, path));
+        result[key] = item;
+      }
+    }
   }
 
   return result;
 }
+
+import { get } from '../object/get.js';

@@ -36,21 +36,35 @@ function orderBy(collection, iteratees = [], orders = []) {
     if (iterateesArray.length === 0) {
         return [...items];
     }
-    return [...items].sort((a, b) => {
-        for (let i = 0; i < iterateesArray.length; i++) {
-            const iteratee = iterateesArray[i];
+    // Simple approach - pre-compute values for each item
+    const itemsWithValues = items.map(item => {
+        const values = iterateesArray.map(iteratee => {
+            if (typeof iteratee === 'function') {
+                return iteratee(item);
+            }
+            else {
+                const path = iteratee;
+                if (path.indexOf('.') === -1 && path.indexOf('[') === -1) {
+                    return item === null || item === void 0 ? void 0 : item[path];
+                }
+                else {
+                    return (0, get_js_1.get)(item, path);
+                }
+            }
+        });
+        return { item, values };
+    });
+    return itemsWithValues.sort((a, b) => {
+        for (let i = 0; i < a.values.length; i++) {
+            const aValue = a.values[i];
+            const bValue = b.values[i];
             const order = ordersArray[i] || 'asc';
-            const getValue = typeof iteratee === 'function'
-                ? iteratee
-                : (item) => (0, get_js_1.get)(item, iteratee);
-            const aValue = getValue(a);
-            const bValue = getValue(b);
             if (aValue === bValue)
                 continue;
             const comparison = aValue < bValue ? -1 : 1;
             return order === 'desc' ? -comparison : comparison;
         }
         return 0;
-    });
+    }).map(({ item }) => item);
 }
 const get_js_1 = require("../object/get.js");

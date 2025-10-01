@@ -15,8 +15,20 @@
  * ```
  */
 export function uniq<T>(array: T[]): T[] {
-  if (!Array.isArray(array)) {
+  if (!Array.isArray(array) || array.length === 0) {
     return [];
+  }
+
+  // Optimize for small arrays
+  if (array.length < 10) {
+    const result: T[] = [];
+    for (let i = 0; i < array.length; i++) {
+      const item = array[i];
+      if (result.indexOf(item) === -1) {
+        result.push(item);
+      }
+    }
+    return result;
   }
 
   return [...new Set(array)];
@@ -40,18 +52,34 @@ export function uniq<T>(array: T[]): T[] {
  * ```
  */
 export function uniqBy<T>(array: T[], iteratee: ((value: T) => unknown) | string): T[] {
-  if (!Array.isArray(array)) {
+  if (!Array.isArray(array) || array.length === 0) {
     return [];
   }
 
   const seen = new Set();
   const result: T[] = [];
-  const getValue =
-    typeof iteratee === 'function'
-      ? iteratee
-      : (item: T) => get(item as unknown as Record<string, unknown>, iteratee as string);
 
-  for (const item of array) {
+  let getValue: (item: T) => unknown;
+  if (typeof iteratee === 'function') {
+    getValue = iteratee;
+  } else {
+    const path = iteratee as string;
+    if (path.indexOf('.') === -1 && path.indexOf('[') === -1) {
+      // Simple property access - avoid get() overhead
+      getValue = (item: T) => (item as any)?.[path];
+    } else {
+      // Complex path - use get()
+      getValue = (item: T) => {
+        if (item !== null && typeof item === 'object') {
+          return get(item as unknown as Record<string, unknown>, path);
+        }
+        return undefined;
+      };
+    }
+  }
+
+  for (let i = 0; i < array.length; i++) {
+    const item = array[i];
     const key = getValue(item);
     if (!seen.has(key)) {
       seen.add(key);

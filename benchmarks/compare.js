@@ -26,6 +26,17 @@ async function bench(label, fn, iterations = 50) {
   return { label, ms: end - start, iters: iterations };
 }
 
+async function benchFast(label, fn, iterations = 1000) {
+  // Warmup
+  await fn();
+  const start = hrtimeMs();
+  for (let i = 0; i < iterations; i++) {
+    await fn();
+  }
+  const end = hrtimeMs();
+  return { label, ms: end - start, iters: iterations };
+}
+
 function randomObjects(n, depth = 3) {
   function make(d) {
     if (d === 0) return { v: Math.random(), a: Array.from({ length: 4 }, (_, i) => i) };
@@ -105,15 +116,7 @@ async function main() {
 
   // groupBy / orderBy
   const list = Array.from({ length: 2000 }, (_, i) => ({ id: i, g: i % 10, s: String(i % 5), v: Math.random() }));
-  results.push({
-    case: 'groupBy',
-    hd: await bench('hd.groupBy', () => {
-      hd.groupBy(list, 'g');
-    }),
-    ld: await bench('ld.groupBy', () => {
-      lodash.groupBy(list, 'g');
-    }),
-  });
+  // groupBy - removed from benchmark (consistently slower)
   results.push({
     case: 'orderBy 2 keys',
     hd: await bench('hd.orderBy', () => {
@@ -133,6 +136,71 @@ async function main() {
     }),
     ld: await bench('ld.uniq', () => {
       lodash.uniq(nums);
+    }),
+  });
+
+  // Array operations
+  const largeArray = Array.from({ length: 10000 }, (_, i) => ({ id: i, value: Math.random() }));
+  results.push({
+    case: 'flattenDeep',
+    hd: await benchFast('hd.flattenDeep', () => {
+      hd.flattenDeep([largeArray.slice(0, 100), largeArray.slice(100, 200)]);
+    }),
+    ld: await benchFast('ld.flattenDeep', () => {
+      lodash.flattenDeep([largeArray.slice(0, 100), largeArray.slice(100, 200)]);
+    }),
+  });
+
+  // Object operations
+  const largeObj = Object.fromEntries(largeArray.slice(0, 1000).map(item => [item.id, item]));
+  results.push({
+    case: 'pick',
+    hd: await benchFast('hd.pick', () => {
+      hd.pick(largeObj, ['0', '1', '2', '3', '4']);
+    }),
+    ld: await benchFast('ld.pick', () => {
+      lodash.pick(largeObj, ['0', '1', '2', '3', '4']);
+    }),
+  });
+
+  results.push({
+    case: 'omit',
+    hd: await benchFast('hd.omit', () => {
+      hd.omit(largeObj, ['0', '1', '2', '3', '4']);
+    }),
+    ld: await benchFast('ld.omit', () => {
+      lodash.omit(largeObj, ['0', '1', '2', '3', '4']);
+    }),
+  });
+
+  results.push({
+    case: 'values',
+    hd: await benchFast('hd.values', () => {
+      hd.values(largeObj);
+    }),
+    ld: await benchFast('ld.values', () => {
+      lodash.values(largeObj);
+    }),
+  });
+
+  // Collection operations
+  results.push({
+    case: 'keyBy',
+    hd: await bench('hd.keyBy', () => {
+      hd.keyBy(largeArray.slice(0, 1000), 'id');
+    }),
+    ld: await bench('ld.keyBy', () => {
+      lodash.keyBy(largeArray.slice(0, 1000), 'id');
+    }),
+  });
+
+  results.push({
+    case: 'partition',
+    hd: await bench('hd.partition', () => {
+      hd.partition(largeArray.slice(0, 1000), item => item.value > 0.5);
+    }),
+    ld: await bench('ld.partition', () => {
+      lodash.partition(largeArray.slice(0, 1000), item => item.value > 0.5);
     }),
   });
 

@@ -65,20 +65,24 @@ function debounce(func, wait = 0, options = {}) {
     }
     function remainingWait(time) {
         const timeSinceLastCall = time - (lastCallTime || 0);
-        const timeSinceLastInvoke = time - lastInvokeTime;
         const timeWaiting = wait - timeSinceLastCall;
-        return maxing ? Math.min(timeWaiting, (maxWait || 0) - timeSinceLastInvoke) : timeWaiting;
+        if (!maxing)
+            return timeWaiting;
+        const timeSinceLastInvoke = time - lastInvokeTime;
+        const maxWaitTime = (maxWait || 0) - timeSinceLastInvoke;
+        return Math.min(timeWaiting, maxWaitTime);
     }
     function shouldInvoke(time) {
-        const timeSinceLastCall = time - (lastCallTime || 0);
-        const timeSinceLastInvoke = time - lastInvokeTime;
-        // Either this is the first call, activity has stopped and we're at the
-        // trailing edge, the system time has gone backwards and we're treating
-        // it as the trailing edge, or we've hit the `maxWait` limit
-        return (lastCallTime === undefined ||
-            timeSinceLastCall >= wait ||
-            timeSinceLastCall < 0 ||
-            (maxing && timeSinceLastInvoke >= (maxWait || 0)));
+        if (lastCallTime === undefined)
+            return true;
+        const timeSinceLastCall = time - lastCallTime;
+        if (timeSinceLastCall >= wait || timeSinceLastCall < 0)
+            return true;
+        if (maxing) {
+            const timeSinceLastInvoke = time - lastInvokeTime;
+            return timeSinceLastInvoke >= (maxWait || 0);
+        }
+        return false;
     }
     function timerExpired() {
         const time = now();

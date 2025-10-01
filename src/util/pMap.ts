@@ -15,61 +15,60 @@ export async function pMap<Input, Output>(
   options: PMapOptions = {},
 ): Promise<Output[]> {
   const { concurrency = Infinity, signal } = options;
-  const results: Output[] = [];
-  const queue: Array<{ index: number; value: Input } | { done: true }> = [] as any;
-  let index = 0;
 
-  async function enqueueAll() {
-    if (Symbol.asyncIterator in Object(iterable)) {
-      for await (const item of iterable as AsyncIterable<Input>) {
-        queue.push({ index: index++, value: item });
-      }
-    } else {
-      for (const item of iterable as Iterable<Input>) {
-        queue.push({ index: index++, value: item });
-      }
+  // Convert iterable to array first
+  const items: Input[] = [];
+  if (Symbol.asyncIterator in Object(iterable)) {
+    for await (const item of iterable as AsyncIterable<Input>) {
+      items.push(item);
     }
-    (queue as any).push({ done: true });
+  } else {
+    for (const item of iterable as Iterable<Input>) {
+      items.push(item);
+    }
   }
 
-  let rejectOnce: (err: any) => void = () => {};
-  const allDone = new Promise<void>((resolve, reject) => {
-    rejectOnce = reject;
-    enqueueAll()
-      .then(() => resolve())
-      .catch(reject);
-  });
+  if (items.length === 0) {
+    return [];
+  }
 
-  async function worker() {
-    while (true) {
+  const results: Output[] = new Array(items.length);
+  const n = Number.isFinite(concurrency) && concurrency > 0 ? Math.floor(concurrency) : Infinity;
+
+  if (n === Infinity || n >= items.length) {
+    // Process all items concurrently
+    const promises = items.map((item, index) => {
       if (signal?.aborted) {
         throw signal.reason ?? new Error('Aborted');
       }
-      const task = queue.shift();
-      if (!task) {
-        // Wait a tick for more tasks
-        if ((queue as any).length === 0) {
-          await new Promise((r) => setTimeout(r, 0));
-        }
-        continue;
+      return Promise.resolve(mapper(item, index));
+    });
+    return Promise.all(promises);
+  }
+
+  // Process with concurrency limit
+  const workers: Promise<void>[] = [];
+  let currentIndex = 0;
+
+  async function worker() {
+    while (currentIndex < items.length) {
+      if (signal?.aborted) {
+        throw signal.reason ?? new Error('Aborted');
       }
-      if ((task as any).done) break;
-      const { index: i, value } = task as { index: number; value: Input };
-      try {
-        const out = await mapper(value, i);
-        results[i] = out as Output;
-      } catch (err) {
-        rejectOnce(err);
-        throw err;
-      }
+
+      const index = currentIndex++;
+      const item = items[index];
+
+      const result = await Promise.resolve(mapper(item, index));
+      results[index] = result;
     }
   }
 
-  const workers: Promise<void>[] = [];
-  const n = Number.isFinite(concurrency) && concurrency > 0 ? Math.floor(concurrency) : Infinity;
-  const workerCount = n === Infinity ? 32 : n; // reasonable cap for microtasks
-  for (let i = 0; i < workerCount; i++) workers.push(worker());
+  // Start workers
+  for (let i = 0; i < n; i++) {
+    workers.push(worker());
+  }
 
-  await Promise.allSettled([allDone, ...workers]);
+  await Promise.all(workers);
   return results;
 }

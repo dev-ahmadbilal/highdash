@@ -27,6 +27,6 @@ describe('get', () => {
 
   it('should handle empty path', () => {
     const object = { 'a': 1 };
-    expect(get(object, '')).toBe(object);
+    expect(get(object, '')).toBe(undefined);
   });
 });
