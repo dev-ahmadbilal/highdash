@@ -45,9 +45,14 @@ function isEqual(value, other) {
             else if (a instanceof DataView && b instanceof DataView) {
                 result = a.byteLength === b.byteLength && baseIsEqual(a.buffer, b.buffer);
             }
-            else if (ArrayBuffer.isView(a) && ArrayBuffer.isView(b) && !(a instanceof DataView) && !(b instanceof DataView)) {
-                result = a.constructor === b.constructor && a.length === b.length &&
-                    Array.from(a).every((val, i) => sameValueZero(val, b[i]));
+            else if (ArrayBuffer.isView(a) &&
+                ArrayBuffer.isView(b) &&
+                !(a instanceof DataView) &&
+                !(b instanceof DataView)) {
+                result =
+                    a.constructor === b.constructor &&
+                        a.length === b.length &&
+                        Array.from(a).every((val, i) => sameValueZero(val, b[i]));
             }
             else if (a instanceof Set && b instanceof Set) {
                 if (a.size !== b.size)
@@ -100,13 +105,16 @@ function isEqual(value, other) {
                     result = false;
                 }
                 else {
-                    result = aKeys.every(key => bKeys.includes(key) && baseIsEqual(a[key], b[key]));
+                    result = aKeys.every((key) => bKeys.includes(key) &&
+                        baseIsEqual(a[key], b[key]));
                     // Symbol keys
                     if (result) {
                         const aSymbols = Object.getOwnPropertySymbols(a);
                         const bSymbols = Object.getOwnPropertySymbols(b);
-                        result = aSymbols.length === bSymbols.length &&
-                            aSymbols.every((sym, i) => sym === bSymbols[i] && baseIsEqual(a[sym], b[sym]));
+                        result =
+                            aSymbols.length === bSymbols.length &&
+                                aSymbols.every((sym, i) => sym === bSymbols[i] &&
+                                    baseIsEqual(a[sym], b[sym]));
                     }
                 }
             }

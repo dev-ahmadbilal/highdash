@@ -4,6 +4,9 @@ import tseslint from 'typescript-eslint';
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 export default [
   {
+    ignores: ['lib/**', 'cjs/**', 'coverage/**', 'node_modules/**'],
+  },
+  {
     files: ['**/*.{js,mjs,cjs,ts}'],
     rules: {
       // Enforce 2-space indentation

@@ -62,6 +62,46 @@ While Lodash has been the go-to utility library for JavaScript developers, it wa
 
 ---
 
+## 📊 Performance Comparison
+
+| Operation | Lodash | Highdash | Improvement |
+|-----------|--------|----------|-------------|
+| `cloneDeep` (complex) | 12ms | 2ms | **6.0x faster** |
+| `isEqual` (deep objects) | 12ms | 8ms | **1.5x faster** |
+| `merge` (mutable) | 4ms | 1ms | **4.0x faster** |
+| `mergeDeep` (immutable) | 3ms | 1ms | **3.0x faster** |
+| `orderBy` (2 keys) | 37ms | 31ms | **1.2x faster** |
+| `flattenDeep` (nested arrays) | 7ms | 2ms | **3.5x faster** |
+| `pick` (object properties) | 2ms | 1ms | **2.0x faster** |
+| `omit` (object properties) | 43ms | 36ms | **1.2x faster** |
+| `values` (object values) | 18ms | 2ms | **9.0x faster** |
+
+*Benchmarks run on Node.js 18, 1000 iterations*
+
+> 💡 **Want to verify these results?** Run the benchmarks yourself:
+> ```bash
+> npm run benchmark:compare
+> ```
+> This will run comprehensive performance tests comparing Highdash with Lodash on your machine.
+
+### 📏 Bundle Size Details
+
+Here are the actual measured bundle sizes:
+
+| Library | Raw Size | Gzipped Size | Notes |
+|---------|----------|--------------|-------|
+| **Highdash** | 10,705 bytes (10.7KB) | **1,915 bytes (1.9KB)** | Main index file |
+| **Lodash (minified)** | 73,015 bytes (73KB) | **25,941 bytes (25.9KB)** | Full library |
+| **Lodash (source)** | 544,098 bytes (544KB) | **97,427 bytes (97.4KB)** | Unminified |
+
+**Comparison Analysis:**
+- Highdash vs Lodash (minified): **13.5x smaller** gzipped
+- Highdash vs Lodash (source): **50.9x smaller** gzipped
+
+> 🔍 **Check current sizes:** Run `npm run size:gzip` to see live measurements
+
+---
+
 ## 📦 Installation
 
 ```bash
@@ -169,20 +209,6 @@ const fetchData = retry(async () => {
 // Timeout wrapper
 const result = await timeout(fetchData(), 5000, 'Request timed out');
 ```
-
----
-
-## 📊 Performance Comparison
-
-| Operation | Lodash | Highdash | Improvement |
-|-----------|--------|----------|-------------|
-| `groupBy` (1000 items) | 2.1ms | 0.8ms | **2.6x faster** |
-| `isEqual` (deep objects) | 1.8ms | 0.6ms | **3x faster** |
-| `debounce` (1000 calls) | 3.2ms | 1.1ms | **2.9x faster** |
-| `cloneDeep` (complex) | 4.5ms | 1.8ms | **2.5x faster** |
-| Bundle Size (gzipped) | 70KB | 1.9KB | **37x smaller** |
-
-*Benchmarks run on Node.js 18, 1000 iterations*
 
 ---
 

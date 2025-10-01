@@ -1,0 +1,27 @@
+# Build output directories
+lib/
+cjs/
+coverage/
+
+# Dependencies
+node_modules/
+
+# Generated files
+*.min.js
+*.bundle.js
+
+# Logs
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Config files that don't need formatting
+.babelrc
+.github/
+.releaserc.json
+tsconfig*.json
+jest.config.cjs
+commitlint.config.cjs
+jest-resolver.cjs
