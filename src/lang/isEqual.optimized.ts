@@ -1,6 +1,3 @@
-'use strict';
-Object.defineProperty(exports, '__esModule', { value: true });
-exports.isEqual = isEqual;
 /**
  * Performs a deep comparison between two values to determine if they are equivalent.
  *
@@ -17,17 +14,21 @@ exports.isEqual = isEqual;
  * isEqual([1, 2], [1, 2]); // true
  * isEqual(new Set([1,2]), new Set([2,1])); // true
  */
-function isEqual(value, other) {
+export function isEqual(value: unknown, other: unknown): boolean {
   const stack = new WeakMap();
-  function sameValueZero(a, b) {
+
+  function sameValueZero(a: unknown, b: unknown): boolean {
     return a === b || (a !== a && b !== b);
   }
-  function baseIsEqual(a, b) {
+
+  function baseIsEqual(a: unknown, b: unknown): boolean {
     if (sameValueZero(a, b)) return true;
     if (a === null || b === null || typeof a !== 'object' || typeof b !== 'object') return false;
+
     // Cycle detection
     if (stack.has(a) || stack.has(b)) return stack.get(a) === b;
     stack.set(a, b);
+
     let result = false;
     try {
       if (a instanceof Date && b instanceof Date) {
@@ -46,8 +47,8 @@ function isEqual(value, other) {
       ) {
         result =
           a.constructor === b.constructor &&
-          a.length === b.length &&
-          Array.from(a).every((val, i) => sameValueZero(val, b[i]));
+          (a as any).length === (b as any).length &&
+          Array.from(a as any).every((val: any, i: number) => sameValueZero(val, (b as any)[i]));
       } else if (a instanceof Set && b instanceof Set) {
         if (a.size !== b.size) result = false;
         else {
@@ -87,24 +88,32 @@ function isEqual(value, other) {
       } else if (Array.isArray(a) && Array.isArray(b)) {
         result = a.length === b.length && a.every((val, i) => baseIsEqual(val, b[i]));
       } else {
-        // Object comparison - check constructor first
-        if (a.constructor !== b.constructor) {
+        // Object comparison
+        const aKeys = Object.keys(a as Record<string, unknown>);
+        const bKeys = Object.keys(b as Record<string, unknown>);
+        if (aKeys.length !== bKeys.length) {
           result = false;
         } else {
-          const aKeys = Object.keys(a);
-          const bKeys = Object.keys(b);
-          if (aKeys.length !== bKeys.length) {
-            result = false;
-          } else {
-            result = aKeys.every((key) => bKeys.includes(key) && baseIsEqual(a[key], b[key]));
-            // Symbol keys
-            if (result) {
-              const aSymbols = Object.getOwnPropertySymbols(a);
-              const bSymbols = Object.getOwnPropertySymbols(b);
-              result =
-                aSymbols.length === bSymbols.length &&
-                aSymbols.every((sym, i) => sym === bSymbols[i] && baseIsEqual(a[sym], b[sym]));
-            }
+          result = aKeys.every(
+            (key) =>
+              bKeys.includes(key) &&
+              baseIsEqual((a as Record<string, unknown>)[key], (b as Record<string, unknown>)[key]),
+          );
+
+          // Symbol keys
+          if (result) {
+            const aSymbols = Object.getOwnPropertySymbols(a as Record<string | symbol, unknown>);
+            const bSymbols = Object.getOwnPropertySymbols(b as Record<string | symbol, unknown>);
+            result =
+              aSymbols.length === bSymbols.length &&
+              aSymbols.every(
+                (sym, i) =>
+                  sym === bSymbols[i] &&
+                  baseIsEqual(
+                    (a as Record<string | symbol, unknown>)[sym],
+                    (b as Record<string | symbol, unknown>)[sym],
+                  ),
+              );
           }
         }
       }
@@ -113,5 +122,6 @@ function isEqual(value, other) {
     }
     return result;
   }
+
   return baseIsEqual(value, other);
 }

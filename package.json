@@ -74,6 +74,8 @@
   ],
   "scripts": {
     "build": "tsc --project tsconfig.build.json && tsc --project tsconfig.cjs.json",
+    "build:prod": "tsc --project tsconfig.prod.json && tsc --project tsconfig.cjs.json",
+    "build:minimal": "tsc --project tsconfig.minimal.json",
     "clean": "rm -rf ./lib/",
     "release": "semantic-release",
     "prepare": "husky install",
@@ -82,7 +84,11 @@
     "start": "npx ts-node src/index.ts",
     "test": "jest --config jest.config.cjs --coverage",
     "benchmark": "node benchmarks/performance.js",
-    "benchmark:compare": "npm run build && npm --prefix benchmarks install --no-audit --no-fund --silent && node benchmarks/compare.js"
+    "benchmark:compare": "npm run build && npm --prefix benchmarks install --no-audit --no-fund --silent && node benchmarks/compare.js",
+    "analyze": "npm run build:prod && npm run analyze:bundle",
+    "analyze:bundle": "npx bundlesize",
+    "size": "npm run build:prod && du -sh lib/ && find lib/ -name '*.js' | wc -l && echo 'Largest files:' && find lib/ -name '*.js' -exec wc -c {} + | sort -n | tail -10",
+    "size:gzip": "npm run build:prod && echo 'Gzipped sizes:' && echo 'Main index: ' && gzip -c lib/index.js | wc -c && echo ' bytes' && echo 'Largest individual files:' && echo 'isEqual: ' && gzip -c lib/lang/isEqual.js | wc -c && echo ' bytes' && echo 'debounce: ' && gzip -c lib/core/debounce.js | wc -c && echo ' bytes' && echo 'mergeDeep: ' && gzip -c lib/core/mergeDeep.js | wc -c && echo ' bytes'"
   },
   "repository": {
     "type": "git",
@@ -99,6 +105,28 @@
     "modern",
     "performance",
     "type-safe"
+  ],
+  "bundlesize": [
+    {
+      "path": "./lib/index.js",
+      "maxSize": "12kb"
+    },
+    {
+      "path": "./lib/lang/isEqual.js",
+      "maxSize": "5kb"
+    },
+    {
+      "path": "./lib/core/debounce.js",
+      "maxSize": "4kb"
+    },
+    {
+      "path": "./lib/core/mergeDeep.js",
+      "maxSize": "4kb"
+    },
+    {
+      "path": "./lib/util/pMap.js",
+      "maxSize": "5kb"
+    }
   ],
   "author": {
     "name": "Ahmad Bilal",
@@ -118,6 +146,7 @@
     "@semantic-release/npm": "^12.0.2",
     "@types/jest": "^30.0.0",
     "@types/node": "^24.6.0",
+    "bundlesize": "^0.18.2",
     "commitlint": "^20.0.0",
     "eslint": "^9.36.0",
     "eslint-config-prettier": "^10.1.8",

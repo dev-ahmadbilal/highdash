@@ -1,5 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+'use strict';
+Object.defineProperty(exports, '__esModule', { value: true });
 exports.debounce = debounce;
 /**
  * Creates a debounced function that delays invoking `func` until after `wait` milliseconds
@@ -32,118 +32,106 @@ exports.debounce = debounce;
  * log.flush(); // prints 'second'
  */
 function debounce(func, wait = 0, options = {}) {
-    const now = typeof performance !== 'undefined' && typeof performance.now === 'function'
-        ? () => performance.now()
-        : () => Date.now();
-    const { leading = false, trailing = true, maxWait } = options;
-    let lastCallTime;
-    let lastInvokeTime = 0;
-    let lastArgs;
-    let lastThis;
-    let result;
-    let timerId;
-    let maxing = false;
-    if (typeof maxWait === 'number') {
-        maxing = true;
+  const now =
+    typeof (performance === null || performance === void 0 ? void 0 : performance.now) === 'function'
+      ? () => performance.now()
+      : () => Date.now();
+  const { leading = false, trailing = true, maxWait } = options;
+  let lastCallTime;
+  let lastInvokeTime = 0;
+  let lastArgs;
+  let lastThis;
+  let result;
+  let timerId;
+  const maxing = typeof maxWait === 'number';
+  function invokeFunc(time) {
+    const args = lastArgs;
+    const thisArg = lastThis;
+    lastArgs = undefined;
+    lastThis = undefined;
+    lastInvokeTime = time;
+    result = func.apply(thisArg, args);
+    return result;
+  }
+  function leadingEdge(time) {
+    lastInvokeTime = time;
+    timerId = setTimeout(timerExpired, wait);
+    return leading ? invokeFunc(time) : result;
+  }
+  function remainingWait(time) {
+    const timeSinceLastCall = time - (lastCallTime || 0);
+    const timeWaiting = wait - timeSinceLastCall;
+    if (!maxing) return timeWaiting;
+    const timeSinceLastInvoke = time - lastInvokeTime;
+    const maxWaitTime = (maxWait || 0) - timeSinceLastInvoke;
+    return Math.min(timeWaiting, maxWaitTime);
+  }
+  function shouldInvoke(time) {
+    if (lastCallTime === undefined) return true;
+    const timeSinceLastCall = time - lastCallTime;
+    if (timeSinceLastCall >= wait || timeSinceLastCall < 0) return true;
+    if (maxing) {
+      const timeSinceLastInvoke = time - lastInvokeTime;
+      return timeSinceLastInvoke >= (maxWait || 0);
     }
-    function invokeFunc(time) {
-        const args = lastArgs;
-        const thisArg = lastThis;
-        lastArgs = undefined;
-        lastThis = undefined;
-        lastInvokeTime = time;
-        result = func.apply(thisArg, args);
-        return result;
+    return false;
+  }
+  function timerExpired() {
+    const time = now();
+    if (shouldInvoke(time)) {
+      trailingEdge(time);
+      return;
     }
-    function leadingEdge(time) {
-        // Reset any `maxWait` timer
-        lastInvokeTime = time;
-        // Start the timer for the trailing edge
+    timerId = setTimeout(timerExpired, remainingWait(time));
+  }
+  function trailingEdge(time) {
+    timerId = undefined;
+    if (trailing && lastArgs) {
+      return invokeFunc(time);
+    }
+    lastArgs = undefined;
+    lastThis = undefined;
+    return result;
+  }
+  function cancel() {
+    if (timerId !== undefined) {
+      clearTimeout(timerId);
+    }
+    lastInvokeTime = 0;
+    lastArgs = undefined;
+    lastCallTime = undefined;
+    lastThis = undefined;
+    timerId = undefined;
+  }
+  function flush() {
+    return timerId === undefined ? result : trailingEdge(now());
+  }
+  function pending() {
+    return timerId !== undefined;
+  }
+  function debounced(...args) {
+    const time = now();
+    const isInvoking = shouldInvoke(time);
+    lastArgs = args;
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    lastThis = this;
+    lastCallTime = time;
+    if (isInvoking) {
+      if (timerId === undefined) {
+        return leadingEdge(lastCallTime);
+      }
+      if (maxing) {
         timerId = setTimeout(timerExpired, wait);
-        // Invoke the leading edge
-        return leading ? invokeFunc(time) : result;
+        return invokeFunc(lastCallTime);
+      }
     }
-    function remainingWait(time) {
-        const timeSinceLastCall = time - (lastCallTime || 0);
-        const timeWaiting = wait - timeSinceLastCall;
-        if (!maxing)
-            return timeWaiting;
-        const timeSinceLastInvoke = time - lastInvokeTime;
-        const maxWaitTime = (maxWait || 0) - timeSinceLastInvoke;
-        return Math.min(timeWaiting, maxWaitTime);
+    if (timerId === undefined) {
+      timerId = setTimeout(timerExpired, wait);
     }
-    function shouldInvoke(time) {
-        if (lastCallTime === undefined)
-            return true;
-        const timeSinceLastCall = time - lastCallTime;
-        if (timeSinceLastCall >= wait || timeSinceLastCall < 0)
-            return true;
-        if (maxing) {
-            const timeSinceLastInvoke = time - lastInvokeTime;
-            return timeSinceLastInvoke >= (maxWait || 0);
-        }
-        return false;
-    }
-    function timerExpired() {
-        const time = now();
-        if (shouldInvoke(time)) {
-            trailingEdge(time);
-            return;
-        }
-        // Restart the timer
-        timerId = setTimeout(timerExpired, remainingWait(time));
-    }
-    function trailingEdge(time) {
-        timerId = undefined;
-        // Only invoke if we have `lastArgs` which means `func` has been
-        // debounced at least once
-        if (trailing && lastArgs) {
-            return invokeFunc(time);
-        }
-        lastArgs = undefined;
-        lastThis = undefined;
-        return result;
-    }
-    function cancel() {
-        if (timerId !== undefined) {
-            clearTimeout(timerId);
-        }
-        lastInvokeTime = 0;
-        lastArgs = undefined;
-        lastCallTime = undefined;
-        lastThis = undefined;
-        timerId = undefined;
-    }
-    function flush() {
-        return timerId === undefined ? result : trailingEdge(now());
-    }
-    function pending() {
-        return timerId !== undefined;
-    }
-    function debounced(...args) {
-        const time = now();
-        const isInvoking = shouldInvoke(time);
-        lastArgs = args;
-        // eslint-disable-next-line @typescript-eslint/no-this-alias
-        lastThis = this;
-        lastCallTime = time;
-        if (isInvoking) {
-            if (timerId === undefined) {
-                return leadingEdge(lastCallTime);
-            }
-            if (maxing) {
-                // Handle invocations in a tight loop
-                timerId = setTimeout(timerExpired, wait);
-                return invokeFunc(lastCallTime);
-            }
-        }
-        if (timerId === undefined) {
-            timerId = setTimeout(timerExpired, wait);
-        }
-        return result;
-    }
-    debounced.cancel = cancel;
-    debounced.flush = flush;
-    debounced.pending = pending;
-    return debounced;
+    return result;
+  }
+  debounced.cancel = cancel;
+  debounced.flush = flush;
+  debounced.pending = pending;
+  return debounced;
 }

@@ -1,0 +1,22 @@
+[
+  {
+    "path": "./lib/index.js",
+    "maxSize": "12kb"
+  },
+  {
+    "path": "./lib/lang/isEqual.js",
+    "maxSize": "5kb"
+  },
+  {
+    "path": "./lib/core/debounce.js",
+    "maxSize": "4kb"
+  },
+  {
+    "path": "./lib/core/mergeDeep.js",
+    "maxSize": "4kb"
+  },
+  {
+    "path": "./lib/util/pMap.js",
+    "maxSize": "5kb"
+  }
+]

@@ -15,198 +15,116 @@
  * isEqual(new Set([1,2]), new Set([2,1])); // true
  */
 export function isEqual(value: unknown, other: unknown): boolean {
-  const stackA: unknown[] = [];
-  const stackB: unknown[] = [];
+  const stack = new WeakMap();
 
   function sameValueZero(a: unknown, b: unknown): boolean {
     return a === b || (a !== a && b !== b);
   }
 
-  function isTypedArray(
-    obj: unknown,
-  ): obj is
-    | Int8Array
-    | Uint8Array
-    | Uint8ClampedArray
-    | Int16Array
-    | Uint16Array
-    | Int32Array
-    | Uint32Array
-    | Float32Array
-    | Float64Array
-    | BigInt64Array
-    | BigUint64Array {
-    return ArrayBuffer.isView(obj) && !(obj instanceof DataView);
-  }
-
-  function equalArrays(a: unknown[], b: unknown[]): boolean {
-    const len = a.length;
-    if (len !== b.length) return false;
-    for (let i = 0; i < len; i++) {
-      if (!baseIsEqual(a[i], b[i])) return false;
-    }
-    return true;
-  }
-
-  function equalArrayBuffer(a: ArrayBufferLike, b: ArrayBufferLike): boolean {
-    if (a.byteLength !== b.byteLength) return false;
-    const va = new Uint8Array(a);
-    const vb = new Uint8Array(b);
-    for (let i = 0; i < va.length; i++) {
-      if (va[i] !== vb[i]) return false;
-    }
-    return true;
-  }
-
-  function equalDataView(a: DataView, b: DataView): boolean {
-    if (a.byteLength !== b.byteLength) return false;
-    return equalArrayBuffer(a.buffer, b.buffer);
-  }
-
-  function equalTypedArrays(a: ArrayBufferView, b: ArrayBufferView): boolean {
-    if (a.constructor !== b.constructor) return false;
-    if ((a as any).length !== (b as any).length) return false;
-    const len = (a as any).length as number;
-    for (let i = 0; i < len; i++) {
-      if (!sameValueZero((a as any)[i], (b as any)[i])) return false;
-    }
-    return true;
-  }
-
-  function equalSets(a: Set<unknown>, b: Set<unknown>): boolean {
-    if (a.size !== b.size) return false;
-    // Unordered deep equality: every aVal must have a match in b
-    const used: boolean[] = new Array(b.size).fill(false);
-    const bValues = Array.from(b.values());
-    outer: for (const aVal of a.values()) {
-      for (let i = 0; i < bValues.length; i++) {
-        if (used[i]) continue;
-        if (baseIsEqual(aVal, bValues[i])) {
-          used[i] = true;
-          continue outer;
-        }
-      }
-      return false;
-    }
-    return true;
-  }
-
-  function equalMaps(a: Map<unknown, unknown>, b: Map<unknown, unknown>): boolean {
-    if (a.size !== b.size) return false;
-    const used: boolean[] = new Array(b.size).fill(false);
-    const bEntries = Array.from(b.entries());
-    outer: for (const [ak, av] of a.entries()) {
-      for (let i = 0; i < bEntries.length; i++) {
-        if (used[i]) continue;
-        const [bk, bv] = bEntries[i];
-        if (baseIsEqual(ak, bk) && baseIsEqual(av, bv)) {
-          used[i] = true;
-          continue outer;
-        }
-      }
-      return false;
-    }
-    return true;
-  }
-
-  function hasOwn(obj: object, key: string | symbol): boolean {
-    return Object.prototype.hasOwnProperty.call(obj, key);
-  }
-
-  function equalObjects(a: Record<string | symbol, unknown>, b: Record<string | symbol, unknown>): boolean {
-    // Compare string keys
-    const aKeys = Object.keys(a);
-    const bKeys = Object.keys(b);
-    if (aKeys.length !== bKeys.length) return false;
-    for (const key of aKeys) {
-      if (!hasOwn(b, key) || !baseIsEqual(a[key], b[key])) return false;
-    }
-
-    // Compare enumerable symbol keys
-    const aSyms = Object.getOwnPropertySymbols(a).filter((s) => {
-      const d = Object.getOwnPropertyDescriptor(a, s);
-      return !!d && d.enumerable === true;
-    });
-    const bSyms = Object.getOwnPropertySymbols(b).filter((s) => {
-      const d = Object.getOwnPropertyDescriptor(b, s);
-      return !!d && d.enumerable === true;
-    });
-    if (aSyms.length !== bSyms.length) return false;
-    for (const s of aSyms) {
-      if (!hasOwn(b, s) || !baseIsEqual(a[s], b[s])) return false;
-    }
-    return true;
-  }
-
   function baseIsEqual(a: unknown, b: unknown): boolean {
-    if (a === b) return true;
-    if (a === null || b === null || a === undefined || b === undefined) return a === b;
-    const typeA = typeof a;
-    const typeB = typeof b;
-    if (typeA !== typeB) return false;
-    if (typeA !== 'object') return sameValueZero(a, b);
+    if (sameValueZero(a, b)) return true;
+    if (a === null || b === null || typeof a !== 'object' || typeof b !== 'object') return false;
 
     // Cycle detection
-    const idx = stackA.indexOf(a);
-    if (idx !== -1) {
-      return stackB[idx] === b;
-    }
-    stackA.push(a);
-    stackB.push(b);
+    if (stack.has(a) || stack.has(b)) return stack.get(a) === b;
+    stack.set(a, b);
 
+    let result = false;
     try {
-      // Arrays
-      if (Array.isArray(a) || Array.isArray(b)) {
-        if (!Array.isArray(a) || !Array.isArray(b)) return false;
-        return equalArrays(a as unknown[], b as unknown[]);
-      }
-
-      // Dates
       if (a instanceof Date && b instanceof Date) {
-        return a.getTime() === b.getTime();
-      }
+        result = a.getTime() === b.getTime();
+      } else if (a instanceof RegExp && b instanceof RegExp) {
+        result = a.toString() === b.toString();
+      } else if (a instanceof ArrayBuffer && b instanceof ArrayBuffer) {
+        result = a.byteLength === b.byteLength && new Uint8Array(a).every((val, i) => val === new Uint8Array(b)[i]);
+      } else if (a instanceof DataView && b instanceof DataView) {
+        result = a.byteLength === b.byteLength && baseIsEqual(a.buffer, b.buffer);
+      } else if (
+        ArrayBuffer.isView(a) &&
+        ArrayBuffer.isView(b) &&
+        !(a instanceof DataView) &&
+        !(b instanceof DataView)
+      ) {
+        result =
+          a.constructor === b.constructor &&
+          (a as any).length === (b as any).length &&
+          Array.from(a as any).every((val: any, i: number) => sameValueZero(val, (b as any)[i]));
+      } else if (a instanceof Set && b instanceof Set) {
+        if (a.size !== b.size) result = false;
+        else {
+          result = true;
+          for (const aVal of a) {
+            let found = false;
+            for (const bVal of b) {
+              if (baseIsEqual(aVal, bVal)) {
+                found = true;
+                break;
+              }
+            }
+            if (!found) {
+              result = false;
+              break;
+            }
+          }
+        }
+      } else if (a instanceof Map && b instanceof Map) {
+        if (a.size !== b.size) result = false;
+        else {
+          result = true;
+          for (const [ak, av] of a) {
+            let found = false;
+            for (const [bk, bv] of b) {
+              if (baseIsEqual(ak, bk) && baseIsEqual(av, bv)) {
+                found = true;
+                break;
+              }
+            }
+            if (!found) {
+              result = false;
+              break;
+            }
+          }
+        }
+      } else if (Array.isArray(a) && Array.isArray(b)) {
+        result = a.length === b.length && a.every((val, i) => baseIsEqual(val, b[i]));
+      } else {
+        // Object comparison - check constructor first
+        if (a.constructor !== b.constructor) {
+          result = false;
+        } else {
+          const aKeys = Object.keys(a as Record<string, unknown>);
+          const bKeys = Object.keys(b as Record<string, unknown>);
+          if (aKeys.length !== bKeys.length) {
+            result = false;
+          } else {
+            result = aKeys.every(
+              (key) =>
+                bKeys.includes(key) &&
+                baseIsEqual((a as Record<string, unknown>)[key], (b as Record<string, unknown>)[key]),
+            );
 
-      // RegExp
-      if (a instanceof RegExp && b instanceof RegExp) {
-        return a.toString() === b.toString();
+            // Symbol keys
+            if (result) {
+              const aSymbols = Object.getOwnPropertySymbols(a as Record<string | symbol, unknown>);
+              const bSymbols = Object.getOwnPropertySymbols(b as Record<string | symbol, unknown>);
+              result =
+                aSymbols.length === bSymbols.length &&
+                aSymbols.every(
+                  (sym, i) =>
+                    sym === bSymbols[i] &&
+                    baseIsEqual(
+                      (a as Record<string | symbol, unknown>)[sym],
+                      (b as Record<string | symbol, unknown>)[sym],
+                    ),
+                );
+            }
+          }
+        }
       }
-
-      // ArrayBuffer
-      if (a instanceof ArrayBuffer && b instanceof ArrayBuffer) {
-        return equalArrayBuffer(a, b);
-      }
-
-      // DataView
-      if (a instanceof DataView && b instanceof DataView) {
-        return equalDataView(a, b);
-      }
-
-      // TypedArrays
-      if (isTypedArray(a) && isTypedArray(b)) {
-        return equalTypedArrays(a as unknown as ArrayBufferView, b as unknown as ArrayBufferView);
-      }
-
-      // Map
-      if (a instanceof Map && b instanceof Map) {
-        return equalMaps(a, b);
-      }
-
-      // Set
-      if (a instanceof Set && b instanceof Set) {
-        return equalSets(a, b);
-      }
-
-      // Functions are only equal by reference
-      if (typeof a === 'function' || typeof b === 'function') {
-        return false;
-      }
-
-      // Plain/other objects (compare own enumerable string and symbol keys)
-      return equalObjects(a as Record<string | symbol, unknown>, b as Record<string | symbol, unknown>);
     } finally {
-      stackA.pop();
-      stackB.pop();
+      stack.delete(a);
     }
+    return result;
   }
 
   return baseIsEqual(value, other);

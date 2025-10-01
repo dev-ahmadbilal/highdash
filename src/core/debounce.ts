@@ -37,10 +37,7 @@ export function debounce<T extends (...args: unknown[]) => unknown>(
     maxWait?: number;
   } = {},
 ): T & { cancel: () => void; flush: () => ReturnType<T> | undefined; pending: () => boolean } {
-  const now: () => number =
-    typeof performance !== 'undefined' && typeof performance.now === 'function'
-      ? () => performance.now()
-      : () => Date.now();
+  const now = typeof performance?.now === 'function' ? () => performance.now() : () => Date.now();
   const { leading = false, trailing = true, maxWait } = options;
 
   let lastCallTime: number | undefined;
@@ -49,16 +46,11 @@ export function debounce<T extends (...args: unknown[]) => unknown>(
   let lastThis: unknown;
   let result: ReturnType<T> | undefined;
   let timerId: ReturnType<typeof setTimeout> | undefined;
-  let maxing = false;
-
-  if (typeof maxWait === 'number') {
-    maxing = true;
-  }
+  const maxing = typeof maxWait === 'number';
 
   function invokeFunc(time: number): ReturnType<T> {
     const args = lastArgs!;
     const thisArg = lastThis;
-
     lastArgs = undefined;
     lastThis = undefined;
     lastInvokeTime = time;
@@ -67,20 +59,15 @@ export function debounce<T extends (...args: unknown[]) => unknown>(
   }
 
   function leadingEdge(time: number): ReturnType<T> | undefined {
-    // Reset any `maxWait` timer
     lastInvokeTime = time;
-    // Start the timer for the trailing edge
     timerId = setTimeout(timerExpired, wait);
-    // Invoke the leading edge
     return leading ? invokeFunc(time) : result;
   }
 
   function remainingWait(time: number): number {
     const timeSinceLastCall = time - (lastCallTime || 0);
     const timeWaiting = wait - timeSinceLastCall;
-
     if (!maxing) return timeWaiting;
-
     const timeSinceLastInvoke = time - lastInvokeTime;
     const maxWaitTime = (maxWait || 0) - timeSinceLastInvoke;
     return Math.min(timeWaiting, maxWaitTime);
@@ -88,15 +75,12 @@ export function debounce<T extends (...args: unknown[]) => unknown>(
 
   function shouldInvoke(time: number): boolean {
     if (lastCallTime === undefined) return true;
-
     const timeSinceLastCall = time - lastCallTime;
     if (timeSinceLastCall >= wait || timeSinceLastCall < 0) return true;
-
     if (maxing) {
       const timeSinceLastInvoke = time - lastInvokeTime;
       return timeSinceLastInvoke >= (maxWait || 0);
     }
-
     return false;
   }
 
@@ -106,15 +90,11 @@ export function debounce<T extends (...args: unknown[]) => unknown>(
       trailingEdge(time);
       return;
     }
-    // Restart the timer
     timerId = setTimeout(timerExpired, remainingWait(time));
   }
 
   function trailingEdge(time: number): ReturnType<T> | undefined {
     timerId = undefined;
-
-    // Only invoke if we have `lastArgs` which means `func` has been
-    // debounced at least once
     if (trailing && lastArgs) {
       return invokeFunc(time);
     }
@@ -156,7 +136,6 @@ export function debounce<T extends (...args: unknown[]) => unknown>(
         return leadingEdge(lastCallTime);
       }
       if (maxing) {
-        // Handle invocations in a tight loop
         timerId = setTimeout(timerExpired, wait);
         return invokeFunc(lastCallTime);
       }
@@ -169,12 +148,6 @@ export function debounce<T extends (...args: unknown[]) => unknown>(
 
   debounced.cancel = cancel;
   debounced.flush = flush;
-
   debounced.pending = pending;
-
-  return debounced as T & {
-    cancel: () => void;
-    flush: () => ReturnType<T> | undefined;
-    pending: () => boolean;
-  };
+  return debounced as T & { cancel: () => void; flush: () => ReturnType<T> | undefined; pending: () => boolean };
 }
