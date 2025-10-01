@@ -1,6 +1,6 @@
 {
   "name": "highdash",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A modern TypeScript-first reimplementation of Lodash with better performance and type safety",
   "type": "module",
   "sideEffects": false,
