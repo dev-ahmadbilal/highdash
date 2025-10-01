@@ -76,6 +76,13 @@ While Lodash has been the go-to utility library for JavaScript developers, it wa
 | `omit` (object properties) | 43ms | 36ms | **1.2x faster** |
 | `values` (object values) | 18ms | 2ms | **9.0x faster** |
 
+
+<div align="center">
+
+![Highdash Vs Lodash](./execution-times-bar-graph.png)
+
+</div>
+
 *Benchmarks run on Node.js 18, 1000 iterations*
 
 > 💡 **Want to verify these results?** Run the benchmarks yourself:
