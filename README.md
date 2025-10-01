@@ -6,8 +6,14 @@
 
 **A modern, TypeScript-first alternative to Lodash with superior performance, type safety, and bundle optimization.**
 
+[![Stars](https://img.shields.io/github/stars/dev-ahmadbilal/highdash?style=flat-square)](https://github.com/dev-ahmadbilal/highdash/stargazers)
+[![Issues](https://img.shields.io/github/issues/dev-ahmadbilal/highdash?style=flat-square)](https://github.com/dev-ahmadbilal/highdash/issues)
+[![GitHub](https://img.shields.io/badge/GitHub-Repository-black?style=flat-square&logo=github)](https://github.com/dev-ahmadbilal/highdash)
+
 [![npm version](https://img.shields.io/npm/v/highdash.svg?style=flat-square)](https://www.npmjs.com/package/highdash)
 [![npm downloads](https://img.shields.io/npm/dm/highdash.svg?style=flat-square)](https://www.npmjs.com/package/highdash)
+[![NPM](https://img.shields.io/badge/NPM-Package-red?style=flat-square&logo=npm)](https://www.npmjs.com/package/highdash)
+
 [![Bundle Size](https://img.shields.io/bundlephobia/minzip/highdash?style=flat-square)](https://bundlephobia.com/package/highdash)
 [![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
 [![Tree Shaking](https://img.shields.io/badge/Tree%20Shaking-Supported-green?style=flat-square)](https://webpack.js.org/guides/tree-shaking/)
@@ -461,6 +467,17 @@ MIT License - see [LICENSE](LICENSE) for details.
 
 ---
 
+## Contact
+
+If you have any questions, suggestions, or would like to collaborate, please feel free to reach out:
+
+- **Email:** [ahmadbilal.3491@gmail.com](mailto:ahmadbilal.3491@gmail.com)
+- **LinkedIn:** [Ahmad Bilal](www.linkedin.com/in/dev-ahmad-bilal)
+
+I look forward to hearing from you!
+
+---
+
 ## 🙏 Acknowledgments
 
 - **Lodash** - The original inspiration and foundation
@@ -472,11 +489,6 @@ MIT License - see [LICENSE](LICENSE) for details.
 
 <div align="center">
 
-**Made with ❤️ by the Highdash Team**
-
-[![GitHub](https://img.shields.io/badge/GitHub-Repository-black?style=flat-square&logo=github)](https://github.com/dev-ahmadbilal/highdash)
-[![NPM](https://img.shields.io/badge/NPM-Package-red?style=flat-square&logo=npm)](https://www.npmjs.com/package/highdash)
-[![Issues](https://img.shields.io/github/issues/dev-ahmadbilal/highdash?style=flat-square)](https://github.com/dev-ahmadbilal/highdash/issues)
-[![Stars](https://img.shields.io/github/stars/dev-ahmadbilal/highdash?style=flat-square)](https://github.com/dev-ahmadbilal/highdash/stargazers)
+**Made with ❤️ by the Ahmad Bilal**
 
 </div>
