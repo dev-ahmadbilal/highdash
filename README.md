@@ -17,9 +17,10 @@
 [![Bundle Size](https://img.shields.io/bundlephobia/minzip/highdash?style=flat-square)](https://bundlephobia.com/package/highdash)
 [![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
 [![Tree Shaking](https://img.shields.io/badge/Tree%20Shaking-Supported-green?style=flat-square)](https://webpack.js.org/guides/tree-shaking/)
+[![codecov](https://codecov.io/gh/dev-ahmadbilal/highdash/branch/main/graph/badge.svg?token=EENXO9JHEW)](https://codecov.io/gh/dev-ahmadbilal/highdash)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 
-[**Documentation**](https://github.com/dev-ahmadbilal/highdash#api-reference) • [**Examples**](https://github.com/dev-ahmadbilal/highdash#examples) • [**Performance**](https://github.com/dev-ahmadbilal/highdash#performance) • [**Migration Guide**](https://github.com/dev-ahmadbilal/highdash#migrating-from-lodash)
+[**Intro**](https://github.com/dev-ahmadbilal/highdash#-why-highdash) • [**Performance Comparison**](https://github.com/dev-ahmadbilal/highdash#-performance-comparison) • [**Examples**](https://github.com/dev-ahmadbilal/highdash#examples) • [**Migration Guide**](https://github.com/dev-ahmadbilal/highdash#migrating-from-lodash)
 
 </div>
 
@@ -82,6 +83,7 @@ While Lodash has been the go-to utility library for JavaScript developers, it wa
 | `omit` (object properties) | 43ms | 36ms | **1.2x faster** |
 | `values` (object values) | 18ms | 2ms | **9.0x faster** |
 
+<br>
 
 <div align="center">
 
@@ -89,7 +91,7 @@ While Lodash has been the go-to utility library for JavaScript developers, it wa
 
 </div>
 
-*Benchmarks run on Node.js 18, 1000 iterations*
+*Benchmarks run on Node.js 18+, 1000 iterations*
 
 > 💡 **Want to verify these results?** Run the benchmarks yourself:
 > ```bash
@@ -222,51 +224,6 @@ const fetchData = retry(async () => {
 // Timeout wrapper
 const result = await timeout(fetchData(), 5000, 'Request timed out');
 ```
-
----
-
-## 🛠 API Reference
-
-### Core Functions
-
-| Function | Description | Bundle Size |
-|----------|-------------|-------------|
-| `debounce(func, wait, options)` | Creates a debounced function with `pending()` | 805B |
-| `throttle(func, wait, options)` | Creates a throttled function with `pending()` | 820B |
-| `cloneDeep(value)` | Deep clone with cycle detection | 915B |
-| `merge(object, ...sources)` | Recursive merge with symbol support | 902B |
-| `uniq(array)` | Remove duplicates efficiently | 874B |
-| `groupBy(collection, iteratee)` | Group elements by key | 891B |
-
-### Collection Functions
-
-| Function | Description | Bundle Size |
-|----------|-------------|-------------|
-| `keyBy(collection, iteratee)` | Create object from array | 820B |
-| `partition(collection, predicate)` | Split into two groups | 805B |
-| `mapValues(object, iteratee)` | Map object values | 805B |
-| `pick(object, paths)` | Pick properties | 805B |
-| `omit(object, paths)` | Omit properties | 805B |
-
-### Language Functions
-
-| Function | Description | Bundle Size |
-|----------|-------------|-------------|
-| `isEqual(value, other)` | Deep equality with cycles | 891B |
-| `isEmpty(value)` | Check if empty | 805B |
-| `isNil(value)` | Check if null/undefined | 805B |
-| `isArray(value)` | Check if array | 805B |
-| `isObject(value)` | Check if object | 805B |
-
-### Modern Utilities
-
-| Function | Description | Bundle Size |
-|----------|-------------|-------------|
-| `pDebounce(func, wait)` | Promise-aware debounce | 1.2KB |
-| `pThrottle(func, wait)` | Promise-aware throttle | 1.2KB |
-| `retry(func, options)` | Retry with backoff | 1.2KB |
-| `timeout(promise, ms)` | Promise timeout wrapper | 1.2KB |
-| `mergeDeep(object, ...sources)` | Immutable deep merge | 902B |
 
 ---
 
