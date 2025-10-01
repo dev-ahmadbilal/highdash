@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/dev-ahmadbilal/highdash/compare/v1.0.1...v1.0.2) (2025-10-01)
+
+
+### Bug Fixes
+
+* docs ([9895706](https://github.com/dev-ahmadbilal/highdash/commit/98957060be44ac9f8761d49820e7d3f1e5c58477))
+
 ## [1.0.1](https://github.com/dev-ahmadbilal/highdash/compare/v1.0.0...v1.0.1) (2025-10-01)
 
 
