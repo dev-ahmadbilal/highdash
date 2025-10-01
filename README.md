@@ -17,6 +17,7 @@
 [![Bundle Size](https://img.shields.io/bundlephobia/minzip/highdash?style=flat-square)](https://bundlephobia.com/package/highdash)
 [![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
 [![Tree Shaking](https://img.shields.io/badge/Tree%20Shaking-Supported-green?style=flat-square)](https://webpack.js.org/guides/tree-shaking/)
+[![codecov](https://codecov.io/gh/dev-ahmadbilal/highdash/branch/main/graph/badge.svg?token=EENXO9JHEW)](https://codecov.io/gh/dev-ahmadbilal/highdash)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 
 [**Documentation**](https://github.com/dev-ahmadbilal/highdash#api-reference) • [**Examples**](https://github.com/dev-ahmadbilal/highdash#examples) • [**Performance**](https://github.com/dev-ahmadbilal/highdash#performance) • [**Migration Guide**](https://github.com/dev-ahmadbilal/highdash#migrating-from-lodash)
@@ -82,6 +83,7 @@ While Lodash has been the go-to utility library for JavaScript developers, it wa
 | `omit` (object properties) | 43ms | 36ms | **1.2x faster** |
 | `values` (object values) | 18ms | 2ms | **9.0x faster** |
 
+<br>
 
 <div align="center">
 
