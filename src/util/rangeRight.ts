@@ -30,7 +30,7 @@
  * // => []
  * ```
  */
-import { range } from './range';
+import { range } from './range.js';
 
 export function rangeRight(start: number, end?: number, step?: number): number[] {
   if (step === 0) {

@@ -36,4 +36,4 @@ export function throttle<T extends (...args: unknown[]) => unknown>(
 }
 
 // Re-export debounce for internal use
-import { debounce } from './debounce';
+import { debounce } from './debounce.js';

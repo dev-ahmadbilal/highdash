@@ -55,4 +55,4 @@ export function sortBy<T>(
   });
 }
 
-import { get } from '../object/get';
+import { get } from '../object/get.js';

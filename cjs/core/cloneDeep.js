@@ -1,0 +1,21 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.cloneDeep = cloneDeep;
+/**
+ * Creates a deep clone of `value`. Recursively clones arrays, objects, maps, sets, and other complex types.
+ *
+ * @param value - The value to recursively clone
+ * @returns Returns the deep cloned value
+ *
+ * @example
+ * ```typescript
+ * const objects = [{ 'a': 1 }, { 'b': 2 }];
+ * const deep = cloneDeep(objects);
+ * console.log(deep[0] === objects[0]); // false
+ * ```
+ */
+function cloneDeep(value) {
+    // Delegate to cloneDeepWith engine without a customizer to gain cycles & symbol handling
+    return (0, cloneDeepWith_js_1.cloneDeepWith)(value);
+}
+const cloneDeepWith_js_1 = require("./cloneDeepWith.js");

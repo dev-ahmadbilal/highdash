@@ -2,6 +2,10 @@
  * Creates a debounced function that delays invoking `func` until after `wait` milliseconds
  * have elapsed since the last time the debounced function was invoked.
  *
+ * - Supports leading/trailing edges and optional `maxWait`.
+ * - Exposes `cancel()`, `flush()`, and `pending()` helpers.
+ * - Uses a monotonic clock when available for stable timing.
+ *
  * @param func - The function to debounce
  * @param wait - The number of milliseconds to delay
  * @param options - The options object
@@ -11,10 +15,18 @@
  * @returns Returns the new debounced function
  *
  * @example
- * ```typescript
- * const debounced = debounce(() => console.log('Hello'), 1000);
- * debounced(); // Will log 'Hello' after 1000ms of inactivity
- * ```
+ * // Trailing call (default)
+ * const debounced = debounce((x: number) => x * 2, 200);
+ * debounced(2);
+ * debounced(3);
+ * debounced.flush(); // => 6
+ *
+ * @example
+ * // Leading + trailing
+ * const log = debounce((msg: string) => console.log(msg), 300, { leading: true, trailing: true });
+ * log('first'); // prints immediately
+ * log('second'); // coalesced
+ * log.flush(); // prints 'second'
  */
 export function debounce<T extends (...args: unknown[]) => unknown>(
   func: T,
@@ -25,6 +37,10 @@ export function debounce<T extends (...args: unknown[]) => unknown>(
     maxWait?: number;
   } = {},
 ): T & { cancel: () => void; flush: () => ReturnType<T> | undefined; pending: () => boolean } {
+  const now: () => number =
+    typeof performance !== 'undefined' && typeof performance.now === 'function'
+      ? () => performance.now()
+      : () => Date.now();
   const { leading = false, trailing = true, maxWait } = options;
 
   let lastCallTime: number | undefined;
@@ -83,7 +99,7 @@ export function debounce<T extends (...args: unknown[]) => unknown>(
   }
 
   function timerExpired(): void {
-    const time = Date.now();
+    const time = now();
     if (shouldInvoke(time)) {
       trailingEdge(time);
       return;
@@ -117,7 +133,7 @@ export function debounce<T extends (...args: unknown[]) => unknown>(
   }
 
   function flush(): ReturnType<T> | undefined {
-    return timerId === undefined ? result : trailingEdge(Date.now());
+    return timerId === undefined ? result : trailingEdge(now());
   }
 
   function pending(): boolean {
@@ -125,7 +141,7 @@ export function debounce<T extends (...args: unknown[]) => unknown>(
   }
 
   function debounced(this: unknown, ...args: Parameters<T>): ReturnType<T> | undefined {
-    const time = Date.now();
+    const time = now();
     const isInvoking = shouldInvoke(time);
 
     lastArgs = args;

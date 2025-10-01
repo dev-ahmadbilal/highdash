@@ -78,19 +78,11 @@ export function cloneDeepWith<T>(
       return new DataView(buffer, input.byteOffset, input.byteLength) as unknown as V;
     }
 
-    if (
-      input instanceof Int8Array ||
-      input instanceof Uint8Array ||
-      input instanceof Uint8ClampedArray ||
-      input instanceof Int16Array ||
-      input instanceof Uint16Array ||
-      input instanceof Int32Array ||
-      input instanceof Uint32Array ||
-      input instanceof Float32Array ||
-      input instanceof Float64Array ||
-      input instanceof BigInt64Array ||
-      input instanceof BigUint64Array
-    ) {
+    if (ArrayBuffer.isView(input)) {
+      if (input instanceof DataView) {
+        const buffer = input.buffer.slice(0);
+        return new DataView(buffer, input.byteOffset, input.byteLength) as unknown as V;
+      }
       return (input as any).slice(0) as V;
     }
 

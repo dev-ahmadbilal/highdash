@@ -16,4 +16,4 @@ export function cloneDeep<T>(value: T): T {
   return cloneDeepWith(value);
 }
 
-import { cloneDeepWith } from './cloneDeepWith';
+import { cloneDeepWith } from './cloneDeepWith.js';

@@ -2,12 +2,78 @@
   "name": "highdash",
   "version": "0.1.0",
   "description": "A modern TypeScript-first reimplementation of Lodash with better performance and type safety",
+  "type": "module",
+  "sideEffects": false,
   "main": "./lib/index.js",
+  "module": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "import": "./lib/index.js",
+      "require": "./cjs/index.js",
+      "default": "./lib/index.js"
+    },
+    "./core/*": {
+      "types": "./lib/core/*.d.ts",
+      "import": "./lib/core/*.js",
+      "require": "./cjs/core/*.js",
+      "default": "./lib/core/*.js"
+    },
+    "./array/*": {
+      "types": "./lib/array/*.d.ts",
+      "import": "./lib/array/*.js",
+      "require": "./cjs/array/*.js",
+      "default": "./lib/array/*.js"
+    },
+    "./collection/*": {
+      "types": "./lib/collection/*.d.ts",
+      "import": "./lib/collection/*.js",
+      "require": "./cjs/collection/*.js",
+      "default": "./lib/collection/*.js"
+    },
+    "./lang/*": {
+      "types": "./lib/lang/*.d.ts",
+      "import": "./lib/lang/*.js",
+      "require": "./cjs/lang/*.js",
+      "default": "./lib/lang/*.js"
+    },
+    "./math/*": {
+      "types": "./lib/math/*.d.ts",
+      "import": "./lib/math/*.js",
+      "require": "./cjs/math/*.js",
+      "default": "./lib/math/*.js"
+    },
+    "./number/*": {
+      "types": "./lib/number/*.d.ts",
+      "import": "./lib/number/*.js",
+      "require": "./cjs/number/*.js",
+      "default": "./lib/number/*.js"
+    },
+    "./object/*": {
+      "types": "./lib/object/*.d.ts",
+      "import": "./lib/object/*.js",
+      "require": "./cjs/object/*.js",
+      "default": "./lib/object/*.js"
+    },
+    "./string/*": {
+      "types": "./lib/string/*.d.ts",
+      "import": "./lib/string/*.js",
+      "require": "./cjs/string/*.js",
+      "default": "./lib/string/*.js"
+    },
+    "./util/*": {
+      "types": "./lib/util/*.d.ts",
+      "import": "./lib/util/*.js",
+      "require": "./cjs/util/*.js",
+      "default": "./lib/util/*.js"
+    }
+  },
   "files": [
     "lib/**/*"
   ],
   "scripts": {
-    "build": "tsc --project tsconfig.build.json",
+    "build": "tsc --project tsconfig.build.json && tsc --project tsconfig.cjs.json",
     "clean": "rm -rf ./lib/",
     "release": "semantic-release",
     "prepare": "husky install",
@@ -15,7 +81,8 @@
     "lint:fix": "eslint ./src/ --fix",
     "start": "npx ts-node src/index.ts",
     "test": "jest --coverage",
-    "benchmark": "node benchmarks/performance.js"
+    "benchmark": "node benchmarks/performance.js",
+    "benchmark:compare": "npm run build && npm --prefix benchmarks install --no-audit --no-fund --silent && node benchmarks/compare.js"
   },
   "repository": {
     "type": "git",

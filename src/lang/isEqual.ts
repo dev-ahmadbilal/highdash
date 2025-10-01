@@ -1,20 +1,18 @@
 /**
  * Performs a deep comparison between two values to determine if they are equivalent.
  *
+ * - Cycle-safe, compares enumerable symbol keys
+ * - Supports ArrayBuffer/DataView/TypedArrays, Map, Set, Date, RegExp
+ * - Uses SameValueZero for primitives
+ *
  * @param value - The value to compare
  * @param other - The other value to compare
  * @returns Returns `true` if the values are equivalent, else `false`
  *
  * @example
- * ```typescript
- * const object = { 'a': 1 };
- * const other = { 'a': 1 };
- * isEqual(object, other);
- * // => true
- *
- * isEqual('hello', 'hello');
- * // => true
- * ```
+ * isEqual({ a: 1 }, { a: 1 }); // true
+ * isEqual([1, 2], [1, 2]); // true
+ * isEqual(new Set([1,2]), new Set([2,1])); // true
  */
 export function isEqual(value: unknown, other: unknown): boolean {
   const stackA: unknown[] = [];
@@ -42,8 +40,9 @@ export function isEqual(value: unknown, other: unknown): boolean {
   }
 
   function equalArrays(a: unknown[], b: unknown[]): boolean {
-    if (a.length !== b.length) return false;
-    for (let i = 0; i < a.length; i++) {
+    const len = a.length;
+    if (len !== b.length) return false;
+    for (let i = 0; i < len; i++) {
       if (!baseIsEqual(a[i], b[i])) return false;
     }
     return true;

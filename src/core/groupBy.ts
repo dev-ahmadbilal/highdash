@@ -49,4 +49,4 @@ export function groupBy<T>(
   return result;
 }
 
-import { get } from '../object/get';
+import { get } from '../object/get.js';

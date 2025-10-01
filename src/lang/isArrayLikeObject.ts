@@ -1,4 +1,4 @@
-import { isArrayLike } from './isArrayLike';
+import { isArrayLike } from './isArrayLike.js';
 
 /**
  * This method is like `isArrayLike` except that it also checks if `value` is an object.

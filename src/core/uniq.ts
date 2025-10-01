@@ -62,4 +62,4 @@ export function uniqBy<T>(array: T[], iteratee: ((value: T) => unknown) | string
   return result;
 }
 
-import { get } from '../object/get';
+import { get } from '../object/get.js';
