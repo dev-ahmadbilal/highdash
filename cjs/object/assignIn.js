@@ -34,6 +34,7 @@ function assignIn(object, ...sources) {
             continue;
         }
         for (const key in source) {
+            ;
             object[key] = source[key];
         }
     }

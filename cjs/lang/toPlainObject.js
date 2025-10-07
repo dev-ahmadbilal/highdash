@@ -43,7 +43,7 @@ function toPlainObject(value) {
         let proto = Object.getPrototypeOf(value);
         while (proto && proto !== Object.prototype) {
             for (const key in proto) {
-                if (Object.prototype.hasOwnProperty.call(proto, key)) {
+                if (Object.hasOwn(proto, key)) {
                     result[key] = proto[key];
                 }
             }

@@ -23,6 +23,7 @@ exports.clamp = clamp;
  */
 function clamp(number, lower, upper) {
     if (lower > upper) {
+        ;
         [lower, upper] = [upper, lower];
     }
     return Math.min(Math.max(number, lower), upper);

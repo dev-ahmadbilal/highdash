@@ -73,7 +73,7 @@ function cloneDeepWith(value, customizer) {
         const cloned = {};
         stack.set(input, cloned);
         for (const k in input) {
-            if (Object.prototype.hasOwnProperty.call(input, k)) {
+            if (Object.hasOwn(input, k)) {
                 cloned[k] = baseCloneDeepWith(input[k], k, input);
             }
         }

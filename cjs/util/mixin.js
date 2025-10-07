@@ -27,9 +27,10 @@ function mixin(object, source) {
         return object;
     }
     for (const key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
+        if (Object.hasOwn(source, key)) {
             const value = source[key];
             if (typeof value === 'function') {
+                ;
                 object[key] = value;
             }
         }

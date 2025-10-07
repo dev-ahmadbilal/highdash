@@ -40,11 +40,13 @@ function extendWith(object, ...sources) {
                     object[key] = customValue !== undefined ? customValue : srcValue;
                 }
                 else {
+                    ;
                     object[key] = srcValue;
                 }
             }
             else {
                 // Overwrite with later sources
+                ;
                 object[key] = srcValue;
             }
         }

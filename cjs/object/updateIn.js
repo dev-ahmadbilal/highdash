@@ -33,7 +33,7 @@ function updateIn(object, path, updater) {
             return updater(object, '', object);
         }
         // eslint-disable-next-line no-useless-escape
-        keys = path.split(/[\.\[\]]+/).filter(Boolean);
+        keys = path.split(/[.[\]]+/).filter(Boolean);
     }
     if (keys.length === 0) {
         return updater(object, '', object);

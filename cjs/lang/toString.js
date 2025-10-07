@@ -19,6 +19,7 @@ exports.toString = toString;
  * // => '1,2,3'
  * ```
  */
+// biome-ignore lint/suspicious/noShadowRestrictedNames: keep Lodash-compatible name
 function toString(value) {
     if (value === null || value === undefined) {
         return '';

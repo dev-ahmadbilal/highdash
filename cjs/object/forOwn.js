@@ -28,7 +28,7 @@ function forOwn(object, iteratee) {
         return object;
     }
     for (const key in object) {
-        if (Object.prototype.hasOwnProperty.call(object, key)) {
+        if (Object.hasOwn(object, key)) {
             const value = object[key];
             const result = iteratee(value, key, object);
             if (result === false) {

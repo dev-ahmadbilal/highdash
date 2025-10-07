@@ -56,7 +56,7 @@ function cloneWith(value, customizer) {
     // For plain objects
     const cloned = {};
     for (const key in value) {
-        if (Object.prototype.hasOwnProperty.call(value, key)) {
+        if (Object.hasOwn(value, key)) {
             cloned[key] = cloneWith(value[key], customizer);
         }
     }

@@ -37,7 +37,7 @@ function get(object, path, defaultValue) {
         }
         else {
             // eslint-disable-next-line no-useless-escape
-            keys = path.split(/[\.\[\]]+/).filter(Boolean);
+            keys = path.split(/[.[\]]+/).filter(Boolean);
         }
     }
     let result = object;

@@ -32,16 +32,18 @@ function assignWith(object, ...sources) {
             continue;
         }
         for (const key in source) {
-            if (Object.prototype.hasOwnProperty.call(source, key)) {
+            if (Object.hasOwn(source, key)) {
                 const srcValue = source[key];
                 const objValue = object[key];
                 if (isCustomizer) {
                     const customValue = customizer(objValue, srcValue, key, object, source);
                     if (customValue !== undefined) {
+                        ;
                         object[key] = customValue;
                     }
                 }
                 else {
+                    ;
                     object[key] = srcValue;
                 }
             }

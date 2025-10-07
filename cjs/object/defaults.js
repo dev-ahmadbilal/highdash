@@ -24,7 +24,7 @@ function defaults(object, ...sources) {
             continue;
         }
         for (const key in source) {
-            if (Object.prototype.hasOwnProperty.call(source, key)) {
+            if (Object.hasOwn(source, key)) {
                 if (object[key] === undefined) {
                     object[key] = source[key];
                 }

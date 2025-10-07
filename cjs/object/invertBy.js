@@ -24,7 +24,7 @@ function invertBy(object, iteratee) {
     }
     const result = {};
     for (const key in object) {
-        if (Object.prototype.hasOwnProperty.call(object, key)) {
+        if (Object.hasOwn(object, key)) {
             const value = object[key];
             let invertedKey;
             if (typeof iteratee === 'function') {

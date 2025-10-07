@@ -21,7 +21,7 @@ function pick(object, paths) {
         return result;
     }
     for (const path of paths) {
-        if (Object.prototype.hasOwnProperty.call(object, path)) {
+        if (Object.hasOwn(object, path)) {
             result[path] = object[path];
         }
     }

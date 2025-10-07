@@ -35,13 +35,14 @@ function mergeWith(object, ...sources) {
             continue;
         }
         for (const key in source) {
-            if (Object.prototype.hasOwnProperty.call(source, key)) {
+            if (Object.hasOwn(source, key)) {
                 const srcValue = source[key];
                 const objValue = object[key];
                 if (isCustomizer) {
                     const customFn = customizer;
                     const customValue = customFn(objValue, srcValue, key, object, source);
                     if (customValue !== undefined) {
+                        ;
                         object[key] = customValue;
                     }
                     else if (objValue &&
@@ -50,9 +51,11 @@ function mergeWith(object, ...sources) {
                         typeof srcValue === 'object' &&
                         !Array.isArray(objValue) &&
                         !Array.isArray(srcValue)) {
+                        ;
                         object[key] = mergeWith(objValue, srcValue, customFn);
                     }
                     else if (objValue === undefined) {
+                        ;
                         object[key] = srcValue;
                     }
                 }
@@ -63,9 +66,11 @@ function mergeWith(object, ...sources) {
                         typeof srcValue === 'object' &&
                         !Array.isArray(objValue) &&
                         !Array.isArray(srcValue)) {
+                        ;
                         object[key] = mergeWith(objValue, srcValue);
                     }
                     else if (objValue === undefined) {
+                        ;
                         object[key] = srcValue;
                     }
                 }

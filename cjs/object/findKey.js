@@ -28,7 +28,7 @@ function findKey(object, predicate) {
         ? predicate
         : (item) => Boolean(item[predicate]);
     for (const key in object) {
-        if (Object.prototype.hasOwnProperty.call(object, key)) {
+        if (Object.hasOwn(object, key)) {
             const value = object[key];
             if (getValue(value, key, object)) {
                 return key;

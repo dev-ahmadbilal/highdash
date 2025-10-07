@@ -29,7 +29,7 @@ function isMatch(object, source) {
     const objectObj = object;
     // Check string keys
     for (const key in sourceObj) {
-        if (Object.prototype.hasOwnProperty.call(sourceObj, key)) {
+        if (Object.hasOwn(sourceObj, key)) {
             const sourceValue = sourceObj[key];
             const objectValue = objectObj[key];
             if (sourceValue !== objectValue &&
