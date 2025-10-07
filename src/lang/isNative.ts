@@ -18,18 +18,18 @@
  */
 export function isNative(value: unknown): value is Function {
   if (typeof value !== 'function') {
-    return false;
+    return false
   }
 
-  const func = value as Function;
-  const funcString = Function.prototype.toString.call(func);
+  const func = value as Function
+  const funcString = Function.prototype.toString.call(func)
   // Bound functions include 'native code' sometimes; detect bound by presence of 'bound '
   if (
     /^bound\s/.test(func.name) ||
     funcString.startsWith('function bound ') ||
     (funcString.includes('native code') && funcString.includes('bound '))
   ) {
-    return false;
+    return false
   }
 
   // Check for native function patterns
@@ -37,5 +37,5 @@ export function isNative(value: unknown): value is Function {
     funcString.includes('[native code]') ||
     funcString.includes('[object Function]') ||
     /^function\s+\w*\s*\(\s*\)\s*\{\s*\[native code\]\s*\}$/.test(funcString)
-  );
+  )
 }

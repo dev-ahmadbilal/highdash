@@ -12,8 +12,8 @@
  */
 export function flattenDeep<T>(array: T[]): T[] {
   if (!Array.isArray(array)) {
-    return [];
+    return []
   }
 
-  return array.flat(Infinity) as T[];
+  return array.flat(Infinity) as T[]
 }

@@ -18,22 +18,22 @@
  */
 export function maxBy<T>(array: T[], iteratee: ((value: T) => number) | string): T | undefined {
   if (!Array.isArray(array) || array.length === 0) {
-    return undefined;
+    return undefined
   }
 
   const getValue =
-    typeof iteratee === 'function' ? iteratee : (item: T) => Number((item as Record<string, unknown>)[iteratee]);
+    typeof iteratee === 'function' ? iteratee : (item: T) => Number((item as Record<string, unknown>)[iteratee])
 
-  let maxValue = getValue(array[0]);
-  let maxItem = array[0];
+  let maxValue = getValue(array[0])
+  let maxItem = array[0]
 
   for (let i = 1; i < array.length; i++) {
-    const value = getValue(array[i]);
+    const value = getValue(array[i])
     if (value > maxValue) {
-      maxValue = value;
-      maxItem = array[i];
+      maxValue = value
+      maxItem = array[i]
     }
   }
 
-  return maxItem;
+  return maxItem
 }

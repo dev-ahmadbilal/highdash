@@ -20,5 +20,5 @@ export function isBuffer(value: unknown): value is Buffer {
     typeof (value as any).constructor === 'function' &&
     typeof (value as any).constructor.isBuffer === 'function' &&
     (value as any).constructor.isBuffer(value)
-  );
+  )
 }

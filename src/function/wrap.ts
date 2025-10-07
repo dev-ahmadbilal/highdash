@@ -14,6 +14,6 @@
  */
 export function wrap<T, R>(value: T, wrapper: (func: T, ...args: unknown[]) => R): (...args: unknown[]) => R {
   return function (this: unknown, ...args: unknown[]) {
-    return wrapper.apply(this as any, [value, ...args]);
-  } as (...args: unknown[]) => R;
+    return wrapper.apply(this as any, [value, ...args])
+  } as (...args: unknown[]) => R
 }

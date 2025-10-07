@@ -12,15 +12,15 @@
  */
 export function sample<T>(collection: T[] | Record<string, T>): T | undefined {
   if (!collection) {
-    return undefined;
+    return undefined
   }
 
-  const items = Array.isArray(collection) ? collection : Object.values(collection);
+  const items = Array.isArray(collection) ? collection : Object.values(collection)
 
   if (items.length === 0) {
-    return undefined;
+    return undefined
   }
 
-  const randomIndex = Math.floor(Math.random() * items.length);
-  return items[randomIndex];
+  const randomIndex = Math.floor(Math.random() * items.length)
+  return items[randomIndex]
 }

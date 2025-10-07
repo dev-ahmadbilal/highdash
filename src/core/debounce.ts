@@ -32,122 +32,122 @@ export function debounce<T extends (...args: unknown[]) => unknown>(
   func: T,
   wait: number = 0,
   options: {
-    leading?: boolean;
-    trailing?: boolean;
-    maxWait?: number;
+    leading?: boolean
+    trailing?: boolean
+    maxWait?: number
   } = {},
 ): T & { cancel: () => void; flush: () => ReturnType<T> | undefined; pending: () => boolean } {
-  const now = typeof performance?.now === 'function' ? () => performance.now() : () => Date.now();
-  const { leading = false, trailing = true, maxWait } = options;
+  const now = typeof performance?.now === 'function' ? () => performance.now() : () => Date.now()
+  const { leading = false, trailing = true, maxWait } = options
 
-  let lastCallTime: number | undefined;
-  let lastInvokeTime = 0;
-  let lastArgs: Parameters<T> | undefined;
-  let lastThis: unknown;
-  let result: ReturnType<T> | undefined;
-  let timerId: ReturnType<typeof setTimeout> | undefined;
-  const maxing = typeof maxWait === 'number';
+  let lastCallTime: number | undefined
+  let lastInvokeTime = 0
+  let lastArgs: Parameters<T> | undefined
+  let lastThis: unknown
+  let result: ReturnType<T> | undefined
+  let timerId: ReturnType<typeof setTimeout> | undefined
+  const maxing = typeof maxWait === 'number'
 
   function invokeFunc(time: number): ReturnType<T> {
-    const args = lastArgs!;
-    const thisArg = lastThis;
-    lastArgs = undefined;
-    lastThis = undefined;
-    lastInvokeTime = time;
-    result = func.apply(thisArg, args) as ReturnType<T>;
-    return result;
+    const args = lastArgs!
+    const thisArg = lastThis
+    lastArgs = undefined
+    lastThis = undefined
+    lastInvokeTime = time
+    result = func.apply(thisArg, args) as ReturnType<T>
+    return result
   }
 
   function leadingEdge(time: number): ReturnType<T> | undefined {
-    lastInvokeTime = time;
-    timerId = setTimeout(timerExpired, wait);
-    return leading ? invokeFunc(time) : result;
+    lastInvokeTime = time
+    timerId = setTimeout(timerExpired, wait)
+    return leading ? invokeFunc(time) : result
   }
 
   function remainingWait(time: number): number {
-    const timeSinceLastCall = time - (lastCallTime || 0);
-    const timeWaiting = wait - timeSinceLastCall;
-    if (!maxing) return timeWaiting;
-    const timeSinceLastInvoke = time - lastInvokeTime;
-    const maxWaitTime = (maxWait || 0) - timeSinceLastInvoke;
-    return Math.min(timeWaiting, maxWaitTime);
+    const timeSinceLastCall = time - (lastCallTime || 0)
+    const timeWaiting = wait - timeSinceLastCall
+    if (!maxing) return timeWaiting
+    const timeSinceLastInvoke = time - lastInvokeTime
+    const maxWaitTime = (maxWait || 0) - timeSinceLastInvoke
+    return Math.min(timeWaiting, maxWaitTime)
   }
 
   function shouldInvoke(time: number): boolean {
-    if (lastCallTime === undefined) return true;
-    const timeSinceLastCall = time - lastCallTime;
-    if (timeSinceLastCall >= wait || timeSinceLastCall < 0) return true;
+    if (lastCallTime === undefined) return true
+    const timeSinceLastCall = time - lastCallTime
+    if (timeSinceLastCall >= wait || timeSinceLastCall < 0) return true
     if (maxing) {
-      const timeSinceLastInvoke = time - lastInvokeTime;
-      return timeSinceLastInvoke >= (maxWait || 0);
+      const timeSinceLastInvoke = time - lastInvokeTime
+      return timeSinceLastInvoke >= (maxWait || 0)
     }
-    return false;
+    return false
   }
 
   function timerExpired(): void {
-    const time = now();
+    const time = now()
     if (shouldInvoke(time)) {
-      trailingEdge(time);
-      return;
+      trailingEdge(time)
+      return
     }
-    timerId = setTimeout(timerExpired, remainingWait(time));
+    timerId = setTimeout(timerExpired, remainingWait(time))
   }
 
   function trailingEdge(time: number): ReturnType<T> | undefined {
-    timerId = undefined;
+    timerId = undefined
     if (trailing && lastArgs) {
-      return invokeFunc(time);
+      return invokeFunc(time)
     }
-    lastArgs = undefined;
-    lastThis = undefined;
-    return result;
+    lastArgs = undefined
+    lastThis = undefined
+    return result
   }
 
   function cancel(): void {
     if (timerId !== undefined) {
-      clearTimeout(timerId);
+      clearTimeout(timerId)
     }
-    lastInvokeTime = 0;
-    lastArgs = undefined;
-    lastCallTime = undefined;
-    lastThis = undefined;
-    timerId = undefined;
+    lastInvokeTime = 0
+    lastArgs = undefined
+    lastCallTime = undefined
+    lastThis = undefined
+    timerId = undefined
   }
 
   function flush(): ReturnType<T> | undefined {
-    return timerId === undefined ? result : trailingEdge(now());
+    return timerId === undefined ? result : trailingEdge(now())
   }
 
   function pending(): boolean {
-    return timerId !== undefined;
+    return timerId !== undefined
   }
 
   function debounced(this: unknown, ...args: Parameters<T>): ReturnType<T> | undefined {
-    const time = now();
-    const isInvoking = shouldInvoke(time);
+    const time = now()
+    const isInvoking = shouldInvoke(time)
 
-    lastArgs = args;
+    lastArgs = args
     // eslint-disable-next-line @typescript-eslint/no-this-alias
-    lastThis = this;
-    lastCallTime = time;
+    lastThis = this
+    lastCallTime = time
 
     if (isInvoking) {
       if (timerId === undefined) {
-        return leadingEdge(lastCallTime);
+        return leadingEdge(lastCallTime)
       }
       if (maxing) {
-        timerId = setTimeout(timerExpired, wait);
-        return invokeFunc(lastCallTime);
+        timerId = setTimeout(timerExpired, wait)
+        return invokeFunc(lastCallTime)
       }
     }
     if (timerId === undefined) {
-      timerId = setTimeout(timerExpired, wait);
+      timerId = setTimeout(timerExpired, wait)
     }
-    return result;
+    return result
   }
 
-  debounced.cancel = cancel;
-  debounced.flush = flush;
-  debounced.pending = pending;
-  return debounced as T & { cancel: () => void; flush: () => ReturnType<T> | undefined; pending: () => boolean };
+  debounced.cancel = cancel
+  debounced.flush = flush
+  debounced.pending = pending
+  return debounced as T & { cancel: () => void; flush: () => ReturnType<T> | undefined; pending: () => boolean }
 }

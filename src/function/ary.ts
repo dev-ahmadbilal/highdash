@@ -14,10 +14,10 @@
  */
 export function ary<T extends (...args: unknown[]) => unknown>(func: T, n: number = func.length): T {
   if (n < 0) {
-    n = 0;
+    n = 0
   }
 
   return ((...args: Parameters<T>) => {
-    return func(...args.slice(0, n));
-  }) as T;
+    return func(...args.slice(0, n))
+  }) as T
 }

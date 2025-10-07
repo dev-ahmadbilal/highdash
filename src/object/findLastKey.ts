@@ -22,23 +22,23 @@ export function findLastKey<T extends Record<string, unknown>>(
   predicate: ((value: T[keyof T], key: keyof T, object: T) => boolean) | string,
 ): keyof T | undefined {
   if (!object || typeof object !== 'object') {
-    return undefined;
+    return undefined
   }
 
   const getValue =
     typeof predicate === 'function'
       ? predicate
-      : (item: T[keyof T]) => Boolean((item as Record<string, unknown>)[predicate]);
+      : (item: T[keyof T]) => Boolean((item as Record<string, unknown>)[predicate])
 
-  const keys = Object.keys(object);
+  const keys = Object.keys(object)
 
   for (let i = keys.length - 1; i >= 0; i--) {
-    const key = keys[i];
-    const value = object[key];
+    const key = keys[i]
+    const value = object[key]
     if (getValue(value as T[keyof T], key, object)) {
-      return key;
+      return key
     }
   }
 
-  return undefined;
+  return undefined
 }

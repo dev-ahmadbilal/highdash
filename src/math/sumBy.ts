@@ -18,14 +18,14 @@
  */
 export function sumBy<T>(array: T[], iteratee: ((value: T) => number) | string): number {
   if (!Array.isArray(array)) {
-    return 0;
+    return 0
   }
 
   const getValue =
-    typeof iteratee === 'function' ? iteratee : (item: T) => Number((item as Record<string, unknown>)[iteratee]);
+    typeof iteratee === 'function' ? iteratee : (item: T) => Number((item as Record<string, unknown>)[iteratee])
 
   return array.reduce((acc, value) => {
-    const num = getValue(value);
-    return acc + (isNaN(num) ? 0 : num);
-  }, 0);
+    const num = getValue(value)
+    return acc + (isNaN(num) ? 0 : num)
+  }, 0)
 }

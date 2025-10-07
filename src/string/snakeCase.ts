@@ -18,7 +18,7 @@
  */
 export function snakeCase(string: string): string {
   if (typeof string !== 'string') {
-    return '';
+    return ''
   }
 
   return string
@@ -26,5 +26,5 @@ export function snakeCase(string: string): string {
     .replace(/[\s-]+/g, '_')
     .replace(/[^\w_]/g, '')
     .replace(/^_+|_+$/g, '') // Remove leading/trailing underscores
-    .toLowerCase();
+    .toLowerCase()
 }

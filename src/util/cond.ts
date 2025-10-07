@@ -27,11 +27,11 @@ export function cond<T extends unknown[], R>(
 ): (...args: T) => R | undefined {
   return (...args: T): R | undefined => {
     for (const [predicate, func] of pairs) {
-      const predVal = typeof predicate === 'function' ? (predicate as (...a: T) => unknown)(...args) : predicate;
+      const predVal = typeof predicate === 'function' ? (predicate as (...a: T) => unknown)(...args) : predicate
       if (predVal) {
-        return func(...args);
+        return func(...args)
       }
     }
-    return undefined;
-  };
+    return undefined
+  }
 }

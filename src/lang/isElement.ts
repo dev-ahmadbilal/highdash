@@ -19,5 +19,5 @@ export function isElement(value: unknown): value is Element {
     typeof value === 'object' &&
     typeof (value as any).nodeType === 'number' &&
     (value as any).nodeType === 1
-  );
+  )
 }

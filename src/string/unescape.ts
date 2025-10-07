@@ -10,9 +10,10 @@
  * // => 'fred, barney, & pebbles'
  * ```
  */
+// biome-ignore lint/suspicious/noShadowRestrictedNames: keep Lodash-compatible name
 export function unescape(string: string): string {
   if (typeof string !== 'string') {
-    return '';
+    return ''
   }
 
   const htmlUnescapes: Record<string, string> = {
@@ -22,7 +23,7 @@ export function unescape(string: string): string {
     '&quot;': '"',
     '&#39;': "'",
     '&#96;': '`',
-  };
+  }
 
-  return string.replace(/&(?:amp|lt|gt|quot|#39|#96);/g, (entity) => htmlUnescapes[entity] || entity);
+  return string.replace(/&(?:amp|lt|gt|quot|#39|#96);/g, (entity) => htmlUnescapes[entity] || entity)
 }

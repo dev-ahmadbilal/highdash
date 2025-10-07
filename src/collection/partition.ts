@@ -22,25 +22,25 @@ export function partition<T>(
   collection: T[] | Record<string, T>,
   predicate: ((value: T) => boolean) | string,
 ): [T[], T[]] {
-  const truthy: T[] = [];
-  const falsy: T[] = [];
+  const truthy: T[] = []
+  const falsy: T[] = []
 
   if (!collection) {
-    return [truthy, falsy];
+    return [truthy, falsy]
   }
 
   const getValue =
-    typeof predicate === 'function' ? predicate : (item: T) => Boolean((item as Record<string, unknown>)[predicate]);
+    typeof predicate === 'function' ? predicate : (item: T) => Boolean((item as Record<string, unknown>)[predicate])
 
-  const items = Array.isArray(collection) ? collection : Object.values(collection);
+  const items = Array.isArray(collection) ? collection : Object.values(collection)
 
   for (const item of items) {
     if (getValue(item)) {
-      truthy.push(item);
+      truthy.push(item)
     } else {
-      falsy.push(item);
+      falsy.push(item)
     }
   }
 
-  return [truthy, falsy];
+  return [truthy, falsy]
 }

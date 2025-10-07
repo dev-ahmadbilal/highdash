@@ -14,43 +14,43 @@
  */
 export function iteratee<T = unknown>(iteratee: string | ((value: T) => unknown) | T): (value: T) => unknown {
   if (typeof iteratee === 'function') {
-    return iteratee as (value: T) => unknown;
+    return iteratee as (value: T) => unknown
   }
 
   if (typeof iteratee === 'string') {
     // Support deep path access like 'a.b[0].c'
-    const raw = iteratee;
+    const raw = iteratee
     const path = raw
       .replace(/\[(\d+)\]/g, '.$1')
       .split('.')
-      .filter(Boolean);
+      .filter(Boolean)
     return (value: T) => {
       // If value is not object-like, treat as equality predicate against the raw string
       if (value === null || (typeof value !== 'object' && typeof value !== 'function')) {
-        return (value as unknown) === (raw as unknown);
+        return (value as unknown) === (raw as unknown)
       }
-      let current: unknown = value;
+      let current: unknown = value
       for (const key of path) {
-        if (current === null) return undefined;
-        current = current?.[key as keyof typeof current];
+        if (current === null) return undefined
+        current = current?.[key as keyof typeof current]
       }
-      return current;
-    };
+      return current
+    }
   }
 
   if (typeof iteratee === 'object' && iteratee !== null) {
-    const src = iteratee as Record<string, unknown>;
+    const src = iteratee as Record<string, unknown>
     const isMatchDeep = (obj: unknown, srcObj: unknown): boolean => {
-      if (obj === srcObj) return true;
-      if (obj === null || srcObj === null) return false;
-      if (typeof srcObj !== 'object') return obj === srcObj;
+      if (obj === srcObj) return true
+      if (obj === null || srcObj === null) return false
+      if (typeof srcObj !== 'object') return obj === srcObj
       for (const key of Object.keys(srcObj)) {
-        if (!isMatchDeep(obj?.[key as keyof typeof obj], srcObj[key as keyof typeof srcObj])) return false;
+        if (!isMatchDeep(obj?.[key as keyof typeof obj], srcObj[key as keyof typeof srcObj])) return false
       }
-      return true;
-    };
-    return (value: T) => isMatchDeep(value as unknown, src);
+      return true
+    }
+    return (value: T) => isMatchDeep(value as unknown, src)
   }
 
-  return (value: T) => value === iteratee;
+  return (value: T) => value === iteratee
 }

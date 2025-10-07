@@ -41,53 +41,53 @@ function baseIsEqualWith(
   parentB?: unknown,
 ): boolean {
   if (customizer) {
-    const custom = customizer(value, other, (key as any) ?? ('' as any), parentA ?? value, parentB ?? other, undefined);
-    if (custom !== undefined) return custom;
+    const custom = customizer(value, other, (key as any) ?? ('' as any), parentA ?? value, parentB ?? other, undefined)
+    if (custom !== undefined) return custom
   }
 
-  if (value === other) return true;
+  if (value === other) return true
 
   if (value === null || other === null || typeof value !== 'object' || typeof other !== 'object') {
-    return false;
+    return false
   }
 
   if (Array.isArray(value) !== Array.isArray(other)) {
-    return false;
+    return false
   }
 
   if (Array.isArray(value) && Array.isArray(other)) {
     if (value.length !== other.length) {
-      return false;
+      return false
     }
 
     for (let i = 0; i < value.length; i++) {
       if (!baseIsEqualWith(value[i], other[i], customizer, i, value, other)) {
-        return false;
+        return false
       }
     }
-    return true;
+    return true
   }
 
-  const valueObj = value as Record<string, unknown>;
-  const otherObj = other as Record<string, unknown>;
+  const valueObj = value as Record<string, unknown>
+  const otherObj = other as Record<string, unknown>
 
-  const valueKeys = Object.keys(valueObj);
-  const otherKeys = Object.keys(otherObj);
+  const valueKeys = Object.keys(valueObj)
+  const otherKeys = Object.keys(otherObj)
 
   if (valueKeys.length !== otherKeys.length) {
-    return false;
+    return false
   }
 
   for (const k of valueKeys) {
     if (!otherKeys.includes(k)) {
-      return false;
+      return false
     }
     if (!baseIsEqualWith(valueObj[k], otherObj[k], customizer, k, valueObj, otherObj)) {
-      return false;
+      return false
     }
   }
 
-  return true;
+  return true
 }
 
 export function isEqualWith(
@@ -102,5 +102,5 @@ export function isEqualWith(
     stack: unknown,
   ) => boolean | undefined,
 ): boolean {
-  return baseIsEqualWith(value, other, customizer);
+  return baseIsEqualWith(value, other, customizer)
 }

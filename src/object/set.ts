@@ -21,28 +21,28 @@
  */
 export function set<T extends Record<string, unknown>>(object: T, path: string | string[], value: unknown): T {
   if (!object || typeof object !== 'object') {
-    return object;
+    return object
   }
 
   // eslint-disable-next-line no-useless-escape
-  const keys = Array.isArray(path) ? path : path.split(/[\.\[\]]+/).filter(Boolean);
-  let current: Record<string, unknown> = object;
+  const keys = Array.isArray(path) ? path : path.split(/[.[\]]+/).filter(Boolean)
+  let current: Record<string, unknown> = object
 
   for (let i = 0; i < keys.length - 1; i++) {
-    const key = keys[i];
-    const nextKey = keys[i + 1];
+    const key = keys[i]
+    const nextKey = keys[i + 1]
 
     if (!(key in current) || current[key] === null || current[key] === undefined) {
       // Determine if next key is a number (array index)
-      const isNextKeyNumeric = /^\d+$/.test(nextKey);
-      current[key] = isNextKeyNumeric ? [] : {};
+      const isNextKeyNumeric = /^\d+$/.test(nextKey)
+      current[key] = isNextKeyNumeric ? [] : {}
     }
 
-    current = current[key] as Record<string, unknown>;
+    current = current[key] as Record<string, unknown>
   }
 
-  const lastKey = keys[keys.length - 1];
-  current[lastKey] = value;
+  const lastKey = keys[keys.length - 1]
+  current[lastKey] = value
 
-  return object;
+  return object
 }

@@ -14,5 +14,5 @@
  * ```
  */
 export function stubObject(): Record<string, unknown> {
-  return {};
+  return {}
 }

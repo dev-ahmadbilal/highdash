@@ -17,17 +17,17 @@
  * // => [['a', 1], ['b', 2], ['c', 3]]
  * ```
  */
-export function toPairsIn<T extends Record<string, unknown>>(object: T): [string, T[keyof T]][];
+export function toPairsIn<T extends Record<string, unknown>>(object: T): [string, T[keyof T]][]
 export function toPairsIn(object: unknown): [string, unknown][] {
   if (!object || typeof object !== 'object') {
-    return [];
+    return []
   }
 
-  const result: [string, unknown][] = [];
+  const result: [string, unknown][] = []
 
   for (const key in object) {
-    result.push([key, (object as Record<string, unknown>)[key]]);
+    result.push([key, (object as Record<string, unknown>)[key]])
   }
 
-  return result;
+  return result
 }

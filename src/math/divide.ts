@@ -12,5 +12,5 @@
  * ```
  */
 export function divide(dividend: number, divisor: number): number {
-  return dividend / divisor;
+  return dividend / divisor
 }

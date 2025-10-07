@@ -13,5 +13,5 @@
  * ```
  */
 export function defer<T extends (...args: unknown[]) => unknown>(func: T, ...args: Parameters<T>): NodeJS.Timeout {
-  return setTimeout(() => func(...args), 0);
+  return setTimeout(() => func(...args), 0)
 }

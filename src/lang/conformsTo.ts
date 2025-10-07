@@ -20,21 +20,21 @@ export function conformsTo<T extends Record<string, unknown>>(
   source: Record<string, (value: unknown) => boolean>,
 ): boolean {
   if (!object || typeof object !== 'object') {
-    return false;
+    return false
   }
 
   for (const key in source) {
-    if (Object.prototype.hasOwnProperty.call(source, key)) {
-      const predicate = source[key];
+    if (Object.hasOwn(source, key)) {
+      const predicate = source[key]
       if (typeof predicate !== 'function') {
-        return false;
+        return false
       }
 
       if (!predicate(object[key])) {
-        return false;
+        return false
       }
     }
   }
 
-  return true;
+  return true
 }

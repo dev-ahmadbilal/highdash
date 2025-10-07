@@ -18,6 +18,6 @@ export function partial<T extends (...args: unknown[]) => unknown>(
   ...partials: unknown[]
 ): (...args: unknown[]) => ReturnType<T> {
   return (...args: unknown[]) => {
-    return func(...partials, ...args) as ReturnType<T>;
-  };
+    return func(...partials, ...args) as ReturnType<T>
+  }
 }

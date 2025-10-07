@@ -20,17 +20,17 @@ export function mapValues<T, U>(
   object: Record<string, T>,
   iteratee: (value: T, key: string, object: Record<string, T>) => U,
 ): Record<string, U> {
-  const result: Record<string, U> = {};
+  const result: Record<string, U> = {}
 
   if (!object || typeof object !== 'object') {
-    return result;
+    return result
   }
 
   for (const key in object) {
-    if (Object.prototype.hasOwnProperty.call(object, key)) {
-      result[key] = iteratee(object[key], key, object);
+    if (Object.hasOwn(object, key)) {
+      result[key] = iteratee(object[key], key, object)
     }
   }
 
-  return result;
+  return result
 }

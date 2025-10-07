@@ -24,20 +24,20 @@ export function memoize<T extends (...args: unknown[]) => unknown>(
   func: T,
   resolver?: (...args: Parameters<T>) => unknown,
 ): T & { cache: Map<unknown, ReturnType<T>> } {
-  const cache = new Map<unknown, ReturnType<T>>();
+  const cache = new Map<unknown, ReturnType<T>>()
 
   const memoized = ((...args: Parameters<T>) => {
-    const key = resolver ? resolver(...args) : args[0];
+    const key = resolver ? resolver(...args) : args[0]
 
     if (cache.has(key)) {
-      return cache.get(key);
+      return cache.get(key)
     }
 
-    const result = func(...args);
-    cache.set(key, result as ReturnType<T>);
-    return result;
-  }) as T & { cache: Map<unknown, ReturnType<T>> };
+    const result = func(...args)
+    cache.set(key, result as ReturnType<T>)
+    return result
+  }) as T & { cache: Map<unknown, ReturnType<T>> }
 
-  memoized.cache = cache;
-  return memoized;
+  memoized.cache = cache
+  return memoized
 }

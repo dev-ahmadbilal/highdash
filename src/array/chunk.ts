@@ -17,12 +17,12 @@
  */
 export function chunk<T>(array: T[], size: number = 1): T[][] {
   if (!Array.isArray(array) || size < 1) {
-    return [];
+    return []
   }
 
-  const result: T[][] = [];
+  const result: T[][] = []
   for (let i = 0; i < array.length; i += size) {
-    result.push(array.slice(i, i + size));
+    result.push(array.slice(i, i + size))
   }
-  return result;
+  return result
 }

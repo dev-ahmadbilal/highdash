@@ -15,7 +15,7 @@
  */
 export function invoke(object: unknown, path: string | string[], ...args: unknown[]): unknown {
   if (!object || typeof object !== 'object') {
-    return undefined;
+    return undefined
   }
 
   const pathParts = Array.isArray(path)
@@ -23,27 +23,27 @@ export function invoke(object: unknown, path: string | string[], ...args: unknow
     : String(path)
         .replace(/\[(\d+)\]/g, '.$1')
         .split('.')
-        .filter(Boolean);
+        .filter(Boolean)
 
-  let current: unknown = object;
+  let current: unknown = object
 
   for (let i = 0; i < pathParts.length - 1; i++) {
-    const part = pathParts[i];
+    const part = pathParts[i]
     if (current === null || typeof current !== 'object' || !(part in current)) {
-      return undefined;
+      return undefined
     }
-    current = (current as Record<string, unknown>)[part];
+    current = (current as Record<string, unknown>)[part]
   }
 
-  const methodName = pathParts[pathParts.length - 1];
+  const methodName = pathParts[pathParts.length - 1]
   if (current === null || typeof current !== 'object' || !(methodName in current)) {
-    return undefined;
+    return undefined
   }
 
-  const method = (current as Record<string, unknown>)[methodName];
+  const method = (current as Record<string, unknown>)[methodName]
   if (typeof method !== 'function') {
-    return undefined;
+    return undefined
   }
 
-  return (method as Function).apply(current, args);
+  return (method as Function).apply(current, args)
 }

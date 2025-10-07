@@ -13,9 +13,9 @@
  */
 export function without<T>(array: T[], ...values: T[]): T[] {
   if (!Array.isArray(array)) {
-    return [];
+    return []
   }
 
-  const valuesSet = new Set(values);
-  return array.filter((item) => !valuesSet.has(item));
+  const valuesSet = new Set(values)
+  return array.filter((item) => !valuesSet.has(item))
 }

@@ -13,15 +13,15 @@
  */
 export function unzip<T>(array: T[][]): T[][] {
   if (!Array.isArray(array) || array.length === 0) {
-    return [];
+    return []
   }
 
-  const maxLength = Math.max(...array.map((group) => group.length));
-  const result: T[][] = [];
+  const maxLength = Math.max(...array.map((group) => group.length))
+  const result: T[][] = []
 
   for (let i = 0; i < maxLength; i++) {
-    result[i] = array.map((group) => group[i]);
+    result[i] = array.map((group) => group[i])
   }
 
-  return result;
+  return result
 }

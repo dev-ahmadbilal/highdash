@@ -12,11 +12,11 @@
  */
 export function escapeRegExp(string: string): string {
   if (typeof string !== 'string') {
-    return '';
+    return ''
   }
 
-  const reRegExpChar = /[\\^$.*+?()[\]{}|]/g;
-  const reHasRegExpChar = RegExp(reRegExpChar.source);
+  const reRegExpChar = /[\\^$.*+?()[\]{}|]/g
+  const reHasRegExpChar = RegExp(reRegExpChar.source)
 
-  return string && reHasRegExpChar.test(string) ? string.replace(reRegExpChar, '\\$&') : string;
+  return string && reHasRegExpChar.test(string) ? string.replace(reRegExpChar, '\\$&') : string
 }

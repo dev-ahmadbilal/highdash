@@ -18,18 +18,18 @@
  */
 export function flow<T extends unknown[], R>(funcs: Array<(...args: T) => unknown>): (...args: T) => R {
   if (funcs.length === 0) {
-    return (...args: T) => args[0] as R;
+    return (...args: T) => args[0] as R
   }
 
   if (funcs.length === 1) {
-    return funcs[0] as (...args: T) => R;
+    return funcs[0] as (...args: T) => R
   }
 
   return (...args: T) => {
-    let result: unknown = funcs[0](...args);
+    let result: unknown = funcs[0](...args)
     for (let i = 1; i < funcs.length; i++) {
-      result = (funcs[i] as any)(result);
+      result = (funcs[i] as any)(result)
     }
-    return result as R;
-  };
+    return result as R
+  }
 }

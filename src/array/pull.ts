@@ -15,19 +15,19 @@
  */
 export function pull<T>(array: T[], ...values: T[]): T[] {
   if (!Array.isArray(array)) {
-    return array;
+    return array
   }
 
-  const valuesSet = new Set(values);
-  let writeIndex = 0;
+  const valuesSet = new Set(values)
+  let writeIndex = 0
 
   for (let readIndex = 0; readIndex < array.length; readIndex++) {
     if (!valuesSet.has(array[readIndex])) {
-      array[writeIndex] = array[readIndex];
-      writeIndex++;
+      array[writeIndex] = array[readIndex]
+      writeIndex++
     }
   }
 
-  array.length = writeIndex;
-  return array;
+  array.length = writeIndex
+  return array
 }

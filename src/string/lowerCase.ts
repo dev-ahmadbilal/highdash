@@ -18,7 +18,7 @@
  */
 export function lowerCase(string: string): string {
   if (typeof string !== 'string') {
-    return '';
+    return ''
   }
 
   return (
@@ -36,5 +36,5 @@ export function lowerCase(string: string): string {
       .replace(/\s+/g, ' ')
       .trim()
       .toLowerCase()
-  );
+  )
 }

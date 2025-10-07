@@ -17,5 +17,5 @@ export function delay<T extends (...args: unknown[]) => unknown>(
   wait: number,
   ...args: Parameters<T>
 ): NodeJS.Timeout {
-  return setTimeout(() => func(...args), wait);
+  return setTimeout(() => func(...args), wait)
 }

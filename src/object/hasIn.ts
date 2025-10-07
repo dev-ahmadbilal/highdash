@@ -20,7 +20,7 @@
  */
 export function hasIn(object: object | null | undefined, path: string | string[]): boolean {
   if (!object || typeof object !== 'object') {
-    return false;
+    return false
   }
 
   const pathParts = Array.isArray(path)
@@ -28,16 +28,16 @@ export function hasIn(object: object | null | undefined, path: string | string[]
     : String(path)
         .replace(/\[(\d+)\]/g, '.$1')
         .split('.')
-        .filter(Boolean);
+        .filter(Boolean)
 
-  let current: unknown = object;
+  let current: unknown = object
 
   for (const part of pathParts) {
     if (current === null || typeof current !== 'object' || !(part in current)) {
-      return false;
+      return false
     }
-    current = (current as Record<string, unknown>)[part];
+    current = (current as Record<string, unknown>)[part]
   }
 
-  return true;
+  return true
 }

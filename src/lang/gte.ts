@@ -19,7 +19,7 @@
  */
 export function gte(value: unknown, other: unknown): boolean {
   if (!(typeof value === 'number' && typeof other === 'number')) {
-    return false;
+    return false
   }
-  return value >= other;
+  return value >= other
 }

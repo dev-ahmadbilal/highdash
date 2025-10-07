@@ -14,5 +14,5 @@
  * ```
  */
 export function isArguments(value: unknown): value is IArguments {
-  return Object.prototype.toString.call(value) === '[object Arguments]';
+  return Object.prototype.toString.call(value) === '[object Arguments]'
 }

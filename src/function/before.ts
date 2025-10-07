@@ -22,24 +22,24 @@
  * ```
  */
 export function before<T extends (...args: unknown[]) => unknown>(n: number, func: T): T {
-  let remaining = n;
-  let lastResult: ReturnType<T> | undefined = undefined;
-  const singleInvoke = n === 1;
+  let remaining = n
+  let lastResult: ReturnType<T> | undefined = undefined
+  const singleInvoke = n === 1
 
   return ((...args: Parameters<T>) => {
     if (singleInvoke) {
       if (remaining === 1) {
-        remaining = 0;
-        return func(...args) as ReturnType<T>;
+        remaining = 0
+        return func(...args) as ReturnType<T>
       }
-      return undefined as unknown as ReturnType<T>;
+      return undefined as unknown as ReturnType<T>
     }
     // n > 1: allow n-1 invocations, then return cached last result
     if (remaining > 1) {
-      remaining -= 1;
-      lastResult = func(...args) as ReturnType<T>;
-      return lastResult;
+      remaining -= 1
+      lastResult = func(...args) as ReturnType<T>
+      return lastResult
     }
-    return lastResult as ReturnType<T>;
-  }) as T;
+    return lastResult as ReturnType<T>
+  }) as T
 }

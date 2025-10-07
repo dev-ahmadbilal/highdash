@@ -25,18 +25,18 @@ export function forOwn<T extends Record<string, unknown>>(
   iteratee: (value: T[keyof T], key: keyof T, object: T) => void | boolean,
 ): T {
   if (!object || typeof object !== 'object') {
-    return object;
+    return object
   }
 
   for (const key in object) {
-    if (Object.prototype.hasOwnProperty.call(object, key)) {
-      const value = object[key];
-      const result = iteratee(value, key, object);
+    if (Object.hasOwn(object, key)) {
+      const value = object[key]
+      const result = iteratee(value, key, object)
       if (result === false) {
-        break;
+        break
       }
     }
   }
 
-  return object;
+  return object
 }

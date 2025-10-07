@@ -17,18 +17,18 @@
  * // => [['a', 1], ['b', 2], ['c', 3]]
  * ```
  */
-export function entriesIn<T extends Record<string, unknown>>(object: T): [string, T[keyof T]][];
+export function entriesIn<T extends Record<string, unknown>>(object: T): [string, T[keyof T]][]
 export function entriesIn(object: unknown): [string, unknown][] {
   if (!object || typeof object !== 'object') {
-    return [];
+    return []
   }
 
-  const result: [string, unknown][] = [];
+  const result: [string, unknown][] = []
 
   // Get all properties (own and inherited)
   for (const key in object) {
-    result.push([key, (object as Record<string, unknown>)[key]]);
+    result.push([key, (object as Record<string, unknown>)[key]])
   }
 
-  return result;
+  return result
 }

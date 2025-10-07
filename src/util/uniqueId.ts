@@ -13,8 +13,8 @@
  * // => '2'
  * ```
  */
-let idCounter = 0;
+let idCounter = 0
 
 export function uniqueId(prefix: string = ''): string {
-  return `${prefix}${++idCounter}`;
+  return `${prefix}${++idCounter}`
 }

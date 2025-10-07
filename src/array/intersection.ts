@@ -13,35 +13,35 @@
  */
 export function intersection<T>(...arrays: T[][]): T[] {
   if (arrays.length === 0) {
-    return [];
+    return []
   }
 
-  const firstArray = arrays[0];
+  const firstArray = arrays[0]
   if (!Array.isArray(firstArray)) {
-    return [];
+    return []
   }
 
-  const seen = new Set<T>();
-  const result: T[] = [];
+  const seen = new Set<T>()
+  const result: T[] = []
 
   for (const item of firstArray) {
     if (seen.has(item)) {
-      continue;
+      continue
     }
 
-    let isInAllArrays = true;
+    let isInAllArrays = true
     for (let i = 1; i < arrays.length; i++) {
       if (!Array.isArray(arrays[i]) || !arrays[i].includes(item)) {
-        isInAllArrays = false;
-        break;
+        isInAllArrays = false
+        break
       }
     }
 
     if (isInAllArrays) {
-      seen.add(item);
-      result.push(item);
+      seen.add(item)
+      result.push(item)
     }
   }
 
-  return result;
+  return result
 }

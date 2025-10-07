@@ -18,6 +18,6 @@ export function partialRight<T extends (...args: unknown[]) => unknown>(
   ...partials: unknown[]
 ): (...args: unknown[]) => ReturnType<T> {
   return (...args: unknown[]) => {
-    return func(...args, ...partials) as ReturnType<T>;
-  };
+    return func(...args, ...partials) as ReturnType<T>
+  }
 }

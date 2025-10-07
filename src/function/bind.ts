@@ -24,6 +24,6 @@ export function bind<T extends (...args: unknown[]) => unknown>(
   ...partials: unknown[]
 ): (...args: unknown[]) => ReturnType<T> {
   return (...args: unknown[]): ReturnType<T> => {
-    return func.apply(thisArg, partials.concat(args)) as ReturnType<T>;
-  };
+    return func.apply(thisArg, partials.concat(args)) as ReturnType<T>
+  }
 }

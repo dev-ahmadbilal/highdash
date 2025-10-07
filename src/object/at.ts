@@ -14,24 +14,24 @@
  */
 export function at<T extends Record<string, unknown>>(object: T, paths: string[]): unknown[] {
   if (!object || typeof object !== 'object' || !Array.isArray(paths)) {
-    return [];
+    return []
   }
 
   return paths.map((path) => {
     const pathParts = String(path)
       .replace(/\[(\d+)\]/g, '.$1')
       .split('.')
-      .filter(Boolean);
+      .filter(Boolean)
 
-    let current: unknown = object;
+    let current: unknown = object
 
     for (const part of pathParts) {
       if (current === null || typeof current !== 'object' || !(part in current)) {
-        return undefined;
+        return undefined
       }
-      current = (current as Record<string, unknown>)[part];
+      current = (current as Record<string, unknown>)[part]
     }
 
-    return current;
-  });
+    return current
+  })
 }

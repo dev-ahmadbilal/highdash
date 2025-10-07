@@ -18,8 +18,8 @@ export function attempt<T extends (...args: unknown[]) => unknown>(
   ...args: Parameters<T>
 ): ReturnType<T> | Error {
   try {
-    return func(...args) as ReturnType<T>;
+    return func(...args) as ReturnType<T>
   } catch (error) {
-    return error instanceof Error ? error : new Error(String(error));
+    return error instanceof Error ? error : new Error(String(error))
   }
 }

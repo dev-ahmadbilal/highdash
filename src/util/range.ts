@@ -34,32 +34,32 @@
  */
 export function range(start: number = 0, end?: number, step?: number): number[] {
   if (end === undefined) {
-    end = start;
-    start = 0;
+    end = start
+    start = 0
   }
 
   if (step === undefined) {
-    step = start < end ? 1 : -1;
+    step = start < end ? 1 : -1
   }
 
   if (step === 0) {
-    return Array(Math.abs(end - start)).fill(start);
+    return Array(Math.abs(end - start)).fill(start)
   }
 
-  const result: number[] = [];
-  let current = start;
+  const result: number[] = []
+  let current = start
 
   if (step > 0) {
     while (current < end) {
-      result.push(current);
-      current += step;
+      result.push(current)
+      current += step
     }
   } else {
     while (current > end) {
-      result.push(current);
-      current += step;
+      result.push(current)
+      current += step
     }
   }
 
-  return result;
+  return result
 }

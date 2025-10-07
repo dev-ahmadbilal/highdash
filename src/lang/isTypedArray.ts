@@ -20,7 +20,7 @@ export function isTypedArray(value: unknown): value is TypedArray {
     typeof (value as any).constructor === 'function' &&
     typeof (value as any).BYTES_PER_ELEMENT === 'number' &&
     ArrayBuffer.isView(value)
-  );
+  )
 }
 
 // Type definition for TypedArray
@@ -35,4 +35,4 @@ type TypedArray =
   | Float32Array
   | Float64Array
   | BigInt64Array
-  | BigUint64Array;
+  | BigUint64Array

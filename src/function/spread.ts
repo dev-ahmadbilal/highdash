@@ -14,6 +14,6 @@
  */
 export function spread<T extends (...args: unknown[]) => unknown>(func: T, start: number = 0): T {
   return ((array: unknown[]) => {
-    return func(...array.slice(start));
-  }) as T;
+    return func(...array.slice(start))
+  }) as T
 }

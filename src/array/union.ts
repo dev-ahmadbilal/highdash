@@ -11,19 +11,19 @@
  * ```
  */
 export function union<T>(...arrays: T[][]): T[] {
-  const seen = new Set<T>();
-  const result: T[] = [];
+  const seen = new Set<T>()
+  const result: T[] = []
 
   for (const array of arrays) {
     if (Array.isArray(array)) {
       for (const item of array) {
         if (!seen.has(item)) {
-          seen.add(item);
-          result.push(item);
+          seen.add(item)
+          result.push(item)
         }
       }
     }
   }
 
-  return result;
+  return result
 }

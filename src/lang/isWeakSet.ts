@@ -14,5 +14,5 @@
  * ```
  */
 export function isWeakSet(value: unknown): value is WeakSet<object> {
-  return value !== null && typeof value === 'object' && value.constructor === WeakSet;
+  return value !== null && typeof value === 'object' && value.constructor === WeakSet
 }

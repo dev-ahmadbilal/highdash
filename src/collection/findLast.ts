@@ -19,38 +19,38 @@ export function findLast<T>(
     | Record<string, unknown>,
 ): T | undefined {
   if (!collection) {
-    return undefined;
+    return undefined
   }
 
   const getValue = (() => {
-    if (typeof predicate === 'function') return predicate;
+    if (typeof predicate === 'function') return predicate
     if (typeof predicate === 'string') {
       // Project tests expect string predicate to match falsy property
-      return (item: T) => !(item as Record<string, unknown>)[predicate];
+      return (item: T) => !(item as Record<string, unknown>)[predicate]
     }
     if (predicate && typeof predicate === 'object') {
-      const entries = Object.entries(predicate as Record<string, unknown>);
-      return (item: T) => entries.every(([k, v]) => (item as any)[k] === v);
+      const entries = Object.entries(predicate as Record<string, unknown>)
+      return (item: T) => entries.every(([k, v]) => (item as any)[k] === v)
     }
-    return () => false;
-  })();
+    return () => false
+  })()
 
   if (Array.isArray(collection)) {
     for (let i = collection.length - 1; i >= 0; i--) {
       if (getValue(collection[i], i, collection)) {
-        return collection[i];
+        return collection[i]
       }
     }
   } else {
-    const keys = Object.keys(collection);
+    const keys = Object.keys(collection)
     for (let i = keys.length - 1; i >= 0; i--) {
-      const key = keys[i];
-      const value = collection[key];
+      const key = keys[i]
+      const value = collection[key]
       if (getValue(value, i, collection)) {
-        return value;
+        return value
       }
     }
   }
 
-  return undefined;
+  return undefined
 }

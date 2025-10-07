@@ -15,5 +15,5 @@
  * ```
  */
 export function defaultTo<T, U>(value: T, defaultValue: U): T | U {
-  return value === null || value === undefined ? defaultValue : value;
+  return value === null || value === undefined ? defaultValue : value
 }

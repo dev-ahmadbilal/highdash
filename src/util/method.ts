@@ -25,18 +25,18 @@ export function method(path: string | string[]): (object: unknown) => unknown {
     : String(path)
         .replace(/\[(\d+)\]/g, '.$1')
         .split('.')
-        .filter((x) => x.length > 0);
+        .filter((x) => x.length > 0)
 
   return (object: unknown): unknown => {
     if (object === null || object === undefined || typeof object !== 'object') {
-      return undefined;
+      return undefined
     }
-    if (parts.length === 0) return undefined;
-    let cur: any = object;
+    if (parts.length === 0) return undefined
+    let cur: any = object
     for (const p of parts) {
-      if (cur === null) return undefined;
-      cur = cur[p];
+      if (cur === null) return undefined
+      cur = cur[p]
     }
-    return cur;
-  };
+    return cur
+  }
 }

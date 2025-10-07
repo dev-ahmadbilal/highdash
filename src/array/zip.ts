@@ -12,30 +12,30 @@
  */
 export function zip<T extends unknown[]>(...arrays: T[]): T[number][][] {
   if (arrays.length === 0) {
-    return [];
+    return []
   }
 
   // Filter out non-arrays and get valid arrays
-  const validArrays = arrays.filter((arr) => Array.isArray(arr));
+  const validArrays = arrays.filter((arr) => Array.isArray(arr))
   if (validArrays.length === 0) {
-    return [];
+    return []
   }
 
   // If any array is empty, return empty result
   if (validArrays.some((arr) => arr.length === 0)) {
-    return [];
+    return []
   }
 
-  const maxLength = Math.max(...validArrays.map((arr) => arr.length));
-  const result: T[number][][] = [];
+  const maxLength = Math.max(...validArrays.map((arr) => arr.length))
+  const result: T[number][][] = []
 
   for (let i = 0; i < maxLength; i++) {
-    const group: T[number][] = [];
+    const group: T[number][] = []
     for (const array of arrays) {
-      group.push(Array.isArray(array) && i < array.length ? array[i] : (undefined as T[number]));
+      group.push(Array.isArray(array) && i < array.length ? array[i] : (undefined as T[number]))
     }
-    result.push(group);
+    result.push(group)
   }
 
-  return result;
+  return result
 }

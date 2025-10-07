@@ -19,7 +19,7 @@
  */
 export function drop<T>(array: T[], n: number = 1): T[] {
   if (!Array.isArray(array) || n <= 0) {
-    return array || [];
+    return array || []
   }
-  return array.slice(n);
+  return array.slice(n)
 }

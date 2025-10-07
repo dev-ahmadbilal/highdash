@@ -24,31 +24,31 @@ export function reject<T>(
     | Record<string, unknown>,
 ): T[] {
   if (!collection) {
-    return [];
+    return []
   }
 
   const getValue = (() => {
-    if (typeof predicate === 'function') return predicate;
+    if (typeof predicate === 'function') return predicate
     if (typeof predicate === 'string') {
       // For reject, treat string predicate as truthiness check and exclude truthy ones
-      return (item: T) => Boolean((item as Record<string, unknown>)[predicate]);
+      return (item: T) => Boolean((item as Record<string, unknown>)[predicate])
     }
     if (predicate && typeof predicate === 'object') {
-      const entries = Object.entries(predicate as Record<string, unknown>);
-      return (item: T) => entries.every(([k, v]) => (item as any)[k] === v);
+      const entries = Object.entries(predicate as Record<string, unknown>)
+      return (item: T) => entries.every(([k, v]) => (item as any)[k] === v)
     }
-    return () => false;
-  })();
+    return () => false
+  })()
 
-  const items = Array.isArray(collection) ? collection : Object.values(collection);
-  const result: T[] = [];
+  const items = Array.isArray(collection) ? collection : Object.values(collection)
+  const result: T[] = []
 
   for (let i = 0; i < items.length; i++) {
-    const item = items[i];
+    const item = items[i]
     if (!getValue(item, i, collection)) {
-      result.push(item);
+      result.push(item)
     }
   }
 
-  return result;
+  return result
 }

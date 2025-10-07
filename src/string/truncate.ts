@@ -20,45 +20,45 @@
 export function truncate(
   string: string,
   options: {
-    length?: number;
-    omission?: string;
-    separator?: string | RegExp;
+    length?: number
+    omission?: string
+    separator?: string | RegExp
   } = {},
 ): string {
   if (typeof string !== 'string') {
-    return '';
+    return ''
   }
 
-  const { length = 30, omission = '...', separator } = options;
+  const { length = 30, omission = '...', separator } = options
 
   if (string.length <= length) {
-    return string;
+    return string
   }
 
-  const omissionLength = omission.length;
-  const truncateLength = length - omissionLength;
+  const omissionLength = omission.length
+  const truncateLength = length - omissionLength
 
   if (truncateLength < 1) {
-    return omission;
+    return omission
   }
 
-  let truncated = string.slice(0, truncateLength);
+  let truncated = string.slice(0, truncateLength)
 
   if (separator) {
-    const separatorRegex = typeof separator === 'string' ? new RegExp(separator, 'g') : separator;
+    const separatorRegex = typeof separator === 'string' ? new RegExp(separator, 'g') : separator
     if (separatorRegex.global) {
-      const lastMatch = [...truncated.matchAll(separatorRegex)].pop();
+      const lastMatch = [...truncated.matchAll(separatorRegex)].pop()
       if (lastMatch && lastMatch.index !== undefined) {
-        truncated = truncated.slice(0, lastMatch.index);
+        truncated = truncated.slice(0, lastMatch.index)
       }
     } else {
-      const globalRegex = new RegExp(separatorRegex.source, 'g');
-      const lastMatch = [...truncated.matchAll(globalRegex)].pop();
+      const globalRegex = new RegExp(separatorRegex.source, 'g')
+      const lastMatch = [...truncated.matchAll(globalRegex)].pop()
       if (lastMatch && lastMatch.index !== undefined) {
-        truncated = truncated.slice(0, lastMatch.index);
+        truncated = truncated.slice(0, lastMatch.index)
       }
     }
   }
 
-  return truncated + omission;
+  return truncated + omission
 }

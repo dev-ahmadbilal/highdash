@@ -25,34 +25,34 @@ export function assignWith<T extends Record<string, unknown>>(
   )[]
 ): T {
   if (!object || typeof object !== 'object') {
-    return object;
+    return object
   }
 
-  const customizer = sources[sources.length - 1];
-  const isCustomizer = typeof customizer === 'function';
-  const sourceObjects = isCustomizer ? sources.slice(0, -1) : sources;
+  const customizer = sources[sources.length - 1]
+  const isCustomizer = typeof customizer === 'function'
+  const sourceObjects = isCustomizer ? sources.slice(0, -1) : sources
 
   for (const source of sourceObjects) {
     if (!source || typeof source !== 'object') {
-      continue;
+      continue
     }
 
     for (const key in source) {
-      if (Object.prototype.hasOwnProperty.call(source, key)) {
-        const srcValue = source[key];
-        const objValue = object[key];
+      if (Object.hasOwn(source, key)) {
+        const srcValue = source[key]
+        const objValue = object[key]
 
         if (isCustomizer) {
-          const customValue = (customizer as Function)(objValue, srcValue, key, object, source);
+          const customValue = (customizer as Function)(objValue, srcValue, key, object, source)
           if (customValue !== undefined) {
-            (object as Record<string, unknown>)[key] = customValue;
+            ;(object as Record<string, unknown>)[key] = customValue
           }
         } else {
-          (object as Record<string, unknown>)[key] = srcValue;
+          ;(object as Record<string, unknown>)[key] = srcValue
         }
       }
     }
   }
 
-  return object;
+  return object
 }

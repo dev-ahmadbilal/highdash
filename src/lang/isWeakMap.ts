@@ -14,5 +14,5 @@
  * ```
  */
 export function isWeakMap(value: unknown): value is WeakMap<object, unknown> {
-  return value !== null && typeof value === 'object' && value.constructor === WeakMap;
+  return value !== null && typeof value === 'object' && value.constructor === WeakMap
 }

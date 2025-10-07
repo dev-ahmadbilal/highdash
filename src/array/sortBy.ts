@@ -25,48 +25,48 @@ export function sortBy<T>(
   ...iteratees: (((value: T) => unknown) | string)[]
 ): T[] {
   if (!collection) {
-    return [];
+    return []
   }
 
-  const items = Array.isArray(collection) ? collection : Object.values(collection);
+  const items = Array.isArray(collection) ? collection : Object.values(collection)
   if (items.length === 0) {
-    return [];
+    return []
   }
 
   // Process iteratees with optimization
-  const flatIteratees: ((value: T) => unknown)[] = [];
+  const flatIteratees: ((value: T) => unknown)[] = []
   for (const iter of iteratees) {
     if (typeof iter === 'string') {
-      const path = iter;
+      const path = iter
       if (path.indexOf('.') === -1 && path.indexOf('[') === -1) {
         // Simple property access - avoid get() overhead
         flatIteratees.push((obj: T) => {
           if (obj !== null && typeof obj === 'object') {
-            return (obj as any)[path];
+            return (obj as any)[path]
           }
-          return undefined;
-        });
+          return undefined
+        })
       } else {
         // Complex path - use get()
-        flatIteratees.push((obj: T) => get(obj as unknown as Record<string, unknown>, path));
+        flatIteratees.push((obj: T) => get(obj as unknown as Record<string, unknown>, path))
       }
     } else {
-      flatIteratees.push(iter);
+      flatIteratees.push(iter)
     }
   }
 
   return [...items].sort((a, b) => {
     for (const iteratee of flatIteratees) {
-      const aValue = iteratee(a);
-      const bValue = iteratee(b);
+      const aValue = iteratee(a)
+      const bValue = iteratee(b)
 
       // Handle comparison with proper type checking
-      if (aValue === bValue) continue;
-      if ((aValue as any) < (bValue as any)) return -1;
-      if ((aValue as any) > (bValue as any)) return 1;
+      if (aValue === bValue) continue
+      if ((aValue as any) < (bValue as any)) return -1
+      if ((aValue as any) > (bValue as any)) return 1
     }
-    return 0;
-  });
+    return 0
+  })
 }
 
-import { get } from '../object/get.js';
+import { get } from '../object/get.js'

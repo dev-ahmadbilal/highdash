@@ -25,11 +25,11 @@ export function bindKey<T extends Record<string, unknown>>(
   key: keyof T,
   ...partials: unknown[]
 ): (...args: unknown[]) => unknown {
-  const method = object[key];
+  const method = object[key]
   if (typeof method !== 'function') {
-    throw new TypeError('Expected a function');
+    throw new TypeError('Expected a function')
   }
   return (...args: unknown[]): unknown => {
-    return (method as Function).apply(object, partials.concat(args));
-  };
+    return (method as Function).apply(object, partials.concat(args))
+  }
 }

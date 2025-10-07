@@ -19,13 +19,13 @@
  */
 export function overSome<T extends unknown[]>(predicates: Array<(...args: T) => unknown>): (...args: T) => any {
   return (...args: T): any => {
-    const results = predicates.map((predicate) => predicate(...args));
+    const results = predicates.map((predicate) => predicate(...args))
     // If any result is a Promise, handle asynchronously
     if (results.some((r) => r instanceof Promise)) {
       return Promise.all(results.map((r) => (r instanceof Promise ? r : Promise.resolve(r)))).then((vals) =>
         vals.some((v) => Boolean(v)),
-      );
+      )
     }
-    return results.some((v) => Boolean(v));
-  };
+    return results.some((v) => Boolean(v))
+  }
 }

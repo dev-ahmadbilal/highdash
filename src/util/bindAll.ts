@@ -23,39 +23,39 @@
 export function bindAll<T extends Record<string, any>>(object: T, ...methodNames: string[]): T {
   if (object === null || object === undefined || typeof object !== 'object') {
     // Mirror lodash behavior: return input as-is for non-objects
-    return object as T;
+    return object as T
   }
 
   const bindAtPath = (path: string) => {
-    const parts = path.split('.');
-    let ctx: any = object;
+    const parts = path.split('.')
+    let ctx: any = object
     for (let i = 0; i < parts.length - 1; i++) {
-      const p = parts[i];
-      if (ctx === null || typeof ctx !== 'object') return; // nothing to bind
-      ctx = ctx[p];
+      const p = parts[i]
+      if (ctx === null || typeof ctx !== 'object') return // nothing to bind
+      ctx = ctx[p]
     }
-    const last = parts[parts.length - 1];
-    if (!last) return;
-    const fn = ctx?.[last];
+    const last = parts[parts.length - 1]
+    if (!last) return
+    const fn = ctx?.[last]
     if (typeof fn === 'function') {
-      ctx[last] = (fn as Function).bind(object);
+      ctx[last] = (fn as Function).bind(object)
     }
-  };
+  }
 
   if (methodNames.length === 0) {
     // Bind all own enumerable function properties on the root object
     for (const key of Object.keys(object)) {
-      const value = (object as any)[key];
+      const value = (object as any)[key]
       if (typeof value === 'function') {
-        (object as any)[key] = (value as Function).bind(object);
+        ;(object as any)[key] = (value as Function).bind(object)
       }
     }
-    return object;
+    return object
   }
 
   for (const name of methodNames) {
-    bindAtPath(String(name));
+    bindAtPath(String(name))
   }
 
-  return object;
+  return object
 }

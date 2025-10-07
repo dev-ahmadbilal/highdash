@@ -18,21 +18,21 @@
  */
 export function remove<T>(array: T[], predicate: (value: T, index: number, array: T[]) => boolean): T[] {
   if (!Array.isArray(array)) {
-    return [];
+    return []
   }
 
-  const removed: T[] = [];
-  let writeIndex = 0;
+  const removed: T[] = []
+  let writeIndex = 0
 
   for (let readIndex = 0; readIndex < array.length; readIndex++) {
     if (predicate(array[readIndex], readIndex, array)) {
-      removed.push(array[readIndex]);
+      removed.push(array[readIndex])
     } else {
-      array[writeIndex] = array[readIndex];
-      writeIndex++;
+      array[writeIndex] = array[readIndex]
+      writeIndex++
     }
   }
 
-  array.length = writeIndex;
-  return removed;
+  array.length = writeIndex
+  return removed
 }

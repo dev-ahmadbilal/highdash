@@ -14,5 +14,5 @@
  * ```
  */
 export function stubArray(): unknown[] {
-  return [];
+  return []
 }

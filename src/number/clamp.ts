@@ -20,8 +20,8 @@
  */
 export function clamp(number: number, lower: number, upper: number): number {
   if (lower > upper) {
-    [lower, upper] = [upper, lower];
+    ;[lower, upper] = [upper, lower]
   }
 
-  return Math.min(Math.max(number, lower), upper);
+  return Math.min(Math.max(number, lower), upper)
 }

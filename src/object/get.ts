@@ -25,31 +25,31 @@ export function get<T = unknown>(
   defaultValue?: T,
 ): T | undefined {
   if (!object || typeof object !== 'object') {
-    return defaultValue;
+    return defaultValue
   }
 
-  let keys: string[];
+  let keys: string[]
 
   if (Array.isArray(path)) {
-    keys = path;
+    keys = path
   } else {
     // Optimize for simple property access
     if (path.indexOf('.') === -1 && path.indexOf('[') === -1) {
-      keys = [path];
+      keys = [path]
     } else {
       // eslint-disable-next-line no-useless-escape
-      keys = path.split(/[\.\[\]]+/).filter(Boolean);
+      keys = path.split(/[.[\]]+/).filter(Boolean)
     }
   }
 
-  let result: unknown = object;
+  let result: unknown = object
 
   for (const key of keys) {
     if (result === null || result === undefined || typeof result !== 'object') {
-      return defaultValue;
+      return defaultValue
     }
-    result = (result as Record<string, unknown>)[key];
+    result = (result as Record<string, unknown>)[key]
   }
 
-  return result === undefined ? defaultValue : (result as T);
+  return result === undefined ? defaultValue : (result as T)
 }

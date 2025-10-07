@@ -11,5 +11,5 @@
  * ```
  */
 export function stubTrue(): true {
-  return true;
+  return true
 }
