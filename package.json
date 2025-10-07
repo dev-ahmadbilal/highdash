@@ -79,8 +79,8 @@
     "clean": "rm -rf ./lib/",
     "release": "semantic-release",
     "prepare": "husky install",
-    "lint": "eslint ./src/",
-    "lint:fix": "eslint ./src/ --fix",
+    "lint": "biome check ./src/",
+    "lint:fix": "biome check ./src/ --fix",
     "start": "npx ts-node src/index.ts",
     "test": "jest --config jest.config.cjs --coverage",
     "benchmark": "node benchmarks/performance.js",
@@ -139,8 +139,8 @@
   },
   "homepage": "https://github.com/dev-ahmadbilal/highdash#readme",
   "devDependencies": {
+    "@biomejs/biome": "2.2.5",
     "@commitlint/config-conventional": "^20.0.0",
-    "@eslint/js": "^9.36.0",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
     "@semantic-release/npm": "^12.0.2",
@@ -148,9 +148,6 @@
     "@types/node": "^24.6.0",
     "bundlesize": "^0.18.2",
     "commitlint": "^20.0.0",
-    "eslint": "^9.36.0",
-    "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-prettier": "^5.5.4",
     "globals": "^16.4.0",
     "husky": "^9.1.7",
     "jest": "^30.2.0",
@@ -159,7 +156,6 @@
     "semantic-release": "^24.2.9",
     "ts-jest": "^29.4.4",
     "ts-node": "^10.9.2",
-    "typescript": "^5.9.2",
-    "typescript-eslint": "^8.45.0"
+    "typescript": "^5.9.2"
   }
 }
