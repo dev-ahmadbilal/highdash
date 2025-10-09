@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/dev-ahmadbilal/highdash/compare/v1.0.2...v1.0.3) (2025-10-01)
+
+
+### Bug Fixes
+
+* **docs:** pkg size comparison ([fa3c56b](https://github.com/dev-ahmadbilal/highdash/commit/fa3c56b90ec3c5020e99b3cbdf20275e3788fe46))
+
 ## [1.0.2](https://github.com/dev-ahmadbilal/highdash/compare/v1.0.1...v1.0.2) (2025-10-01)
 
 
