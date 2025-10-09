@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/dev-ahmadbilal/highdash/compare/v1.0.3...v1.0.4) (2025-10-09)
+
+
+### Bug Fixes
+
+* fallback support of commonjs ([f5b59ae](https://github.com/dev-ahmadbilal/highdash/commit/f5b59ae0a2e98231b6788316d7a9327421871fa8))
+
 ## [1.0.3](https://github.com/dev-ahmadbilal/highdash/compare/v1.0.2...v1.0.3) (2025-10-01)
 
 
