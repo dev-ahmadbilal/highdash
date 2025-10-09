@@ -2,11 +2,8 @@ import { method } from '../../src/util/method';
 
 describe('method', () => {
   it('should create function that invokes method on object', () => {
-    const objects = [
-      { a: { b: 2 } },
-      { a: { b: 1 } }
-    ];
-    
+    const objects = [{ a: { b: 2 } }, { a: { b: 1 } }];
+
     const getB = method('a.b');
     expect(getB(objects[0])).toBe(2);
     expect(getB(objects[1])).toBe(1);
@@ -34,7 +31,7 @@ describe('method', () => {
     const getActive = method('active');
     const getCount = method('count');
     const getValue = method('value');
-    
+
     expect(getActive({ active: true })).toBe(true);
     expect(getCount({ count: 0 })).toBe(0);
     expect(getValue({ value: null })).toBe(null);
@@ -73,11 +70,8 @@ describe('method', () => {
     const getName = method('data.users.0.profile.name');
     const obj = {
       data: {
-        users: [
-          { profile: { name: 'john' } },
-          { profile: { name: 'jane' } }
-        ]
-      }
+        users: [{ profile: { name: 'john' } }, { profile: { name: 'jane' } }],
+      },
     };
     expect(getName(obj)).toBe('john');
   });

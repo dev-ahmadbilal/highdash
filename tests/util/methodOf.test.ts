@@ -4,9 +4,9 @@ describe('methodOf', () => {
   it('should create function that invokes method on object', () => {
     const objects = {
       a: { b: 2 },
-      c: { b: 1 }
+      c: { b: 1 },
     };
-    
+
     const getB = methodOf(objects, 'a.b');
     expect(getB()).toBe(2);
   });
@@ -34,7 +34,7 @@ describe('methodOf', () => {
     const getActive = methodOf(obj, 'active');
     const getCount = methodOf(obj, 'count');
     const getValue = methodOf(obj, 'value');
-    
+
     expect(getActive()).toBe(true);
     expect(getCount()).toBe(0);
     expect(getValue()).toBe(null);
@@ -77,11 +77,8 @@ describe('methodOf', () => {
   it('should work with complex nested structures', () => {
     const obj = {
       data: {
-        users: [
-          { profile: { name: 'john' } },
-          { profile: { name: 'jane' } }
-        ]
-      }
+        users: [{ profile: { name: 'john' } }, { profile: { name: 'jane' } }],
+      },
     };
     const getName = methodOf(obj, 'data.users.0.profile.name');
     expect(getName()).toBe('john');

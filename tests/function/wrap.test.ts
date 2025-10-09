@@ -26,9 +26,9 @@ describe('wrap', () => {
     const value = 10;
     const obj = {
       multiplier: 2,
-      wrapper: function(val: number, add: number) {
+      wrapper: function (val: number, add: number) {
         return (val + add) * this.multiplier;
-      }
+      },
     };
     const wrapped = wrap(value, obj.wrapper);
     expect(wrapped.call(obj, 5)).toBe(30); // (10 + 5) * 2
@@ -43,7 +43,7 @@ describe('wrap', () => {
 
   it('should work with boolean values', () => {
     const value = true;
-    const wrapper = (val: boolean, negate: boolean) => negate ? !val : val;
+    const wrapper = (val: boolean, negate: boolean) => (negate ? !val : val);
     const wrapped = wrap(value, wrapper);
     expect(wrapped(true)).toBe(false);
   });

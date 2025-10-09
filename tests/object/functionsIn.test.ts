@@ -6,8 +6,8 @@ describe('functionsIn', () => {
       this.a = 1;
       this.b = () => {};
     }
-    Foo.prototype.c = function() {};
-    
+    Foo.prototype.c = function () {};
+
     const obj = new Foo();
     const result = functionsIn(obj);
     expect(result).toEqual(['b', 'c']);

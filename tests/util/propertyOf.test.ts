@@ -4,9 +4,9 @@ describe('propertyOf', () => {
   it('should create function that gets property value from object', () => {
     const objects = {
       a: { b: 2 },
-      c: { b: 1 }
+      c: { b: 1 },
     };
-    
+
     const getB = propertyOf(objects, 'a.b');
     expect(getB()).toBe(2);
   });
@@ -34,7 +34,7 @@ describe('propertyOf', () => {
     const getActive = propertyOf(obj, 'active');
     const getCount = propertyOf(obj, 'count');
     const getValue = propertyOf(obj, 'value');
-    
+
     expect(getActive()).toBe(true);
     expect(getCount()).toBe(0);
     expect(getValue()).toBe(null);
@@ -77,11 +77,8 @@ describe('propertyOf', () => {
   it('should work with complex nested structures', () => {
     const obj = {
       data: {
-        users: [
-          { profile: { name: 'john' } },
-          { profile: { name: 'jane' } }
-        ]
-      }
+        users: [{ profile: { name: 'john' } }, { profile: { name: 'jane' } }],
+      },
     };
     const getName = propertyOf(obj, 'data.users.0.profile.name');
     expect(getName()).toBe('john');

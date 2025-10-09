@@ -6,7 +6,7 @@ describe('functions', () => {
       a: 1,
       b: () => {},
       c: 'hello',
-      d: function() {}
+      d: function () {},
     };
     const result = functions(obj);
     expect(result).toEqual(['b', 'd']);

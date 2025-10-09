@@ -6,10 +6,13 @@ describe('toPairsIn', () => {
       this.a = 1;
     }
     Foo.prototype.b = 2;
-    
+
     const obj = new Foo();
     const result = toPairsIn(obj);
-    expect(result).toEqual([['a', 1], ['b', 2]]);
+    expect(result).toEqual([
+      ['a', 1],
+      ['b', 2],
+    ]);
   });
 
   it('handles empty object', () => {
@@ -17,7 +20,10 @@ describe('toPairsIn', () => {
   });
 
   it('handles object with own properties only', () => {
-    expect(toPairsIn({ a: 1, b: 2 })).toEqual([['a', 1], ['b', 2]]);
+    expect(toPairsIn({ a: 1, b: 2 })).toEqual([
+      ['a', 1],
+      ['b', 2],
+    ]);
   });
 
   it('handles null input', () => {

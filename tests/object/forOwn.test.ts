@@ -10,8 +10,8 @@ describe('forOwn', () => {
 
     const obj = new Foo();
     const result: string[] = [];
-    
-    forOwn(obj, function(value, key) {
+
+    forOwn(obj, function (value, key) {
       result.push(key as string);
     });
 
@@ -23,7 +23,7 @@ describe('forOwn', () => {
   it('should pass correct arguments to iteratee', () => {
     const obj = { a: 1, b: 2 };
     const iteratee = jest.fn();
-    
+
     forOwn(obj, iteratee);
 
     expect(iteratee).toHaveBeenCalledWith(1, 'a', obj);
@@ -36,7 +36,7 @@ describe('forOwn', () => {
       if (key === 'b') return false;
       return true;
     });
-    
+
     forOwn(obj, iteratee);
 
     expect(iteratee).toHaveBeenCalledTimes(2);
@@ -48,7 +48,7 @@ describe('forOwn', () => {
   it('should return the original object', () => {
     const obj = { a: 1, b: 2 };
     const result = forOwn(obj, () => {});
-    
+
     expect(result).toBe(obj);
   });
 
@@ -65,17 +65,17 @@ describe('forOwn', () => {
   it('should handle empty object', () => {
     const obj = {};
     const iteratee = jest.fn();
-    
+
     forOwn(obj, iteratee);
-    
+
     expect(iteratee).not.toHaveBeenCalled();
   });
 
   it('should handle array-like object', () => {
     const obj = { 0: 'a', 1: 'b', length: 2 };
     const result: string[] = [];
-    
-    forOwn(obj, function(value, key) {
+
+    forOwn(obj, function (value, key) {
       result.push(key as string);
     });
 
@@ -88,8 +88,8 @@ describe('forOwn', () => {
     const sym = Symbol('test');
     const obj = { [sym]: 'value', a: 1 };
     const result: any[] = [];
-    
-    forOwn(obj, function(value, key) {
+
+    forOwn(obj, function (value, key) {
       result.push([value, key]);
     });
 
@@ -103,7 +103,7 @@ describe('forOwn', () => {
     child.own = 'value';
 
     const result: string[] = [];
-    forOwn(child, function(value, key) {
+    forOwn(child, function (value, key) {
       result.push(key as string);
     });
 

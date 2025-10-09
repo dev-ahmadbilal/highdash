@@ -4,7 +4,11 @@ describe('entries', () => {
   it('should return entries of object', () => {
     const obj = { a: 1, b: 2, c: 3 };
     const result = entries(obj);
-    expect(result).toEqual([['a', 1], ['b', 2], ['c', 3]]);
+    expect(result).toEqual([
+      ['a', 1],
+      ['b', 2],
+      ['c', 3],
+    ]);
   });
 
   it('should handle empty object', () => {
@@ -28,6 +32,9 @@ describe('entries', () => {
     Foo.prototype.c = 3;
     const foo = new (Foo as any)();
     const result = entries(foo);
-    expect(result).toEqual([['a', 1], ['b', 2]]);
+    expect(result).toEqual([
+      ['a', 1],
+      ['b', 2],
+    ]);
   });
 });

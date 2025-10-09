@@ -5,9 +5,9 @@ describe('matches', () => {
     const users = [
       { user: 'barney', age: 36, active: true },
       { user: 'fred', age: 40, active: false },
-      { user: 'pebbles', age: 1, active: true }
+      { user: 'pebbles', age: 1, active: true },
     ];
-    
+
     const matcher = matches({ age: 36, active: true });
     expect(matcher(users[0])).toBe(true);
     expect(matcher(users[1])).toBe(false);
@@ -15,12 +15,8 @@ describe('matches', () => {
   });
 
   it('should work with nested objects', () => {
-    const objects = [
-      { a: { b: 2 } },
-      { a: { b: 1 } },
-      { a: { c: 2 } }
-    ];
-    
+    const objects = [{ a: { b: 2 } }, { a: { b: 1 } }, { a: { c: 2 } }];
+
     const matcher = matches({ a: { b: 2 } });
     expect(matcher(objects[0])).toBe(true);
     expect(matcher(objects[1])).toBe(false);
@@ -28,12 +24,8 @@ describe('matches', () => {
   });
 
   it('should work with arrays', () => {
-    const objects = [
-      { tags: ['red', 'blue'] },
-      { tags: ['red', 'green'] },
-      { tags: ['blue'] }
-    ];
-    
+    const objects = [{ tags: ['red', 'blue'] }, { tags: ['red', 'green'] }, { tags: ['blue'] }];
+
     const matcher = matches({ tags: ['red', 'blue'] });
     expect(matcher(objects[0])).toBe(true);
     expect(matcher(objects[1])).toBe(false);

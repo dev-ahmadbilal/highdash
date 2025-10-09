@@ -70,7 +70,8 @@
     }
   },
   "files": [
-    "lib/**/*"
+    "lib/**/*",
+    "cjs/**/*"
   ],
   "scripts": {
     "build": "tsc --project tsconfig.build.json && tsc --project tsconfig.cjs.json",
@@ -81,6 +82,10 @@
     "prepare": "husky install",
     "lint": "eslint ./src/",
     "lint:fix": "eslint ./src/ --fix",
+    "lint:tests": "eslint ./tests/",
+    "lint:tests:fix": "eslint ./tests/ --fix",
+    "lint:all": "eslint ./src/ ./tests/",
+    "lint:all:fix": "eslint ./src/ ./tests/ --fix",
     "start": "npx ts-node src/index.ts",
     "test": "jest --config jest.config.cjs --coverage",
     "benchmark": "node benchmarks/performance.js",

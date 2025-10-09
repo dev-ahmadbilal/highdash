@@ -26,7 +26,9 @@ describe('once', () => {
 
   it('should preserve this context', () => {
     const obj = { value: 42 };
-    const func = jest.fn(function() { return this.value; });
+    const func = jest.fn(function () {
+      return this.value;
+    });
     const onceFunc = once(func);
 
     const result = onceFunc.call(obj);

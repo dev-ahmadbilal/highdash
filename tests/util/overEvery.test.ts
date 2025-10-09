@@ -25,7 +25,7 @@ describe('overEvery', () => {
 
   it('should work with different argument counts', () => {
     const func = overEvery([
-      (a: number, b: number) => a > 0,
+      (a: number, _b: number) => a > 0,
       (a: number, b: number) => b > 0,
       (a: number, b: number) => a + b > 0,
     ]);
@@ -80,9 +80,9 @@ describe('overEvery', () => {
 
   it('should work with functions that return falsy values', () => {
     const func = overEvery([
-      (x: number) => x > 0,
+      (_x: number) => _x > 0,
       (x: number) => x < 10,
-      (x: number) => null, // falsy
+      (_x: number) => null, // falsy
       (x: number) => x % 2 === 0,
     ]);
     expect(func(2)).toBe(false); // null is falsy

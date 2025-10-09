@@ -4,9 +4,9 @@ describe('bindKey', () => {
   it('should bind method with this context', () => {
     const obj = {
       value: 42,
-      getValue: function() {
+      getValue: function () {
         return this.value;
-      }
+      },
     };
 
     const boundFunc = bindKey(obj, 'getValue');
@@ -16,9 +16,9 @@ describe('bindKey', () => {
   it('should bind method with partial arguments', () => {
     const obj = {
       multiplier: 2,
-      calculate: function(a: number, b: number) {
+      calculate: function (a: number, b: number) {
         return (a + b) * this.multiplier;
-      }
+      },
     };
 
     const boundCalc = bindKey(obj, 'calculate', 5);
@@ -28,9 +28,9 @@ describe('bindKey', () => {
   it('should bind method with this context and partial arguments', () => {
     const obj = {
       prefix: 'Hello',
-      greet: function(name: string, suffix: string) {
+      greet: function (name: string, suffix: string) {
         return `${this.prefix} ${name}${suffix}`;
-      }
+      },
     };
 
     const boundGreet = bindKey(obj, 'greet', 'World');
@@ -39,9 +39,9 @@ describe('bindKey', () => {
 
   it('should handle no partial arguments', () => {
     const obj = {
-      add: function(a: number, b: number) {
+      add: function (a: number, b: number) {
         return a + b;
-      }
+      },
     };
 
     const boundAdd = bindKey(obj, 'add');
@@ -50,9 +50,9 @@ describe('bindKey', () => {
 
   it('should handle all arguments as partials', () => {
     const obj = {
-      multiply: function(a: number, b: number) {
+      multiply: function (a: number, b: number) {
         return a * b;
-      }
+      },
     };
 
     const boundMultiply = bindKey(obj, 'multiply', 3, 4);
@@ -61,7 +61,7 @@ describe('bindKey', () => {
 
   it('should throw error for non-function property', () => {
     const obj = {
-      value: 42
+      value: 42,
     };
 
     expect(() => {

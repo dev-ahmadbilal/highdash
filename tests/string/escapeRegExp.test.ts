@@ -74,7 +74,9 @@ describe('escapeRegExp', () => {
   });
 
   it('should handle string with mixed content', () => {
-    expect(escapeRegExp('hello [world] (test) {value} | other')).toBe('hello \\[world\\] \\(test\\) \\{value\\} \\| other');
+    expect(escapeRegExp('hello [world] (test) {value} | other')).toBe(
+      'hello \\[world\\] \\(test\\) \\{value\\} \\| other',
+    );
   });
 
   it('should handle string with multiple lines', () => {
@@ -114,7 +116,9 @@ describe('escapeRegExp', () => {
   });
 
   it('should handle string with special characters and regex entities', () => {
-    expect(escapeRegExp('hello [world] (test) {value} | other')).toBe('hello \\[world\\] \\(test\\) \\{value\\} \\| other');
+    expect(escapeRegExp('hello [world] (test) {value} | other')).toBe(
+      'hello \\[world\\] \\(test\\) \\{value\\} \\| other',
+    );
   });
 
   it('should handle string with numbers and regex entities', () => {
@@ -122,46 +126,68 @@ describe('escapeRegExp', () => {
   });
 
   it('should handle string with mixed separators and regex entities', () => {
-    expect(escapeRegExp('hello, [world]; (test): {value} | other')).toBe('hello, \\[world\\]; \\(test\\): \\{value\\} \\| other');
+    expect(escapeRegExp('hello, [world]; (test): {value} | other')).toBe(
+      'hello, \\[world\\]; \\(test\\): \\{value\\} \\| other',
+    );
   });
 
   it('should handle string with mixed separators, spaces, and regex entities', () => {
-    expect(escapeRegExp('hello, [world]; (test): {value} | other')).toBe('hello, \\[world\\]; \\(test\\): \\{value\\} \\| other');
+    expect(escapeRegExp('hello, [world]; (test): {value} | other')).toBe(
+      'hello, \\[world\\]; \\(test\\): \\{value\\} \\| other',
+    );
   });
 
   it('should handle string with mixed separators, spaces, tabs, and regex entities', () => {
-    expect(escapeRegExp('hello, [world]; (test): {value} | other\t')).toBe('hello, \\[world\\]; \\(test\\): \\{value\\} \\| other\t');
+    expect(escapeRegExp('hello, [world]; (test): {value} | other\t')).toBe(
+      'hello, \\[world\\]; \\(test\\): \\{value\\} \\| other\t',
+    );
   });
 
   it('should handle string with mixed separators, spaces, tabs, newlines, and regex entities', () => {
-    expect(escapeRegExp('hello, [world]; (test): {value} | other\t\n')).toBe('hello, \\[world\\]; \\(test\\): \\{value\\} \\| other\t\n');
+    expect(escapeRegExp('hello, [world]; (test): {value} | other\t\n')).toBe(
+      'hello, \\[world\\]; \\(test\\): \\{value\\} \\| other\t\n',
+    );
   });
 
   it('should handle string with mixed separators, spaces, tabs, newlines, carriage returns, and regex entities', () => {
-    expect(escapeRegExp('hello, [world]; (test): {value} | other\t\n\r')).toBe('hello, \\[world\\]; \\(test\\): \\{value\\} \\| other\t\n\r');
+    expect(escapeRegExp('hello, [world]; (test): {value} | other\t\n\r')).toBe(
+      'hello, \\[world\\]; \\(test\\): \\{value\\} \\| other\t\n\r',
+    );
   });
 
   it('should handle string with mixed separators, spaces, tabs, newlines, carriage returns, form feeds, and regex entities', () => {
-    expect(escapeRegExp('hello, [world]; (test): {value} | other\t\n\r\f')).toBe('hello, \\[world\\]; \\(test\\): \\{value\\} \\| other\t\n\r\f');
+    expect(escapeRegExp('hello, [world]; (test): {value} | other\t\n\r\f')).toBe(
+      'hello, \\[world\\]; \\(test\\): \\{value\\} \\| other\t\n\r\f',
+    );
   });
 
   it('should handle string with mixed separators, spaces, tabs, newlines, carriage returns, form feeds, vertical tabs, and regex entities', () => {
-    expect(escapeRegExp('hello, [world]; (test): {value} | other\t\n\r\f\v')).toBe('hello, \\[world\\]; \\(test\\): \\{value\\} \\| other\t\n\r\f\v');
+    expect(escapeRegExp('hello, [world]; (test): {value} | other\t\n\r\f\v')).toBe(
+      'hello, \\[world\\]; \\(test\\): \\{value\\} \\| other\t\n\r\f\v',
+    );
   });
 
   it('should handle string with mixed separators, spaces, tabs, newlines, carriage returns, form feeds, vertical tabs, backspaces, and regex entities', () => {
-    expect(escapeRegExp('hello, [world]; (test): {value} | other\t\n\r\f\v\b')).toBe('hello, \\[world\\]; \\(test\\): \\{value\\} \\| other\t\n\r\f\v\b');
+    expect(escapeRegExp('hello, [world]; (test): {value} | other\t\n\r\f\v\b')).toBe(
+      'hello, \\[world\\]; \\(test\\): \\{value\\} \\| other\t\n\r\f\v\b',
+    );
   });
 
   it('should handle string with mixed separators, spaces, tabs, newlines, carriage returns, form feeds, vertical tabs, backspaces, null characters, and regex entities', () => {
-    expect(escapeRegExp('hello, [world]; (test): {value} | other\t\n\r\f\v\b\0')).toBe('hello, \\[world\\]; \\(test\\): \\{value\\} \\| other\t\n\r\f\v\b\0');
+    expect(escapeRegExp('hello, [world]; (test): {value} | other\t\n\r\f\v\b\0')).toBe(
+      'hello, \\[world\\]; \\(test\\): \\{value\\} \\| other\t\n\r\f\v\b\0',
+    );
   });
 
   it('should handle string with mixed separators, spaces, tabs, newlines, carriage returns, form feeds, vertical tabs, backspaces, null characters, unicode, and regex entities', () => {
-    expect(escapeRegExp('hello, [world]; (test): {value} | other\t\n\r\f\v\b\0🚀')).toBe('hello, \\[world\\]; \\(test\\): \\{value\\} \\| other\t\n\r\f\v\b\0🚀');
+    expect(escapeRegExp('hello, [world]; (test): {value} | other\t\n\r\f\v\b\0🚀')).toBe(
+      'hello, \\[world\\]; \\(test\\): \\{value\\} \\| other\t\n\r\f\v\b\0🚀',
+    );
   });
 
   it('should handle string with mixed separators, spaces, tabs, newlines, carriage returns, form feeds, vertical tabs, backspaces, null characters, unicode, emoji, and regex entities', () => {
-    expect(escapeRegExp('hello, [world]; (test): {value} | other\t\n\r\f\v\b\0🚀😀')).toBe('hello, \\[world\\]; \\(test\\): \\{value\\} \\| other\t\n\r\f\v\b\0🚀😀');
+    expect(escapeRegExp('hello, [world]; (test): {value} | other\t\n\r\f\v\b\0🚀😀')).toBe(
+      'hello, \\[world\\]; \\(test\\): \\{value\\} \\| other\t\n\r\f\v\b\0🚀😀',
+    );
   });
 });

@@ -10,8 +10,8 @@ describe('forInRight', () => {
 
     const obj = new Foo();
     const result: string[] = [];
-    
-    forInRight(obj, function(value, key) {
+
+    forInRight(obj, function (value, key) {
       result.push(key as string);
     });
 
@@ -24,7 +24,7 @@ describe('forInRight', () => {
   it('should pass correct arguments to iteratee', () => {
     const obj = { a: 1, b: 2 };
     const iteratee = jest.fn();
-    
+
     forInRight(obj, iteratee);
 
     expect(iteratee).toHaveBeenCalledWith(1, 'a', obj);
@@ -37,7 +37,7 @@ describe('forInRight', () => {
       if (key === 'b') return false;
       return true;
     });
-    
+
     forInRight(obj, iteratee);
 
     expect(iteratee).toHaveBeenCalledTimes(2);
@@ -49,7 +49,7 @@ describe('forInRight', () => {
   it('should return the original object', () => {
     const obj = { a: 1, b: 2 };
     const result = forInRight(obj, () => {});
-    
+
     expect(result).toBe(obj);
   });
 
@@ -66,17 +66,17 @@ describe('forInRight', () => {
   it('should handle empty object', () => {
     const obj = {};
     const iteratee = jest.fn();
-    
+
     forInRight(obj, iteratee);
-    
+
     expect(iteratee).not.toHaveBeenCalled();
   });
 
   it('should iterate in reverse order', () => {
     const obj = { a: 1, b: 2, c: 3 };
     const result: string[] = [];
-    
-    forInRight(obj, function(value, key) {
+
+    forInRight(obj, function (value, key) {
       result.push(key as string);
     });
 
@@ -89,8 +89,8 @@ describe('forInRight', () => {
     const sym = Symbol('test');
     const obj = { [sym]: 'value', a: 1 };
     const result: any[] = [];
-    
-    forInRight(obj, function(value, key) {
+
+    forInRight(obj, function (value, key) {
       result.push([value, key]);
     });
 

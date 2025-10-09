@@ -2,7 +2,10 @@ import { chunk } from '../../src/array/chunk';
 
 describe('chunk', () => {
   it('should chunk array into groups of specified size', () => {
-    expect(chunk(['a', 'b', 'c', 'd'], 2)).toEqual([['a', 'b'], ['c', 'd']]);
+    expect(chunk(['a', 'b', 'c', 'd'], 2)).toEqual([
+      ['a', 'b'],
+      ['c', 'd'],
+    ]);
     expect(chunk(['a', 'b', 'c', 'd'], 3)).toEqual([['a', 'b', 'c'], ['d']]);
   });
 

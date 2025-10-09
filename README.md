@@ -18,7 +18,7 @@
 [![codecov](https://codecov.io/gh/dev-ahmadbilal/highdash/branch/main/graph/badge.svg?token=EENXO9JHEW)](https://codecov.io/gh/dev-ahmadbilal/highdash)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 
-[**Intro**](https://github.com/dev-ahmadbilal/highdash#-why-highdash) • [**Performance Comparison**](https://github.com/dev-ahmadbilal/highdash#-performance-comparison) • [**Examples**](https://github.com/dev-ahmadbilal/highdash#examples) • [**Migration Guide**](https://github.com/dev-ahmadbilal/highdash#migrating-from-lodash)
+[**Quick Start**](https://github.com/dev-ahmadbilal/highdash#-quick-start) • [**Performance**](https://github.com/dev-ahmadbilal/highdash#-performance-comparison) • [**Technical Deep Dive**](docs/TECHNICAL_COMPARISON.md) • [**API Reference**](docs/API.md) • [**Migration Guide**](https://github.com/dev-ahmadbilal/highdash#migrating-from-lodash)
 
 </div>
 
@@ -71,15 +71,15 @@ While Lodash has been the go-to utility library for JavaScript developers, it wa
 
 | Operation | Lodash | Highdash | Improvement |
 |-----------|--------|----------|-------------|
-| `cloneDeep` (complex) | 12ms | 2ms | **6.0x faster** |
-| `isEqual` (deep objects) | 12ms | 8ms | **1.5x faster** |
-| `merge` (mutable) | 4ms | 1ms | **4.0x faster** |
-| `mergeDeep` (immutable) | 3ms | 1ms | **3.0x faster** |
-| `orderBy` (2 keys) | 37ms | 31ms | **1.2x faster** |
-| `flattenDeep` (nested arrays) | 7ms | 2ms | **3.5x faster** |
-| `pick` (object properties) | 2ms | 1ms | **2.0x faster** |
-| `omit` (object properties) | 43ms | 36ms | **1.2x faster** |
-| `values` (object values) | 18ms | 2ms | **9.0x faster** |
+| `cloneDeep` (complex) | 11ms | 2.6ms | **4.4x faster** |
+| `isEqual` (deep objects) | 12.6ms | 8ms | **1.6x faster** |
+| `merge` (mutable) | 4.2ms | 1ms | **4.2x faster** |
+| `mergeDeep` (immutable) | 4ms | 1ms | **4.0x faster** |
+| `orderBy` (2 keys) | 36.6ms | 31ms | **1.2x faster** |
+| `flattenDeep` (nested arrays) | 6.2ms | 3ms | **2.1x faster** |
+| `pick` (object properties) | 1.8ms | 0.6ms | **3.0x faster** |
+| `omit` (object properties) | 42.6ms | 35.6ms | **1.2x faster** |
+| `values` (object values) | 17.2ms | 2.2ms | **7.8x faster** |
 
 <br>
 
@@ -89,13 +89,15 @@ While Lodash has been the go-to utility library for JavaScript developers, it wa
 
 </div>
 
-*Benchmarks run on Node.js 18+, 1000 iterations*
+*Benchmarks run on Node.js 18+, 1000 iterations. Results averaged over 5 runs.*
 
 > 💡 **Want to verify these results?** Run the benchmarks yourself:
 > ```bash
 > npm run benchmark:compare
 > ```
 > This will run comprehensive performance tests comparing Highdash with Lodash on your machine.
+
+> 🔍 **Want to understand WHY Highdash is faster?** Check out our [Technical Comparison](docs/TECHNICAL_COMPARISON.md) for detailed implementation analysis and optimization strategies.
 
 ### 📏 Bundle Size Details
 
@@ -143,6 +145,21 @@ import { isEqual } from 'highdash/lang/isEqual.js';
 // ❌ Avoid importing everything (defeats tree-shaking)
 import * as _ from 'highdash';
 ```
+
+### CommonJS Support
+
+Highdash supports both ESM and CommonJS imports. For CommonJS projects:
+
+```javascript
+// CommonJS require (use .cjs extension for .js files)
+const { debounce, isEqual } = require('highdash');
+
+// Tree-shakable CommonJS imports
+const { debounce } = require('highdash/core/debounce');
+const { isEqual } = require('highdash/lang/isEqual');
+```
+
+**Note**: If your project uses `"type": "module"` in package.json, use `.cjs` extension for CommonJS files or use dynamic imports.
 
 ### Core Examples
 
@@ -333,7 +350,7 @@ npm run benchmark:compare
 
 ### Test Coverage
 
-- **1955+ tests** across all functions
+- **2000+ tests** across all functions
 - **91%+ code coverage** with comprehensive edge cases
 - **Type safety validation** with TypeScript strict mode
 - **Performance benchmarks** against Lodash
@@ -379,7 +396,7 @@ npm run benchmark:compare  # Compare with Lodash
 ## 📈 Roadmap
 
 ### ✅ Completed
-- [x] Core utility functions (200+ functions)
+- [x] Core utility functions (228 functions)
 - [x] TypeScript-first implementation
 - [x] Tree-shaking optimization
 - [x] Performance benchmarks

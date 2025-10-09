@@ -11,7 +11,7 @@ describe('isElement', () => {
     const div = document.createElement('div');
     const span = document.createElement('span');
     const p = document.createElement('p');
-    
+
     expect(isElement(div)).toBe(true);
     expect(isElement(span)).toBe(true);
     expect(isElement(p)).toBe(true);

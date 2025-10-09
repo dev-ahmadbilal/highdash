@@ -18,7 +18,9 @@ describe('truncate', () => {
   });
 
   it('should truncate at regex separator', () => {
-    expect(truncate('hi-diddly-ho there, neighborino', { length: 24, separator: /,? +/ })).toBe('hi-diddly-ho there...');
+    expect(truncate('hi-diddly-ho there, neighborino', { length: 24, separator: /,? +/ })).toBe(
+      'hi-diddly-ho there...',
+    );
   });
 
   it('should handle short strings', () => {

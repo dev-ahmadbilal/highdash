@@ -13,7 +13,7 @@ describe('isObjectLike', () => {
 
   it('should return true for functions', () => {
     expect(isObjectLike(() => {})).toBe(true);
-    expect(isObjectLike(function() {})).toBe(true);
+    expect(isObjectLike(function () {})).toBe(true);
   });
 
   it('should return true for dates', () => {

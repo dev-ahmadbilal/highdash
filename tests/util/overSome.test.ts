@@ -24,7 +24,7 @@ describe('overSome', () => {
 
   it('should work with different argument counts', () => {
     const func = overSome([
-      (a: number, b: number) => a > 0,
+      (a: number, _b: number) => a > 0,
       (a: number, b: number) => b > 0,
       (a: number, b: number) => a + b > 0,
     ]);
@@ -80,8 +80,8 @@ describe('overSome', () => {
 
   it('should work with functions that return falsy values', () => {
     const func = overSome([
-      (x: number) => x > 10,
-      (x: number) => null, // falsy
+      (_x: number) => _x > 10,
+      (_x: number) => null, // falsy
       (x: number) => x % 2 === 0,
     ]);
     expect(func(2)).toBe(true); // even

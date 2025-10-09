@@ -1,5 +1,6 @@
 import { isArguments } from '../../src/lang/isArguments';
 
+/* eslint-disable prefer-rest-params */
 describe('isArguments', () => {
   it('should return true for arguments object', () => {
     function testFunction() {

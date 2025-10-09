@@ -3,7 +3,7 @@ import { isFunction } from '../../src/lang/isFunction';
 describe('isFunction', () => {
   it('should return true for functions', () => {
     expect(isFunction(() => {})).toBe(true);
-    expect(isFunction(function() {})).toBe(true);
+    expect(isFunction(function () {})).toBe(true);
     expect(isFunction(Array.prototype.slice)).toBe(true);
     expect(isFunction(Number)).toBe(true);
     expect(isFunction(String)).toBe(true);

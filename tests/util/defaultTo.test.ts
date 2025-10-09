@@ -25,7 +25,7 @@ describe('defaultTo', () => {
   it('should work with objects', () => {
     const obj = { a: 1 };
     const defaultObj = { b: 2 };
-    
+
     expect(defaultTo(obj, defaultObj)).toBe(obj);
     expect(defaultTo(null, defaultObj)).toBe(defaultObj);
     expect(defaultTo(undefined, defaultObj)).toBe(defaultObj);
@@ -34,7 +34,7 @@ describe('defaultTo', () => {
   it('should work with arrays', () => {
     const arr = [1, 2, 3];
     const defaultArr = [4, 5, 6];
-    
+
     expect(defaultTo(arr, defaultArr)).toBe(arr);
     expect(defaultTo(null, defaultArr)).toBe(defaultArr);
     expect(defaultTo(undefined, defaultArr)).toBe(defaultArr);
@@ -43,7 +43,7 @@ describe('defaultTo', () => {
   it('should work with functions', () => {
     const fn = () => 'hello';
     const defaultFn = () => 'world';
-    
+
     expect(defaultTo(fn, defaultFn)).toBe(fn);
     expect(defaultTo(null, defaultFn)).toBe(defaultFn);
     expect(defaultTo(undefined, defaultFn)).toBe(defaultFn);

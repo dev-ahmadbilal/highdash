@@ -6,7 +6,7 @@ describe('assign', () => {
     const source1 = { b: 2 };
     const source2 = { c: 3 };
     const result = assign(target, source1, source2);
-    
+
     expect(result).toEqual({ a: 1, b: 2, c: 3 });
     expect(result).toBe(target);
   });
@@ -34,11 +34,11 @@ describe('assign', () => {
       this.b = 2;
     }
     Source.prototype.c = 3;
-    
+
     const target = {};
     const source = new (Source as any)();
     const result = assign(target, source);
-    
+
     expect(result).toEqual({ a: 1, b: 2 });
   });
 });

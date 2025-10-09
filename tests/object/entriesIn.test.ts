@@ -6,10 +6,13 @@ describe('entriesIn', () => {
       this.a = 1;
     }
     Foo.prototype.b = 2;
-    
+
     const obj = new Foo();
     const result = entriesIn(obj);
-    expect(result).toEqual([['a', 1], ['b', 2]]);
+    expect(result).toEqual([
+      ['a', 1],
+      ['b', 2],
+    ]);
   });
 
   it('handles empty object', () => {
@@ -17,7 +20,10 @@ describe('entriesIn', () => {
   });
 
   it('handles object with own properties only', () => {
-    expect(entriesIn({ a: 1, b: 2 })).toEqual([['a', 1], ['b', 2]]);
+    expect(entriesIn({ a: 1, b: 2 })).toEqual([
+      ['a', 1],
+      ['b', 2],
+    ]);
   });
 
   it('handles null input', () => {

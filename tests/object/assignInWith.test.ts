@@ -17,9 +17,9 @@ describe('assignInWith', () => {
       if (objValue === 0) return srcValue;
       return objValue;
     };
-    
+
     const result = assignInWith(object, new Foo(), new Bar(), customizer);
-    
+
     expect(result).toBe(object);
     expect(result.a).toBe(1);
     expect(result.b).toBe(2);
@@ -34,9 +34,9 @@ describe('assignInWith', () => {
     const customizer = (objValue: any, srcValue: any) => {
       return objValue === undefined ? srcValue : objValue;
     };
-    
+
     const result = assignInWith(object, source1, source2, customizer);
-    
+
     expect(result).toBe(object);
     expect(result.a).toBe(1);
     expect(result.b).toBe(2);
@@ -49,7 +49,7 @@ describe('assignInWith', () => {
       return objValue === undefined ? srcValue : objValue;
     };
     const result = assignInWith(object, null, undefined, { b: 2 }, customizer);
-    
+
     expect(result).toBe(object);
     expect(result.a).toBe(1);
     expect(result.b).toBe(2);
@@ -58,7 +58,7 @@ describe('assignInWith', () => {
   it('returns original object if no sources', () => {
     const object = { a: 1 };
     const result = assignInWith(object);
-    
+
     expect(result).toBe(object);
     expect(result.a).toBe(1);
   });

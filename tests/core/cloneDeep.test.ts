@@ -46,7 +46,10 @@ describe('cloneDeep', () => {
   });
 
   it('should clone maps', () => {
-    const original = new Map([['a', 1], ['b', 2]]);
+    const original = new Map([
+      ['a', 1],
+      ['b', 2],
+    ]);
     const cloned = cloneDeep(original);
 
     expect(cloned).toEqual(original);

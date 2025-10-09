@@ -11,7 +11,7 @@ describe('isMatchWith', () => {
 
     const object = { name: 'John', age: 30 };
     const source = { name: 'John', age: 32 };
-    
+
     expect(isMatchWith(object, source, customizer)).toBe(true);
   });
 
@@ -25,7 +25,7 @@ describe('isMatchWith', () => {
 
     const object = { name: 'John', age: 30 };
     const source = { name: 'JOHN', age: 30 };
-    
+
     expect(isMatchWith(object, source, customizer)).toBe(true);
   });
 
@@ -39,7 +39,7 @@ describe('isMatchWith', () => {
 
     const object = { user: { name: 'John', timestamp: 1000 } };
     const source = { user: { name: 'John', timestamp: 1500 } };
-    
+
     expect(isMatchWith(object, source, customizer)).toBe(true);
   });
 
@@ -53,14 +53,14 @@ describe('isMatchWith', () => {
 
     const object = { name: 'John', scores: [1, 2, 3] };
     const source = { name: 'John', scores: [4, 5, 6] };
-    
+
     expect(isMatchWith(object, source, customizer)).toBe(true);
   });
 
   it('should work with no customizer', () => {
     const object = { name: 'John', age: 30 };
     const source = { name: 'John', age: 30 };
-    
+
     expect(isMatchWith(object, source)).toBe(true);
   });
 
@@ -74,7 +74,7 @@ describe('isMatchWith', () => {
 
     const object = { name: 'John', age: 30, city: 'NYC' };
     const source = { name: 'John', age: 25 };
-    
+
     expect(isMatchWith(object, source, customizer)).toBe(true);
   });
 
@@ -88,7 +88,7 @@ describe('isMatchWith', () => {
 
     const object = { name: 'John', value: null };
     const source = { name: 'John', value: undefined };
-    
+
     expect(isMatchWith(object, source, customizer)).toBe(true);
   });
 
@@ -102,7 +102,7 @@ describe('isMatchWith', () => {
 
     const object = { name: 'John', fn: () => 'hello' };
     const source = { name: 'John', fn: () => 'world' };
-    
+
     expect(isMatchWith(object, source, customizer)).toBe(true);
   });
 
@@ -116,7 +116,7 @@ describe('isMatchWith', () => {
 
     const object = { name: 'John', date: new Date('2023-01-01') };
     const source = { name: 'John', date: new Date('2023-01-02') };
-    
+
     expect(isMatchWith(object, source, customizer)).toBe(true);
   });
 
@@ -130,7 +130,7 @@ describe('isMatchWith', () => {
 
     const object = { name: 'John', pattern: /abc/ };
     const source = { name: 'John', pattern: /def/ };
-    
+
     expect(isMatchWith(object, source, customizer)).toBe(true);
   });
 
@@ -146,19 +146,19 @@ describe('isMatchWith', () => {
       user: {
         profile: {
           id: 1,
-          name: 'John'
-        }
-      }
+          name: 'John',
+        },
+      },
     };
     const source = {
       user: {
         profile: {
           id: 2,
-          name: 'John'
-        }
-      }
+          name: 'John',
+        },
+      },
     };
-    
+
     expect(isMatchWith(object, source, customizer)).toBe(true);
   });
 });

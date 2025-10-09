@@ -35,12 +35,12 @@ describe('isEqualWith', () => {
 
     const obj1 = { id: 1, name: 'John' };
     const obj2 = { id: 2, name: 'John' };
-    
+
     expect(isEqualWith(obj1, obj2, customizer)).toBe(true);
   });
 
   it('should work with arrays', () => {
-    const customizer = (objValue: any, othValue: any, key: number) => {
+    const customizer = (objValue: any, othValue: any, _key: number) => {
       if (typeof objValue === 'number' && typeof othValue === 'number') {
         return objValue % 2 === othValue % 2;
       }
@@ -61,7 +61,7 @@ describe('isEqualWith', () => {
 
     const obj1 = { user: { name: 'John', timestamp: 1000 } };
     const obj2 = { user: { name: 'John', timestamp: 1500 } };
-    
+
     expect(isEqualWith(obj1, obj2, customizer)).toBe(true);
   });
 
@@ -96,7 +96,7 @@ describe('isEqualWith', () => {
     const fn1 = () => 'hello';
     const fn2 = () => 'hello';
     const fn3 = () => 'world';
-    
+
     expect(isEqualWith(fn1, fn2, customizer)).toBe(true);
     expect(isEqualWith(fn1, fn3, customizer)).toBe(false);
   });
@@ -112,7 +112,7 @@ describe('isEqualWith', () => {
     const date1 = new Date('2023-01-01T00:00:00Z');
     const date2 = new Date('2023-01-01T00:00:00.500Z');
     const date3 = new Date('2023-01-01T00:00:02Z');
-    
+
     expect(isEqualWith(date1, date2, customizer)).toBe(true);
     expect(isEqualWith(date1, date3, customizer)).toBe(false);
   });

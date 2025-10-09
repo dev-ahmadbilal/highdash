@@ -50,7 +50,9 @@ describe('unescape', () => {
   });
 
   it('should handle string with mixed content', () => {
-    expect(unescape('hello &amp; world &lt; test &gt; &quot;quote&quot; &#39;single&#39;')).toBe('hello & world < test > "quote" \'single\'');
+    expect(unescape('hello &amp; world &lt; test &gt; &quot;quote&quot; &#39;single&#39;')).toBe(
+      'hello & world < test > "quote" \'single\'',
+    );
   });
 
   it('should handle string with multiple lines', () => {
@@ -90,54 +92,80 @@ describe('unescape', () => {
   });
 
   it('should handle string with special characters and HTML entities', () => {
-    expect(unescape('hello &amp; world &lt; test &gt; &quot;quote&quot; &#39;single&#39;')).toBe('hello & world < test > "quote" \'single\'');
+    expect(unescape('hello &amp; world &lt; test &gt; &quot;quote&quot; &#39;single&#39;')).toBe(
+      'hello & world < test > "quote" \'single\'',
+    );
   });
 
   it('should handle string with numbers and HTML entities', () => {
-    expect(unescape('123 &amp; 456 &lt; 789 &gt; &quot;quote&quot; &#39;single&#39;')).toBe('123 & 456 < 789 > "quote" \'single\'');
+    expect(unescape('123 &amp; 456 &lt; 789 &gt; &quot;quote&quot; &#39;single&#39;')).toBe(
+      '123 & 456 < 789 > "quote" \'single\'',
+    );
   });
 
   it('should handle string with mixed separators and HTML entities', () => {
-    expect(unescape('hello, &amp; world; &lt; test: &gt; &quot;quote&quot; &#39;single&#39;')).toBe('hello, & world; < test: > "quote" \'single\'');
+    expect(unescape('hello, &amp; world; &lt; test: &gt; &quot;quote&quot; &#39;single&#39;')).toBe(
+      'hello, & world; < test: > "quote" \'single\'',
+    );
   });
 
   it('should handle string with mixed separators, spaces, and HTML entities', () => {
-    expect(unescape('hello, &amp; world; &lt; test: &gt; &quot;quote&quot; &#39;single&#39;')).toBe('hello, & world; < test: > "quote" \'single\'');
+    expect(unescape('hello, &amp; world; &lt; test: &gt; &quot;quote&quot; &#39;single&#39;')).toBe(
+      'hello, & world; < test: > "quote" \'single\'',
+    );
   });
 
   it('should handle string with mixed separators, spaces, tabs, and HTML entities', () => {
-    expect(unescape('hello, &amp; world; &lt; test: &gt; &quot;quote&quot; &#39;single&#39;\t')).toBe('hello, & world; < test: > "quote" \'single\'\t');
+    expect(unescape('hello, &amp; world; &lt; test: &gt; &quot;quote&quot; &#39;single&#39;\t')).toBe(
+      'hello, & world; < test: > "quote" \'single\'\t',
+    );
   });
 
   it('should handle string with mixed separators, spaces, tabs, newlines, and HTML entities', () => {
-    expect(unescape('hello, &amp; world; &lt; test: &gt; &quot;quote&quot; &#39;single&#39;\t\n')).toBe('hello, & world; < test: > "quote" \'single\'\t\n');
+    expect(unescape('hello, &amp; world; &lt; test: &gt; &quot;quote&quot; &#39;single&#39;\t\n')).toBe(
+      'hello, & world; < test: > "quote" \'single\'\t\n',
+    );
   });
 
   it('should handle string with mixed separators, spaces, tabs, newlines, carriage returns, and HTML entities', () => {
-    expect(unescape('hello, &amp; world; &lt; test: &gt; &quot;quote&quot; &#39;single&#39;\t\n\r')).toBe('hello, & world; < test: > "quote" \'single\'\t\n\r');
+    expect(unescape('hello, &amp; world; &lt; test: &gt; &quot;quote&quot; &#39;single&#39;\t\n\r')).toBe(
+      'hello, & world; < test: > "quote" \'single\'\t\n\r',
+    );
   });
 
   it('should handle string with mixed separators, spaces, tabs, newlines, carriage returns, form feeds, and HTML entities', () => {
-    expect(unescape('hello, &amp; world; &lt; test: &gt; &quot;quote&quot; &#39;single&#39;\t\n\r\f')).toBe('hello, & world; < test: > "quote" \'single\'\t\n\r\f');
+    expect(unescape('hello, &amp; world; &lt; test: &gt; &quot;quote&quot; &#39;single&#39;\t\n\r\f')).toBe(
+      'hello, & world; < test: > "quote" \'single\'\t\n\r\f',
+    );
   });
 
   it('should handle string with mixed separators, spaces, tabs, newlines, carriage returns, form feeds, vertical tabs, and HTML entities', () => {
-    expect(unescape('hello, &amp; world; &lt; test: &gt; &quot;quote&quot; &#39;single&#39;\t\n\r\f\v')).toBe('hello, & world; < test: > "quote" \'single\'\t\n\r\f\v');
+    expect(unescape('hello, &amp; world; &lt; test: &gt; &quot;quote&quot; &#39;single&#39;\t\n\r\f\v')).toBe(
+      'hello, & world; < test: > "quote" \'single\'\t\n\r\f\v',
+    );
   });
 
   it('should handle string with mixed separators, spaces, tabs, newlines, carriage returns, form feeds, vertical tabs, backspaces, and HTML entities', () => {
-    expect(unescape('hello, &amp; world; &lt; test: &gt; &quot;quote&quot; &#39;single&#39;\t\n\r\f\v\b')).toBe('hello, & world; < test: > "quote" \'single\'\t\n\r\f\v\b');
+    expect(unescape('hello, &amp; world; &lt; test: &gt; &quot;quote&quot; &#39;single&#39;\t\n\r\f\v\b')).toBe(
+      'hello, & world; < test: > "quote" \'single\'\t\n\r\f\v\b',
+    );
   });
 
   it('should handle string with mixed separators, spaces, tabs, newlines, carriage returns, form feeds, vertical tabs, backspaces, null characters, and HTML entities', () => {
-    expect(unescape('hello, &amp; world; &lt; test: &gt; &quot;quote&quot; &#39;single&#39;\t\n\r\f\v\b\0')).toBe('hello, & world; < test: > "quote" \'single\'\t\n\r\f\v\b\0');
+    expect(unescape('hello, &amp; world; &lt; test: &gt; &quot;quote&quot; &#39;single&#39;\t\n\r\f\v\b\0')).toBe(
+      'hello, & world; < test: > "quote" \'single\'\t\n\r\f\v\b\0',
+    );
   });
 
   it('should handle string with mixed separators, spaces, tabs, newlines, carriage returns, form feeds, vertical tabs, backspaces, null characters, unicode, and HTML entities', () => {
-    expect(unescape('hello, &amp; world; &lt; test: &gt; &quot;quote&quot; &#39;single&#39;\t\n\r\f\v\b\0🚀')).toBe('hello, & world; < test: > "quote" \'single\'\t\n\r\f\v\b\0🚀');
+    expect(unescape('hello, &amp; world; &lt; test: &gt; &quot;quote&quot; &#39;single&#39;\t\n\r\f\v\b\0🚀')).toBe(
+      'hello, & world; < test: > "quote" \'single\'\t\n\r\f\v\b\0🚀',
+    );
   });
 
   it('should handle string with mixed separators, spaces, tabs, newlines, carriage returns, form feeds, vertical tabs, backspaces, null characters, unicode, emoji, and HTML entities', () => {
-    expect(unescape('hello, &amp; world; &lt; test: &gt; &quot;quote&quot; &#39;single&#39;\t\n\r\f\v\b\0🚀😀')).toBe('hello, & world; < test: > "quote" \'single\'\t\n\r\f\v\b\0🚀😀');
+    expect(unescape('hello, &amp; world; &lt; test: &gt; &quot;quote&quot; &#39;single&#39;\t\n\r\f\v\b\0🚀😀')).toBe(
+      'hello, & world; < test: > "quote" \'single\'\t\n\r\f\v\b\0🚀😀',
+    );
   });
 });
