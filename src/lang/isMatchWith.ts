@@ -37,28 +37,28 @@ export function isMatchWith(
   ) => boolean | undefined,
 ): boolean {
   if (object === source) {
-    return true;
+    return true
   }
 
   if (object === null || typeof object !== 'object' || source === null || typeof source !== 'object') {
-    return false;
+    return false
   }
 
-  const sourceObj = source as Record<string, unknown>;
-  const objectObj = object as Record<string, unknown>;
+  const sourceObj = source as Record<string, unknown>
+  const objectObj = object as Record<string, unknown>
 
   for (const key in sourceObj) {
-    if (Object.prototype.hasOwnProperty.call(sourceObj, key)) {
-      const sourceValue = sourceObj[key];
-      const objectValue = objectObj[key];
+    if (Object.hasOwn(sourceObj, key)) {
+      const sourceValue = sourceObj[key]
+      const objectValue = objectObj[key]
 
       if (customizer) {
-        const result = customizer(objectValue, sourceValue, key, object, source);
+        const result = customizer(objectValue, sourceValue, key, object, source)
         if (result !== undefined) {
           if (!result) {
-            return false;
+            return false
           }
-          continue;
+          continue
         }
       }
 
@@ -70,10 +70,10 @@ export function isMatchWith(
           typeof objectValue !== 'object' ||
           !isMatchWith(objectValue, sourceValue, customizer))
       ) {
-        return false;
+        return false
       }
     }
   }
 
-  return true;
+  return true
 }

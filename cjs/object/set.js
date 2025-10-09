@@ -27,7 +27,7 @@ function set(object, path, value) {
         return object;
     }
     // eslint-disable-next-line no-useless-escape
-    const keys = Array.isArray(path) ? path : path.split(/[\.\[\]]+/).filter(Boolean);
+    const keys = Array.isArray(path) ? path : path.split(/[.[\]]+/).filter(Boolean);
     let current = object;
     for (let i = 0; i < keys.length - 1; i++) {
         const key = keys[i];

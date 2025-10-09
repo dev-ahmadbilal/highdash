@@ -17,19 +17,19 @@
  * // => [['a', 1], ['b', 2]]
  * ```
  */
-export function toPairs<T extends Record<string, unknown>>(object: T): [string, T[keyof T]][];
+export function toPairs<T extends Record<string, unknown>>(object: T): [string, T[keyof T]][]
 export function toPairs(object: unknown): [string, unknown][] {
   if (!object || typeof object !== 'object') {
-    return [];
+    return []
   }
 
-  const result: [string, unknown][] = [];
+  const result: [string, unknown][] = []
 
   for (const key in object) {
-    if (Object.prototype.hasOwnProperty.call(object, key)) {
-      result.push([key, (object as Record<string, unknown>)[key]]);
+    if (Object.hasOwn(object, key)) {
+      result.push([key, (object as Record<string, unknown>)[key]])
     }
   }
 
-  return result;
+  return result
 }

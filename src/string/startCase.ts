@@ -18,7 +18,7 @@
  */
 export function startCase(string: string): string {
   if (typeof string !== 'string') {
-    return '';
+    return ''
   }
 
   return string
@@ -28,5 +28,5 @@ export function startCase(string: string): string {
     .split(' ')
     .filter((word) => word.length > 0)
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-    .join(' ');
+    .join(' ')
 }

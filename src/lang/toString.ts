@@ -16,26 +16,27 @@
  * // => '1,2,3'
  * ```
  */
+// biome-ignore lint/suspicious/noShadowRestrictedNames: keep Lodash-compatible name
 export function toString(value: unknown): string {
   if (value === null || value === undefined) {
-    return '';
+    return ''
   }
 
   if (typeof value === 'string') {
-    return value;
+    return value
   }
 
   if (typeof value === 'number') {
-    return value === 0 && 1 / value < 0 ? '-0' : String(value);
+    return value === 0 && 1 / value < 0 ? '-0' : String(value)
   }
 
   if (typeof value === 'boolean') {
-    return String(value);
+    return String(value)
   }
 
   if (typeof value === 'object') {
-    return String(value);
+    return String(value)
   }
 
-  return String(value);
+  return String(value)
 }

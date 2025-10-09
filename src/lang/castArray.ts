@@ -30,7 +30,7 @@
  */
 export function castArray<T>(value: T): T extends unknown[] ? T : T[] {
   if (Array.isArray(value)) {
-    return value as T extends unknown[] ? T : T[];
+    return value as T extends unknown[] ? T : T[]
   }
-  return [value] as T extends unknown[] ? T : T[];
+  return [value] as T extends unknown[] ? T : T[]
 }

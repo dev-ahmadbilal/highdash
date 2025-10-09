@@ -19,29 +19,29 @@
  */
 export function curryRight<T extends (...args: unknown[]) => unknown>(func: T, arity: number = func.length): T {
   if (arity < 0) {
-    arity = 0;
+    arity = 0
   }
 
   function curried(...args: unknown[]): unknown {
     if (args.length >= arity) {
-      const requiredLeft = Math.max(0, func.length - arity);
-      const rightArgs = args.slice(args.length - arity);
-      const haveLeft = args.length - arity;
+      const requiredLeft = Math.max(0, func.length - arity)
+      const rightArgs = args.slice(args.length - arity)
+      const haveLeft = args.length - arity
       if (haveLeft >= requiredLeft) {
-        const leftArgs = args.slice(0, haveLeft);
-        return func(...([...(leftArgs as unknown[]), ...(rightArgs as unknown[])] as any));
+        const leftArgs = args.slice(0, haveLeft)
+        return func(...([...(leftArgs as unknown[]), ...(rightArgs as unknown[])] as any))
       }
-      const frozenRight = rightArgs.slice().reverse();
+      const frozenRight = rightArgs.slice().reverse()
       return (...nextLeft: unknown[]) => {
-        return func(...([...(nextLeft as unknown[]), ...(frozenRight as unknown[])] as any));
-      };
+        return func(...([...(nextLeft as unknown[]), ...(frozenRight as unknown[])] as any))
+      }
     }
 
     return (...nextArgs: unknown[]) => {
       // Prepend nextArgs to the left, and keep previously provided args to the right
-      return curried(...nextArgs, ...args);
-    };
+      return curried(...nextArgs, ...args)
+    }
   }
 
-  return curried as T;
+  return curried as T
 }

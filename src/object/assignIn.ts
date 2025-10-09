@@ -24,18 +24,18 @@
  */
 export function assignIn<T extends Record<string, unknown>>(object: T, ...sources: Record<string, unknown>[]): T {
   if (!object || typeof object !== 'object') {
-    return object;
+    return object
   }
 
   for (const source of sources) {
     if (!source || typeof source !== 'object') {
-      continue;
+      continue
     }
 
     for (const key in source) {
-      (object as Record<string, unknown>)[key] = source[key];
+      ;(object as Record<string, unknown>)[key] = source[key]
     }
   }
 
-  return object;
+  return object
 }

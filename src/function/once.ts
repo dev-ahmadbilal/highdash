@@ -15,14 +15,14 @@
  * ```
  */
 export function once<T extends (...args: unknown[]) => unknown>(func: T): T {
-  let called = false;
-  let result: ReturnType<T>;
+  let called = false
+  let result: ReturnType<T>
 
   return function (this: unknown, ...args: Parameters<T>) {
     if (!called) {
-      called = true;
-      result = func.apply(this, args) as ReturnType<T>;
+      called = true
+      result = func.apply(this, args) as ReturnType<T>
     }
-    return result;
-  } as T;
+    return result
+  } as T
 }

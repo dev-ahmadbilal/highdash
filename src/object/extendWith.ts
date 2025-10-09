@@ -25,35 +25,35 @@ export function extendWith<T extends Record<string, unknown>>(
   )[]
 ): T {
   if (!object || typeof object !== 'object') {
-    return object;
+    return object
   }
 
-  const customizer = sources[sources.length - 1];
-  const isCustomizer = typeof customizer === 'function';
-  const sourceObjects = isCustomizer ? sources.slice(0, -1) : sources;
+  const customizer = sources[sources.length - 1]
+  const isCustomizer = typeof customizer === 'function'
+  const sourceObjects = isCustomizer ? sources.slice(0, -1) : sources
 
   for (const source of sourceObjects) {
     if (!source || typeof source !== 'object') {
-      continue;
+      continue
     }
 
     for (const key in source) {
-      const srcValue = (source as Record<string, unknown>)[key];
-      const objValue = (object as Record<string, unknown>)[key];
+      const srcValue = (source as Record<string, unknown>)[key]
+      const objValue = (object as Record<string, unknown>)[key]
 
       if (objValue === undefined) {
         if (isCustomizer) {
-          const customValue = (customizer as Function)(objValue, srcValue, key, object, source);
-          (object as Record<string, unknown>)[key] = customValue !== undefined ? customValue : srcValue;
+          const customValue = (customizer as Function)(objValue, srcValue, key, object, source)
+          ;(object as Record<string, unknown>)[key] = customValue !== undefined ? customValue : srcValue
         } else {
-          (object as Record<string, unknown>)[key] = srcValue;
+          ;(object as Record<string, unknown>)[key] = srcValue
         }
       } else {
         // Overwrite with later sources
-        (object as Record<string, unknown>)[key] = srcValue;
+        ;(object as Record<string, unknown>)[key] = srcValue
       }
     }
   }
 
-  return object;
+  return object
 }

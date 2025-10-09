@@ -31,7 +31,7 @@ function unsetIn(object, path) {
             return object;
         }
         // eslint-disable-next-line no-useless-escape
-        keys = path.split(/[\.\[\]]+/).filter(Boolean);
+        keys = path.split(/[.[\]]+/).filter(Boolean);
     }
     if (keys.length === 0) {
         return object;
@@ -53,6 +53,7 @@ function unsetIn(object, path) {
     }
     const last = keys[keys.length - 1];
     if (Array.isArray(cur)) {
+        ;
         cur.splice(Number(last), 1);
     }
     else {

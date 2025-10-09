@@ -1,4 +1,4 @@
-import { get } from '../object/get.js';
+import { get } from '../object/get.js'
 
 /**
  * Groups a collection by a key selector into a Map of key -> items[].
@@ -24,60 +24,60 @@ export function groupToMap<T, K>(
   collection: T[] | Record<string, T>,
   iteratee: ((value: T) => K) | string,
 ): Map<K, T[]> {
-  const map = new Map<K, T[]>();
+  const map = new Map<K, T[]>()
 
   if (!collection) {
-    return map;
+    return map
   }
 
-  const items = Array.isArray(collection) ? collection : Object.values(collection);
-  const length = items.length;
+  const items = Array.isArray(collection) ? collection : Object.values(collection)
+  const length = items.length
 
   if (length === 0) {
-    return map;
+    return map
   }
 
   if (typeof iteratee === 'function') {
     // Function iteratee
     for (let i = 0; i < length; i++) {
-      const item = items[i];
-      const key = iteratee(item);
-      const group = map.get(key);
+      const item = items[i]
+      const key = iteratee(item)
+      const group = map.get(key)
       if (group) {
-        group.push(item);
+        group.push(item)
       } else {
-        map.set(key, [item]);
+        map.set(key, [item])
       }
     }
   } else {
     // String iteratee
-    const path = iteratee as string;
+    const path = iteratee as string
     if (path.indexOf('.') === -1 && path.indexOf('[') === -1) {
       // Simple property access
       for (let i = 0; i < length; i++) {
-        const item = items[i];
-        const key = (item as any)?.[path];
-        const group = map.get(key);
+        const item = items[i]
+        const key = (item as any)?.[path]
+        const group = map.get(key)
         if (group) {
-          group.push(item);
+          group.push(item)
         } else {
-          map.set(key, [item]);
+          map.set(key, [item])
         }
       }
     } else {
       // Complex path
       for (let i = 0; i < length; i++) {
-        const item = items[i];
-        const key = get(item as unknown as Record<string, unknown>, path) as K;
-        const group = map.get(key);
+        const item = items[i]
+        const key = get(item as unknown as Record<string, unknown>, path) as K
+        const group = map.get(key)
         if (group) {
-          group.push(item);
+          group.push(item)
         } else {
-          map.set(key, [item]);
+          map.set(key, [item])
         }
       }
     }
   }
 
-  return map;
+  return map
 }

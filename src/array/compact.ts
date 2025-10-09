@@ -12,8 +12,8 @@
  */
 export function compact<T>(array: T[]): NonNullable<T>[] {
   if (!Array.isArray(array)) {
-    return [];
+    return []
   }
 
-  return array.filter(Boolean) as NonNullable<T>[];
+  return array.filter(Boolean) as NonNullable<T>[]
 }

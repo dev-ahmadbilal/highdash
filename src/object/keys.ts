@@ -17,8 +17,8 @@
  */
 export function keys<T extends Record<string, unknown>>(object: T): (keyof T)[] {
   if (!object || typeof object !== 'object') {
-    return [];
+    return []
   }
 
-  return Object.keys(object) as (keyof T)[];
+  return Object.keys(object) as (keyof T)[]
 }

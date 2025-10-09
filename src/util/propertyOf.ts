@@ -20,26 +20,26 @@
 export function propertyOf<T = unknown>(object: unknown, path?: string | string[]): (...args: unknown[]) => T {
   const resolve = (obj: any, p: string | string[] | undefined): any => {
     // eslint-disable-next-line eqeqeq
-    if (obj == null || p === undefined) return undefined;
+    if (obj == null || p === undefined) return undefined
     const parts = Array.isArray(p)
       ? p
       : String(p)
           .replace(/\[(\d+)\]/g, '.$1')
           .split('.')
-          .filter((x) => x.length > 0);
-    if (parts.length === 0) return undefined;
-    let cur: any = obj;
+          .filter((x) => x.length > 0)
+    if (parts.length === 0) return undefined
+    let cur: any = obj
     for (const part of parts) {
       // eslint-disable-next-line eqeqeq
-      if (cur == null) return undefined;
-      cur = cur[part];
+      if (cur == null) return undefined
+      cur = cur[part]
     }
-    return cur;
-  };
-
-  if (path !== undefined) {
-    return () => resolve(object as any, path) as T;
+    return cur
   }
 
-  return (...args: unknown[]) => resolve(object as any, args[0] as string | string[]) as T;
+  if (path !== undefined) {
+    return () => resolve(object as any, path) as T
+  }
+
+  return (...args: unknown[]) => resolve(object as any, args[0] as string | string[]) as T
 }

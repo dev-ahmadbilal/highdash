@@ -23,46 +23,46 @@ export function updateIn<T extends Record<string, unknown>, R extends T = T>(
   updater: (current: unknown, path: string, obj: T) => R,
 ): T {
   if (!object || typeof object !== 'object') {
-    return object;
+    return object
   }
 
-  let keys: string[];
+  let keys: string[]
   if (Array.isArray(path)) {
-    keys = path;
+    keys = path
   } else {
     if (path === '') {
-      return updater(object, '', object) as T;
+      return updater(object, '', object) as T
     }
     // eslint-disable-next-line no-useless-escape
-    keys = path.split(/[\.\[\]]+/).filter(Boolean);
+    keys = path.split(/[.[\]]+/).filter(Boolean)
   }
 
   if (keys.length === 0) {
-    return updater(object, '', object) as T;
+    return updater(object, '', object) as T
   }
 
   function cloneShallow(obj: any): any {
-    return Array.isArray(obj) ? obj.slice() : { ...obj };
+    return Array.isArray(obj) ? obj.slice() : { ...obj }
   }
 
-  const result: any = cloneShallow(object);
-  let cur: any = result;
-  let src: any = object;
+  const result: any = cloneShallow(object)
+  let cur: any = result
+  let src: any = object
 
   for (let i = 0; i < keys.length - 1; i++) {
-    const k = keys[i];
-    const nk = keys[i + 1];
-    const nextIsIndex = /^\d+$/.test(nk);
-    const srcNext = src !== null && src !== undefined ? (src as any)[k] : undefined;
-    const next = srcNext !== null && srcNext !== undefined ? srcNext : nextIsIndex ? [] : {};
-    const cloned = cloneShallow(next);
-    cur[k] = cloned;
-    cur = cloned;
-    src = srcNext;
+    const k = keys[i]
+    const nk = keys[i + 1]
+    const nextIsIndex = /^\d+$/.test(nk)
+    const srcNext = src !== null && src !== undefined ? (src as any)[k] : undefined
+    const next = srcNext !== null && srcNext !== undefined ? srcNext : nextIsIndex ? [] : {}
+    const cloned = cloneShallow(next)
+    cur[k] = cloned
+    cur = cloned
+    src = srcNext
   }
 
-  const last = keys[keys.length - 1];
-  const prev = src !== null && src !== undefined ? src[last] : undefined;
-  cur[last] = updater(prev, path as string, object);
-  return result as T;
+  const last = keys[keys.length - 1]
+  const prev = src !== null && src !== undefined ? src[last] : undefined
+  cur[last] = updater(prev, path as string, object)
+  return result as T
 }

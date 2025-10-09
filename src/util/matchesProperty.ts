@@ -19,7 +19,7 @@
 export function matchesProperty<T = unknown>(path: string | string[], srcValue: T): (object: unknown) => boolean {
   return (object: unknown): boolean => {
     if (!object || typeof object !== 'object') {
-      return false;
+      return false
     }
 
     const pathParts = Array.isArray(path)
@@ -27,17 +27,17 @@ export function matchesProperty<T = unknown>(path: string | string[], srcValue: 
       : String(path)
           .replace(/\[(\d+)\]/g, '.$1')
           .split('.')
-          .filter(Boolean);
+          .filter(Boolean)
 
-    let current: unknown = object;
+    let current: unknown = object
 
     for (const part of pathParts) {
       if (current === null || typeof current !== 'object' || !(part in current)) {
-        return false;
+        return false
       }
-      current = (current as Record<string, unknown>)[part];
+      current = (current as Record<string, unknown>)[part]
     }
 
-    return current === srcValue;
-  };
+    return current === srcValue
+  }
 }

@@ -16,7 +16,9 @@ exports.template = template;
  * ```
  */
 function template(string, options = {}) {
-    const { escape = /<%-([\s\S]+?)%>/g, evaluate = /<%([\s\S]+?)%>/g, interpolate = /<%=([\s\S]+?)%>/g, 
+    const { 
+    // biome-ignore lint/suspicious/noShadowRestrictedNames: keep Lodash-compatible name
+    escape = /<%-([\s\S]+?)%>/g, evaluate = /<%([\s\S]+?)%>/g, interpolate = /<%=([\s\S]+?)%>/g, 
     // imports and sourceURL are not used by tests, but we keep options signature
     variable = 'obj', } = options;
     // Build a single compiled function similar to lodash's approach

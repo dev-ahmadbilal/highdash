@@ -19,20 +19,20 @@ export function countBy<T>(
   collection: T[] | Record<string, T>,
   iteratee: ((value: T) => unknown) | string,
 ): Record<string, number> {
-  const result: Record<string, number> = {};
+  const result: Record<string, number> = {}
 
   if (!collection) {
-    return result;
+    return result
   }
 
-  const getValue = typeof iteratee === 'function' ? iteratee : (item: T) => (item as Record<string, unknown>)[iteratee];
+  const getValue = typeof iteratee === 'function' ? iteratee : (item: T) => (item as Record<string, unknown>)[iteratee]
 
-  const items = Array.isArray(collection) ? collection : Object.values(collection);
+  const items = Array.isArray(collection) ? collection : Object.values(collection)
 
   for (const item of items) {
-    const key = String(getValue(item));
-    result[key] = (result[key] || 0) + 1;
+    const key = String(getValue(item))
+    result[key] = (result[key] || 0) + 1
   }
 
-  return result;
+  return result
 }

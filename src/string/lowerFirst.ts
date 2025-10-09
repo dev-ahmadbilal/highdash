@@ -15,8 +15,8 @@
  */
 export function lowerFirst(string: string): string {
   if (typeof string !== 'string' || string.length === 0) {
-    return '';
+    return ''
   }
 
-  return string.charAt(0).toLowerCase() + string.slice(1);
+  return string.charAt(0).toLowerCase() + string.slice(1)
 }

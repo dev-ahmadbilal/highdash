@@ -21,7 +21,7 @@
  */
 export function result<T = unknown>(object: unknown, path: string | string[], defaultValue?: T): T {
   if (!object || typeof object !== 'object') {
-    return defaultValue as T;
+    return defaultValue as T
   }
 
   const pathParts = Array.isArray(path)
@@ -29,27 +29,27 @@ export function result<T = unknown>(object: unknown, path: string | string[], de
     : String(path)
         .replace(/\[(\d+)\]/g, '.$1')
         .split('.')
-        .filter(Boolean);
+        .filter(Boolean)
 
-  let current: unknown = object;
+  let current: unknown = object
 
   for (const part of pathParts) {
     if (current === null || typeof current !== 'object' || !(part in current)) {
       // Missing path → if defaultValue is a function, invoke it
       return (
         typeof defaultValue === 'function' ? (defaultValue as unknown as Function).call(object) : (defaultValue as T)
-      ) as T;
+      ) as T
     }
-    current = (current as Record<string, unknown>)[part];
+    current = (current as Record<string, unknown>)[part]
   }
 
   if (typeof current === 'function') {
-    return (current as Function).call(object) as T;
+    return (current as Function).call(object) as T
   }
 
   if (current === undefined && typeof defaultValue === 'function') {
-    return (defaultValue as unknown as Function).call(object) as T;
+    return (defaultValue as unknown as Function).call(object) as T
   }
 
-  return (current as T) ?? (defaultValue as T);
+  return (current as T) ?? (defaultValue as T)
 }

@@ -19,17 +19,17 @@
  */
 export function functionsIn<T extends Record<string, unknown>>(object: T): string[] {
   if (!object || typeof object !== 'object') {
-    return [];
+    return []
   }
 
-  const result: string[] = [];
+  const result: string[] = []
 
   for (const key in object) {
-    const value = object[key];
+    const value = object[key]
     if (typeof value === 'function') {
-      result.push(key);
+      result.push(key)
     }
   }
 
-  return result;
+  return result
 }

@@ -21,20 +21,20 @@
  */
 export function toArray(value: unknown): unknown[] {
   if (value === null || value === undefined) {
-    return [];
+    return []
   }
 
   if (Array.isArray(value)) {
-    return [...value];
+    return [...value]
   }
 
   if (typeof value === 'string') {
-    return value.split('');
+    return value.split('')
   }
 
   if (typeof value === 'object') {
-    return Object.values(value);
+    return Object.values(value)
   }
 
-  return [];
+  return []
 }

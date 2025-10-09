@@ -1,4 +1,4 @@
-import { isObject } from './isObject.js';
+import { isObject } from './isObject.js'
 
 /**
  * Checks if `value` is a plain object, that is, an object created by the `Object` constructor or one with a `[[Prototype]]` of `null`.
@@ -27,40 +27,40 @@ import { isObject } from './isObject.js';
  */
 export function isPlainObject(value: unknown): value is Record<string, unknown> {
   if (!isObject(value)) {
-    return false;
+    return false
   }
 
   // Check if it's an array
   if (Array.isArray(value)) {
-    return false;
+    return false
   }
 
   // Check if it's a function
   if (typeof value === 'function') {
-    return false;
+    return false
   }
 
   // Check if it's a Date
   if (value instanceof Date) {
-    return false;
+    return false
   }
 
   // Check if it's a RegExp
   if (value instanceof RegExp) {
-    return false;
+    return false
   }
 
   // Check if it's a Map or Set
   if (value instanceof Map || value instanceof Set) {
-    return false;
+    return false
   }
 
   // Check if it's a typed array
   if (ArrayBuffer.isView(value)) {
-    return false;
+    return false
   }
 
   // Check if it's a plain object by checking its prototype
-  const proto = Object.getPrototypeOf(value);
-  return proto === null || proto === Object.prototype;
+  const proto = Object.getPrototypeOf(value)
+  return proto === null || proto === Object.prototype
 }

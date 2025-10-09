@@ -22,18 +22,18 @@ export function throttle<T extends (...args: unknown[]) => unknown>(
   func: T,
   wait: number = 0,
   options: {
-    leading?: boolean;
-    trailing?: boolean;
+    leading?: boolean
+    trailing?: boolean
   } = {},
 ): T & { cancel: () => void; flush: () => ReturnType<T> | undefined; pending: () => boolean } {
-  const { leading = true, trailing = true } = options;
+  const { leading = true, trailing = true } = options
 
   return debounce(func, wait, {
     leading,
     trailing,
     maxWait: wait,
-  });
+  })
 }
 
 // Re-export debounce for internal use
-import { debounce } from './debounce.js';
+import { debounce } from './debounce.js'

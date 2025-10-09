@@ -28,22 +28,22 @@ export function mergeWith<T extends Record<string, unknown>>(
   )[]
 ): T {
   if (!object || typeof object !== 'object') {
-    return object;
+    return object
   }
 
-  const customizer = sources[sources.length - 1];
-  const isCustomizer = typeof customizer === 'function';
-  const sourceObjects = isCustomizer ? sources.slice(0, -1) : sources;
+  const customizer = sources[sources.length - 1]
+  const isCustomizer = typeof customizer === 'function'
+  const sourceObjects = isCustomizer ? sources.slice(0, -1) : sources
 
   for (const source of sourceObjects) {
     if (!source || typeof source !== 'object') {
-      continue;
+      continue
     }
 
     for (const key in source) {
-      if (Object.prototype.hasOwnProperty.call(source, key)) {
-        const srcValue = source[key];
-        const objValue = (object as Record<string, unknown>)[key];
+      if (Object.hasOwn(source, key)) {
+        const srcValue = source[key]
+        const objValue = (object as Record<string, unknown>)[key]
 
         if (isCustomizer) {
           const customFn = customizer as (
@@ -52,10 +52,10 @@ export function mergeWith<T extends Record<string, unknown>>(
             key: string,
             object: Record<string, unknown>,
             source: Record<string, unknown>,
-          ) => unknown;
-          const customValue = customFn(objValue, srcValue, key, object, source);
+          ) => unknown
+          const customValue = customFn(objValue, srcValue, key, object, source)
           if (customValue !== undefined) {
-            (object as Record<string, unknown>)[key] = customValue;
+            ;(object as Record<string, unknown>)[key] = customValue
           } else if (
             objValue &&
             typeof objValue === 'object' &&
@@ -64,13 +64,13 @@ export function mergeWith<T extends Record<string, unknown>>(
             !Array.isArray(objValue) &&
             !Array.isArray(srcValue)
           ) {
-            (object as Record<string, unknown>)[key] = mergeWith(
+            ;(object as Record<string, unknown>)[key] = mergeWith(
               objValue as Record<string, unknown>,
               srcValue as Record<string, unknown>,
               customFn,
-            ) as unknown;
+            ) as unknown
           } else if (objValue === undefined) {
-            (object as Record<string, unknown>)[key] = srcValue;
+            ;(object as Record<string, unknown>)[key] = srcValue
           }
         } else {
           if (
@@ -81,17 +81,17 @@ export function mergeWith<T extends Record<string, unknown>>(
             !Array.isArray(objValue) &&
             !Array.isArray(srcValue)
           ) {
-            (object as Record<string, unknown>)[key] = mergeWith(
+            ;(object as Record<string, unknown>)[key] = mergeWith(
               objValue as Record<string, unknown>,
               srcValue as Record<string, unknown>,
-            ) as unknown;
+            ) as unknown
           } else if (objValue === undefined) {
-            (object as Record<string, unknown>)[key] = srcValue;
+            ;(object as Record<string, unknown>)[key] = srcValue
           }
         }
       }
     }
   }
 
-  return object;
+  return object
 }

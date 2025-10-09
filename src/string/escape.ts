@@ -10,9 +10,10 @@
  * // => 'fred, barney, &amp; pebbles'
  * ```
  */
+// biome-ignore lint/suspicious/noShadowRestrictedNames: keep Lodash-compatible name
 export function escape(string: string): string {
   if (typeof string !== 'string') {
-    return '';
+    return ''
   }
 
   const htmlEscapes: Record<string, string> = {
@@ -22,7 +23,7 @@ export function escape(string: string): string {
     '"': '&quot;',
     "'": '&#39;',
     '`': '&#96;',
-  };
+  }
 
-  return string.replace(/[&<>"'`]/g, (char) => htmlEscapes[char] || char);
+  return string.replace(/[&<>"'`]/g, (char) => htmlEscapes[char] || char)
 }

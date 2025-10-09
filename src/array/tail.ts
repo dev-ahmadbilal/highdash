@@ -18,7 +18,7 @@
  */
 export function tail<T>(array: T[]): T[] {
   if (!Array.isArray(array) || array.length === 0) {
-    return [];
+    return []
   }
-  return array.slice(1);
+  return array.slice(1)
 }

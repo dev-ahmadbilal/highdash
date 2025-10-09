@@ -14,7 +14,7 @@
  */
 export function rearg<T extends (...args: unknown[]) => unknown>(func: T, indexes: number[]): T {
   return ((...args: Parameters<T>) => {
-    const reargedArgs = indexes.map((index) => args[index]);
-    return func(...reargedArgs);
-  }) as T;
+    const reargedArgs = indexes.map((index) => args[index])
+    return func(...reargedArgs)
+  }) as T
 }

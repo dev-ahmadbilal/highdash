@@ -23,7 +23,7 @@ function defaultsDeep(object, ...sources) {
             continue;
         }
         for (const key in source) {
-            if (Object.prototype.hasOwnProperty.call(source, key)) {
+            if (Object.hasOwn(source, key)) {
                 const sourceValue = source[key];
                 const objectValue = object[key];
                 if (objectValue !== null &&

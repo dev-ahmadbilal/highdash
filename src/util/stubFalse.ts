@@ -11,5 +11,5 @@
  * ```
  */
 export function stubFalse(): false {
-  return false;
+  return false
 }

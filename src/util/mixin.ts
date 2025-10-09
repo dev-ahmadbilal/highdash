@@ -18,21 +18,21 @@
  */
 export function mixin<T extends Record<string, unknown>>(object: T, source: Record<string, unknown>): T {
   if (!object || typeof object !== 'object') {
-    return object;
+    return object
   }
 
   if (!source || typeof source !== 'object') {
-    return object;
+    return object
   }
 
   for (const key in source) {
-    if (Object.prototype.hasOwnProperty.call(source, key)) {
-      const value = source[key];
+    if (Object.hasOwn(source, key)) {
+      const value = source[key]
       if (typeof value === 'function') {
-        (object as Record<string, unknown>)[key] = value;
+        ;(object as Record<string, unknown>)[key] = value
       }
     }
   }
 
-  return object;
+  return object
 }

@@ -18,24 +18,24 @@
 export function conforms<T extends Record<string, unknown>>(source: T): (object: unknown) => boolean {
   return (object: unknown): boolean => {
     if (!object || typeof object !== 'object') {
-      return false;
+      return false
     }
 
-    const obj = object as Record<string, unknown>;
+    const obj = object as Record<string, unknown>
 
     for (const key in source) {
-      if (Object.prototype.hasOwnProperty.call(source, key)) {
-        const predicate = source[key];
+      if (Object.hasOwn(source, key)) {
+        const predicate = source[key]
         if (typeof predicate !== 'function') {
-          return false;
+          return false
         }
 
         if (!predicate(obj[key])) {
-          return false;
+          return false
         }
       }
     }
 
-    return true;
-  };
+    return true
+  }
 }

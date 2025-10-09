@@ -14,5 +14,5 @@
  * ```
  */
 export function isArrayBuffer(value: unknown): value is ArrayBuffer {
-  return value !== null && typeof value === 'object' && value.constructor === ArrayBuffer;
+  return value !== null && typeof value === 'object' && value.constructor === ArrayBuffer
 }

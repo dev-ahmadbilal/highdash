@@ -18,19 +18,19 @@ export function pickBy<T extends Record<string, unknown>>(
   predicate: (value: T[keyof T], key: keyof T) => boolean,
 ): Partial<T> {
   if (!object || typeof object !== 'object') {
-    return {};
+    return {}
   }
 
-  const result: Partial<T> = {};
+  const result: Partial<T> = {}
 
   for (const key in object) {
-    if (Object.prototype.hasOwnProperty.call(object, key)) {
-      const value = object[key];
+    if (Object.hasOwn(object, key)) {
+      const value = object[key]
       if (predicate(value, key)) {
-        result[key] = value;
+        result[key] = value
       }
     }
   }
 
-  return result;
+  return result
 }

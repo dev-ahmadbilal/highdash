@@ -21,12 +21,12 @@
  */
 export function isArrayLike(value: unknown): value is ArrayLike<unknown> {
   if (value === null || typeof value === 'function') {
-    return false;
+    return false
   }
 
   // Handle strings separately since they have length but 'length' in 'abc' throws
   if (typeof value === 'string') {
-    return true;
+    return true
   }
 
   // For objects, check if they have a length property
@@ -36,8 +36,8 @@ export function isArrayLike(value: unknown): value is ArrayLike<unknown> {
       typeof (value as ArrayLike<unknown>).length === 'number' &&
       (value as ArrayLike<unknown>).length >= 0 &&
       (value as ArrayLike<unknown>).length % 1 === 0
-    );
+    )
   }
 
-  return false;
+  return false
 }

@@ -13,6 +13,7 @@ exports.escape = escape;
  * // => 'fred, barney, &amp; pebbles'
  * ```
  */
+// biome-ignore lint/suspicious/noShadowRestrictedNames: keep Lodash-compatible name
 function escape(string) {
     if (typeof string !== 'string') {
         return '';

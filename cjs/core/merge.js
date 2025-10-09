@@ -62,12 +62,15 @@ function merge(object, ...sources) {
                 const sVal = source[sym];
                 const tVal = target[sym];
                 if (isPlainObject(tVal) && isPlainObject(sVal)) {
+                    ;
                     target[sym] = baseMerge(tVal, sVal);
                 }
                 else if (Array.isArray(tVal) && Array.isArray(sVal)) {
+                    ;
                     target[sym] = mergeArrays(tVal, sVal);
                 }
                 else {
+                    ;
                     target[sym] = sVal;
                 }
             }
@@ -79,23 +82,27 @@ function merge(object, ...sources) {
         }
         seen.set(source, target);
         for (const key in source) {
-            if (!Object.prototype.hasOwnProperty.call(source, key))
+            if (!Object.hasOwn(source, key))
                 continue;
             const sVal = source[key];
             const tVal = target[key];
             if (Array.isArray(tVal) && Array.isArray(sVal)) {
+                ;
                 target[key] = mergeArrays(tVal, sVal);
                 continue;
             }
             if (isPlainObject(tVal) && isPlainObject(sVal)) {
+                ;
                 target[key] = baseMerge(tVal, sVal);
                 continue;
             }
             if (isPlainObject(sVal) && !isPlainObject(tVal) && tVal !== undefined) {
                 // If destination has a non-plain object and source is plain, overwrite (Lodash does overwrite non-mergeables)
+                ;
                 target[key] = baseMerge({}, sVal);
                 continue;
             }
+            ;
             target[key] = sVal;
         }
         // Merge enumerable symbol keys

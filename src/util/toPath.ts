@@ -14,11 +14,11 @@
  * ```
  */
 export function toPath(value: string | string[] | null | undefined): string[] {
-  if (value === null) return [];
-  if (Array.isArray(value)) return value;
-  if (typeof value !== 'string') return [];
+  if (value === null) return []
+  if (Array.isArray(value)) return value
+  if (typeof value !== 'string') return []
   return value
     .replace(/\[(\d+)\]/g, '.$1')
     .split('.')
-    .filter((x) => x.length > 0);
+    .filter((x) => x.length > 0)
 }

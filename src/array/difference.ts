@@ -14,17 +14,17 @@
  */
 export function difference<T>(array: T[], ...values: T[][]): T[] {
   if (!Array.isArray(array)) {
-    return [];
+    return []
   }
 
-  const excludeValues = new Set<T>();
+  const excludeValues = new Set<T>()
   for (const valueArray of values) {
     if (Array.isArray(valueArray)) {
       for (const value of valueArray) {
-        excludeValues.add(value);
+        excludeValues.add(value)
       }
     }
   }
 
-  return array.filter((item) => !excludeValues.has(item));
+  return array.filter((item) => !excludeValues.has(item))
 }

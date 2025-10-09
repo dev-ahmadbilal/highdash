@@ -17,7 +17,7 @@
  */
 export function unset<T extends Record<string, unknown>>(object: T, path: string | string[]): boolean {
   if (!object || typeof object !== 'object') {
-    return false;
+    return false
   }
 
   const pathParts = Array.isArray(path)
@@ -25,29 +25,29 @@ export function unset<T extends Record<string, unknown>>(object: T, path: string
     : String(path)
         .replace(/\[(\d+)\]/g, '.$1')
         .split('.')
-        .filter(Boolean);
+        .filter(Boolean)
 
   if (pathParts.length === 0) {
-    return false;
+    return false
   }
 
-  let current: Record<string, unknown> = object;
+  let current: Record<string, unknown> = object
 
   for (let i = 0; i < pathParts.length - 1; i++) {
-    const key = pathParts[i];
+    const key = pathParts[i]
 
     if (!(key in current) || current[key] === null || typeof current[key] !== 'object') {
-      return false;
+      return false
     }
 
-    current = current[key] as Record<string, unknown>;
+    current = current[key] as Record<string, unknown>
   }
 
-  const lastKey = pathParts[pathParts.length - 1];
+  const lastKey = pathParts[pathParts.length - 1]
   if (lastKey in current) {
-    delete current[lastKey];
-    return true;
+    delete current[lastKey]
+    return true
   }
 
-  return false;
+  return false
 }

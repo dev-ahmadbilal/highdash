@@ -21,36 +21,36 @@
  */
 export function toNumber(value: unknown): number {
   if (typeof value === 'number') {
-    return value;
+    return value
   }
 
   if (typeof value === 'string') {
-    const parsed = parseFloat(value);
-    return isNaN(parsed) ? 0 : parsed;
+    const parsed = parseFloat(value)
+    return isNaN(parsed) ? 0 : parsed
   }
 
   if (typeof value === 'boolean') {
-    return value ? 1 : 0;
+    return value ? 1 : 0
   }
 
   if (value === null || value === undefined) {
-    return 0;
+    return 0
   }
 
   if (typeof value === 'object' && value !== null) {
     // Try valueOf first, then toString
 
     if (typeof (value as any).valueOf === 'function') {
-      const valueOfResult = (value as any).valueOf();
+      const valueOfResult = (value as any).valueOf()
       if (typeof valueOfResult === 'number') {
-        return valueOfResult;
+        return valueOfResult
       }
     }
 
-    const stringValue = String(value);
-    const parsed = parseFloat(stringValue);
-    return isNaN(parsed) ? 0 : parsed;
+    const stringValue = String(value)
+    const parsed = parseFloat(stringValue)
+    return isNaN(parsed) ? 0 : parsed
   }
 
-  return 0;
+  return 0
 }

@@ -21,18 +21,18 @@ export function property<T = unknown>(path: string | string[]): (object: unknown
     : String(path)
         .replace(/\[(\d+)\]/g, '.$1')
         .split('.')
-        .filter((x) => x.length > 0);
+        .filter((x) => x.length > 0)
 
   return (object: unknown): T => {
     if (object === null || object === undefined || typeof object !== 'object') {
-      return undefined as T;
+      return undefined as T
     }
-    if (parts.length === 0) return undefined as T;
-    let cur: any = object;
+    if (parts.length === 0) return undefined as T
+    let cur: any = object
     for (const p of parts) {
-      if (cur === null) return undefined as T;
-      cur = cur[p];
+      if (cur === null) return undefined as T
+      cur = cur[p]
     }
-    return cur as T;
-  };
+    return cur as T
+  }
 }

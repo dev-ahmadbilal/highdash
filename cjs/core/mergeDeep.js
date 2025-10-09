@@ -33,7 +33,7 @@ function mergeDeep(object, ...sources) {
     function cloneObject(obj) {
         const out = {};
         for (const k in obj) {
-            if (Object.prototype.hasOwnProperty.call(obj, k))
+            if (Object.hasOwn(obj, k))
                 out[k] = obj[k];
         }
         const syms = Object.getOwnPropertySymbols(obj);
@@ -72,12 +72,15 @@ function mergeDeep(object, ...sources) {
                 const sVal = source[sym];
                 const tVal = target[sym];
                 if (Array.isArray(tVal) && Array.isArray(sVal)) {
+                    ;
                     target[sym] = mergeArrays(tVal, sVal);
                 }
                 else if (isPlainObject(tVal) && isPlainObject(sVal)) {
+                    ;
                     target[sym] = baseMerge(cloneObject(tVal), sVal);
                 }
                 else {
+                    ;
                     target[sym] = sVal;
                 }
             }
@@ -89,22 +92,26 @@ function mergeDeep(object, ...sources) {
         }
         seen.set(source, target);
         for (const key in source) {
-            if (!Object.prototype.hasOwnProperty.call(source, key))
+            if (!Object.hasOwn(source, key))
                 continue;
             const sVal = source[key];
             const tVal = target[key];
             if (Array.isArray(tVal) && Array.isArray(sVal)) {
+                ;
                 target[key] = mergeArrays(tVal, sVal);
                 continue;
             }
             if (isPlainObject(tVal) && isPlainObject(sVal)) {
+                ;
                 target[key] = baseMerge(cloneObject(tVal), sVal);
                 continue;
             }
             if (isPlainObject(sVal) && !isPlainObject(tVal) && tVal !== undefined) {
+                ;
                 target[key] = baseMerge({}, sVal);
                 continue;
             }
+            ;
             target[key] = sVal;
         }
         assignEnumerableSymbols(target, source);

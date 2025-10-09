@@ -12,9 +12,9 @@
  */
 export function mean(array: number[]): number {
   if (!Array.isArray(array) || array.length === 0) {
-    return NaN;
+    return NaN
   }
 
-  const sum = array.reduce((acc, value) => acc + value, 0);
-  return sum / array.length;
+  const sum = array.reduce((acc, value) => acc + value, 0)
+  return sum / array.length
 }

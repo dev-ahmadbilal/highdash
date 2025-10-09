@@ -41,7 +41,7 @@ function transform(object, iteratee, accumulator) {
     }
     else if (typeof object === 'object') {
         for (const key in object) {
-            if (Object.prototype.hasOwnProperty.call(object, key)) {
+            if (Object.hasOwn(object, key)) {
                 const value = object[key];
                 const newResult = iteratee(result, value, key, object);
                 if (newResult === false) {

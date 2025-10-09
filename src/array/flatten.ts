@@ -12,8 +12,8 @@
  */
 export function flatten<T>(array: T[]): T[] {
   if (!Array.isArray(array)) {
-    return [];
+    return []
   }
 
-  return array.flat(1) as T[];
+  return array.flat(1) as T[]
 }

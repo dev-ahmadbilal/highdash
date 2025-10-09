@@ -20,7 +20,7 @@ export function update<T extends Record<string, unknown>>(
   updater: (value: unknown) => unknown,
 ): T {
   if (!object || typeof object !== 'object') {
-    return object;
+    return object
   }
 
   const pathParts = Array.isArray(path)
@@ -28,27 +28,27 @@ export function update<T extends Record<string, unknown>>(
     : String(path)
         .replace(/\[(\d+)\]/g, '.$1')
         .split('.')
-        .filter(Boolean);
+        .filter(Boolean)
 
   if (pathParts.length === 0) {
-    return object;
+    return object
   }
 
-  let current: Record<string, unknown> = object;
+  let current: Record<string, unknown> = object
 
   for (let i = 0; i < pathParts.length - 1; i++) {
-    const key = pathParts[i];
+    const key = pathParts[i]
 
     if (!(key in current) || current[key] === null || typeof current[key] !== 'object') {
-      current[key] = {};
+      current[key] = {}
     }
 
-    current = current[key] as Record<string, unknown>;
+    current = current[key] as Record<string, unknown>
   }
 
-  const lastKey = pathParts[pathParts.length - 1];
-  const currentValue = current[lastKey];
-  current[lastKey] = updater(currentValue);
+  const lastKey = pathParts[pathParts.length - 1]
+  const currentValue = current[lastKey]
+  current[lastKey] = updater(currentValue)
 
-  return object;
+  return object
 }

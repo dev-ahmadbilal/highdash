@@ -1,4 +1,4 @@
-import { isArrayLike } from './isArrayLike.js';
+import { isArrayLike } from './isArrayLike.js'
 
 /**
  * This method is like `isArrayLike` except that it also checks if `value` is an object.
@@ -19,5 +19,5 @@ import { isArrayLike } from './isArrayLike.js';
  * ```
  */
 export function isArrayLikeObject(value: unknown): value is ArrayLike<unknown> {
-  return isArrayLike(value) && typeof value === 'object';
+  return isArrayLike(value) && typeof value === 'object'
 }

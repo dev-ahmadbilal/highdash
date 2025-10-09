@@ -18,7 +18,7 @@
  */
 export function initial<T>(array: T[]): T[] {
   if (!Array.isArray(array) || array.length === 0) {
-    return [];
+    return []
   }
-  return array.slice(0, -1);
+  return array.slice(0, -1)
 }

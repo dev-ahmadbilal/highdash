@@ -25,54 +25,54 @@ export function orderBy<T>(
   orders: ('asc' | 'desc') | ('asc' | 'desc')[] = [],
 ): T[] {
   if (!collection) {
-    return [];
+    return []
   }
 
-  const items = Array.isArray(collection) ? collection : Object.values(collection);
+  const items = Array.isArray(collection) ? collection : Object.values(collection)
   if (items.length === 0) {
-    return [];
+    return []
   }
 
   // Normalize iteratees and orders to arrays
-  const iterateesArray = Array.isArray(iteratees) ? iteratees : [iteratees];
-  const ordersArray = Array.isArray(orders) ? orders : [orders];
+  const iterateesArray = Array.isArray(iteratees) ? iteratees : [iteratees]
+  const ordersArray = Array.isArray(orders) ? orders : [orders]
 
   if (iterateesArray.length === 0) {
-    return [...items];
+    return [...items]
   }
 
   // Simple approach - pre-compute values for each item
   const itemsWithValues = items.map((item) => {
     const values = iterateesArray.map((iteratee) => {
       if (typeof iteratee === 'function') {
-        return iteratee(item);
+        return iteratee(item)
       } else {
-        const path = iteratee as string;
+        const path = iteratee as string
         if (path.indexOf('.') === -1 && path.indexOf('[') === -1) {
-          return (item as any)?.[path];
+          return (item as any)?.[path]
         } else {
-          return get(item as unknown as Record<string, unknown>, path);
+          return get(item as unknown as Record<string, unknown>, path)
         }
       }
-    });
-    return { item, values };
-  });
+    })
+    return { item, values }
+  })
 
   return itemsWithValues
     .sort((a, b) => {
       for (let i = 0; i < a.values.length; i++) {
-        const aValue = a.values[i];
-        const bValue = b.values[i];
-        const order = ordersArray[i] || 'asc';
+        const aValue = a.values[i]
+        const bValue = b.values[i]
+        const order = ordersArray[i] || 'asc'
 
-        if (aValue === bValue) continue;
+        if (aValue === bValue) continue
 
-        const comparison = (aValue as any) < (bValue as any) ? -1 : 1;
-        return order === 'desc' ? -comparison : comparison;
+        const comparison = (aValue as any) < (bValue as any) ? -1 : 1
+        return order === 'desc' ? -comparison : comparison
       }
-      return 0;
+      return 0
     })
-    .map(({ item }) => item);
+    .map(({ item }) => item)
 }
 
-import { get } from '../object/get.js';
+import { get } from '../object/get.js'

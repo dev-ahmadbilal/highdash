@@ -19,7 +19,7 @@
  */
 export function words(string: string, pattern?: RegExp | string): string[] {
   if (typeof string !== 'string') {
-    return [];
+    return []
   }
 
   if (pattern === undefined) {
@@ -28,15 +28,15 @@ export function words(string: string, pattern?: RegExp | string): string[] {
     // - sequences of lowercase letters
     // - standalone uppercase sequences (e.g., "HTML")
     // Numbers are treated as separators (not returned)
-    const defaultPattern = /[A-Z]?[a-z]+|[A-Z]+(?![a-z])/g;
-    const matches = string.match(defaultPattern);
-    return matches ? matches : [];
+    const defaultPattern = /[A-Z]?[a-z]+|[A-Z]+(?![a-z])/g
+    const matches = string.match(defaultPattern)
+    return matches ? matches : []
   }
 
   if (typeof pattern === 'string') {
-    pattern = new RegExp(pattern, 'g');
+    pattern = new RegExp(pattern, 'g')
   }
 
-  const matches = string.match(pattern);
-  return matches || [];
+  const matches = string.match(pattern)
+  return matches || []
 }

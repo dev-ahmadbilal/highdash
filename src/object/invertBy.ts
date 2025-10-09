@@ -20,30 +20,30 @@ export function invertBy<T extends Record<string, unknown>>(
   iteratee?: ((value: T[keyof T]) => string) | keyof T,
 ): Record<string, string[]> {
   if (!object || typeof object !== 'object') {
-    return {};
+    return {}
   }
 
-  const result: Record<string, string[]> = {};
+  const result: Record<string, string[]> = {}
 
   for (const key in object) {
-    if (Object.prototype.hasOwnProperty.call(object, key)) {
-      const value = object[key];
-      let invertedKey: string;
+    if (Object.hasOwn(object, key)) {
+      const value = object[key]
+      let invertedKey: string
       if (typeof iteratee === 'function') {
-        invertedKey = String((iteratee as (v: T[keyof T]) => string)(value));
+        invertedKey = String((iteratee as (v: T[keyof T]) => string)(value))
       } else if (iteratee) {
-        const v = (value as any)[iteratee as string];
-        invertedKey = String(v);
+        const v = (value as any)[iteratee as string]
+        invertedKey = String(v)
       } else {
-        invertedKey = String(value);
+        invertedKey = String(value)
       }
 
       if (!result[invertedKey]) {
-        result[invertedKey] = [];
+        result[invertedKey] = []
       }
-      result[invertedKey].push(key);
+      result[invertedKey].push(key)
     }
   }
 
-  return result;
+  return result
 }

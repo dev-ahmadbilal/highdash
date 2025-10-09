@@ -18,7 +18,7 @@
  */
 export function kebabCase(string: string): string {
   if (typeof string !== 'string') {
-    return '';
+    return ''
   }
 
   return string
@@ -26,5 +26,5 @@ export function kebabCase(string: string): string {
     .replace(/[\s_]+/g, '-')
     .replace(/[^\w-]/g, '')
     .replace(/^-+|-+$/g, '') // Remove leading/trailing hyphens
-    .toLowerCase();
+    .toLowerCase()
 }

@@ -17,48 +17,48 @@
  */
 export function unsetIn<T extends Record<string, unknown>>(object: T, path: string | string[]): T {
   if (!object || typeof object !== 'object') {
-    return object;
+    return object
   }
 
-  let keys: string[];
+  let keys: string[]
   if (Array.isArray(path)) {
-    keys = path;
+    keys = path
   } else {
     if (path === '') {
-      return object;
+      return object
     }
     // eslint-disable-next-line no-useless-escape
-    keys = path.split(/[\.\[\]]+/).filter(Boolean);
+    keys = path.split(/[.[\]]+/).filter(Boolean)
   }
 
   if (keys.length === 0) {
-    return object;
+    return object
   }
 
   function cloneShallow(obj: any): any {
-    return Array.isArray(obj) ? obj.slice() : { ...obj };
+    return Array.isArray(obj) ? obj.slice() : { ...obj }
   }
 
-  const result: any = cloneShallow(object);
-  let cur: any = result;
-  let src: any = object;
+  const result: any = cloneShallow(object)
+  let cur: any = result
+  let src: any = object
 
   for (let i = 0; i < keys.length - 1; i++) {
-    const k = keys[i];
+    const k = keys[i]
     // eslint-disable-next-line eqeqeq
-    const srcNext = src != null ? (src as any)[k] : undefined;
-    const cloned = cloneShallow(srcNext ?? {});
-    cur[k] = cloned;
-    cur = cloned;
-    src = srcNext;
+    const srcNext = src != null ? (src as any)[k] : undefined
+    const cloned = cloneShallow(srcNext ?? {})
+    cur[k] = cloned
+    cur = cloned
+    src = srcNext
   }
 
-  const last = keys[keys.length - 1];
+  const last = keys[keys.length - 1]
   if (Array.isArray(cur)) {
-    (cur as any).splice(Number(last), 1);
+    ;(cur as any).splice(Number(last), 1)
   } else {
-    delete cur[last];
+    delete cur[last]
   }
 
-  return result as T;
+  return result as T
 }

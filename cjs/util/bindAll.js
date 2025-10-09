@@ -50,6 +50,7 @@ function bindAll(object, ...methodNames) {
         for (const key of Object.keys(object)) {
             const value = object[key];
             if (typeof value === 'function') {
+                ;
                 object[key] = value.bind(object);
             }
         }

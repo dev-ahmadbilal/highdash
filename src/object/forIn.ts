@@ -25,16 +25,16 @@ export function forIn<T extends Record<string, unknown>>(
   iteratee: (value: T[keyof T], key: keyof T, object: T) => void | boolean,
 ): T {
   if (!object || typeof object !== 'object') {
-    return object;
+    return object
   }
 
   for (const key in object) {
-    const value = object[key];
-    const result = iteratee(value, key, object);
+    const value = object[key]
+    const result = iteratee(value, key, object)
     if (result === false) {
-      break;
+      break
     }
   }
 
-  return object;
+  return object
 }

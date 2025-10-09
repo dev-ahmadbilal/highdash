@@ -17,12 +17,12 @@
  */
 export function times<T>(n: number, iteratee: (index: number) => T): T[] {
   if (n < 1 || !Number.isInteger(n)) {
-    return [];
+    return []
   }
 
-  const result: T[] = [];
+  const result: T[] = []
   for (let i = 0; i < n; i++) {
-    result.push(iteratee(i));
+    result.push(iteratee(i))
   }
-  return result;
+  return result
 }

@@ -22,51 +22,51 @@ export function cloneWith<T>(
   customizer?: (value: unknown, key: string | number | symbol, object: unknown, stack: unknown) => unknown,
 ): T {
   if (customizer) {
-    const result = customizer(value, '', value, undefined);
+    const result = customizer(value, '', value, undefined)
     if (result !== undefined) {
-      return result as T;
+      return result as T
     }
   }
 
   if (value === null || typeof value !== 'object') {
-    return value;
+    return value
   }
 
   if (Array.isArray(value)) {
-    return value.map((item) => cloneWith(item, customizer)) as T;
+    return value.map((item) => cloneWith(item, customizer)) as T
   }
 
   if (value instanceof Date) {
-    return new Date(value.getTime()) as T;
+    return new Date(value.getTime()) as T
   }
 
   if (value instanceof RegExp) {
-    return new RegExp(value.source, value.flags) as T;
+    return new RegExp(value.source, value.flags) as T
   }
 
   if (value instanceof Map) {
-    const clonedMap = new Map();
+    const clonedMap = new Map()
     for (const [key, val] of value) {
-      clonedMap.set(cloneWith(key, customizer), cloneWith(val, customizer));
+      clonedMap.set(cloneWith(key, customizer), cloneWith(val, customizer))
     }
-    return clonedMap as T;
+    return clonedMap as T
   }
 
   if (value instanceof Set) {
-    const clonedSet = new Set();
+    const clonedSet = new Set()
     for (const val of value) {
-      clonedSet.add(cloneWith(val, customizer));
+      clonedSet.add(cloneWith(val, customizer))
     }
-    return clonedSet as T;
+    return clonedSet as T
   }
 
   // For plain objects
-  const cloned: Record<string, unknown> = {};
+  const cloned: Record<string, unknown> = {}
   for (const key in value) {
-    if (Object.prototype.hasOwnProperty.call(value, key)) {
-      cloned[key] = cloneWith((value as Record<string, unknown>)[key], customizer);
+    if (Object.hasOwn(value, key)) {
+      cloned[key] = cloneWith((value as Record<string, unknown>)[key], customizer)
     }
   }
 
-  return cloned as T;
+  return cloned as T
 }

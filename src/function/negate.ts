@@ -19,6 +19,6 @@
  */
 export function negate<T extends (...args: unknown[]) => boolean>(predicate: T): T {
   return ((...args: Parameters<T>) => {
-    return !predicate(...args);
-  }) as T;
+    return !predicate(...args)
+  }) as T
 }

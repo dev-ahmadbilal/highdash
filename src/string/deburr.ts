@@ -12,7 +12,7 @@
  */
 export function deburr(string: string): string {
   if (typeof string !== 'string') {
-    return '';
+    return ''
   }
 
   // Manual fallback mappings for special cases
@@ -29,15 +29,15 @@ export function deburr(string: string): string {
     ı: 'i',
     Ł: 'L',
     ł: 'l',
-  };
+  }
 
   return string
     .split('')
     .map((char) => {
       if (extraMap[char]) {
-        return extraMap[char];
+        return extraMap[char]
       }
-      return char.normalize('NFD').replace(/[\u0300-\u036f]/g, ''); // strip combining marks
+      return char.normalize('NFD').replace(/[\u0300-\u036f]/g, '') // strip combining marks
     })
-    .join('');
+    .join('')
 }

@@ -19,7 +19,7 @@
  */
 export function dropRight<T>(array: T[], n: number = 1): T[] {
   if (!Array.isArray(array) || n <= 0) {
-    return array || [];
+    return array || []
   }
-  return array.slice(0, -n);
+  return array.slice(0, -n)
 }

@@ -13,7 +13,7 @@
  */
 export function cloneDeep<T>(value: T): T {
   // Delegate to cloneDeepWith engine without a customizer to gain cycles & symbol handling
-  return cloneDeepWith(value);
+  return cloneDeepWith(value)
 }
 
-import { cloneDeepWith } from './cloneDeepWith.js';
+import { cloneDeepWith } from './cloneDeepWith.js'

@@ -13,18 +13,18 @@
  */
 export function defaultsDeep<T extends Record<string, unknown>>(object: T, ...sources: Partial<T>[]): T {
   if (!object || typeof object !== 'object') {
-    return object;
+    return object
   }
 
   for (const source of sources) {
     if (!source || typeof source !== 'object') {
-      continue;
+      continue
     }
 
     for (const key in source) {
-      if (Object.prototype.hasOwnProperty.call(source, key)) {
-        const sourceValue = source[key];
-        const objectValue = object[key];
+      if (Object.hasOwn(source, key)) {
+        const sourceValue = source[key]
+        const objectValue = object[key]
 
         if (
           objectValue !== null &&
@@ -37,13 +37,13 @@ export function defaultsDeep<T extends Record<string, unknown>>(object: T, ...so
           object[key] = defaultsDeep(
             objectValue as Record<string, unknown>,
             sourceValue as Record<string, unknown>,
-          ) as T[Extract<keyof T, string>];
+          ) as T[Extract<keyof T, string>]
         } else if (objectValue === undefined) {
-          object[key] = sourceValue as T[Extract<keyof T, string>];
+          object[key] = sourceValue as T[Extract<keyof T, string>]
         }
       }
     }
   }
 
-  return object;
+  return object
 }

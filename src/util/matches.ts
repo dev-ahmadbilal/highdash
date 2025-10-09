@@ -18,13 +18,13 @@
 export function matches<T extends Record<string, unknown>>(source: T): (object: unknown) => boolean {
   return (object: unknown): boolean => {
     if (!object || typeof object !== 'object') {
-      return false;
+      return false
     }
 
     for (const key in source) {
-      if (Object.prototype.hasOwnProperty.call(source, key)) {
-        const sourceValue = source[key];
-        const objectValue = (object as Record<string, unknown>)[key];
+      if (Object.hasOwn(source, key)) {
+        const sourceValue = source[key]
+        const objectValue = (object as Record<string, unknown>)[key]
 
         if (
           sourceValue !== objectValue &&
@@ -34,11 +34,11 @@ export function matches<T extends Record<string, unknown>>(source: T): (object: 
             typeof objectValue !== 'object' ||
             !matches(sourceValue as Record<string, unknown>)(objectValue))
         ) {
-          return false;
+          return false
         }
       }
     }
 
-    return true;
-  };
+    return true
+  }
 }

@@ -13,25 +13,25 @@
  * ```
  */
 export function omit<T extends Record<string, unknown>, K extends keyof T>(object: T, paths: K[]): Omit<T, K> {
-  const result = {} as Omit<T, K>;
+  const result = {} as Omit<T, K>
 
   if (!object || typeof object !== 'object') {
-    return result;
+    return result
   }
 
   // Optimize for small arrays - use indexOf instead of Set
-  const useSet = paths.length > 10;
-  const pathsSet = useSet ? new Set(paths) : null;
+  const useSet = paths.length > 10
+  const pathsSet = useSet ? new Set(paths) : null
 
   for (const key in object) {
-    if (Object.prototype.hasOwnProperty.call(object, key)) {
-      const shouldOmit = useSet ? pathsSet!.has(key as unknown as K) : paths.indexOf(key as unknown as K) !== -1;
+    if (Object.hasOwn(object, key)) {
+      const shouldOmit = useSet ? pathsSet!.has(key as unknown as K) : paths.indexOf(key as unknown as K) !== -1
 
       if (!shouldOmit) {
-        (result as Record<string, unknown>)[key] = object[key as keyof T];
+        ;(result as Record<string, unknown>)[key] = object[key as keyof T]
       }
     }
   }
 
-  return result;
+  return result
 }

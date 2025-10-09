@@ -38,7 +38,7 @@ function isMatchWith(object, source, customizer) {
     const sourceObj = source;
     const objectObj = object;
     for (const key in sourceObj) {
-        if (Object.prototype.hasOwnProperty.call(sourceObj, key)) {
+        if (Object.hasOwn(sourceObj, key)) {
             const sourceValue = sourceObj[key];
             const objectValue = objectObj[key];
             if (customizer) {

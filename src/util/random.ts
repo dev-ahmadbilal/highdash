@@ -25,15 +25,15 @@
  */
 export function random(lower: number = 0, upper?: number, floating?: boolean): number {
   if (upper === undefined) {
-    upper = lower;
-    lower = 0;
+    upper = lower
+    lower = 0
   }
 
-  const isFloating = floating || lower % 1 !== 0 || upper % 1 !== 0;
+  const isFloating = floating || lower % 1 !== 0 || upper % 1 !== 0
 
   if (isFloating) {
-    return lower + Math.random() * (upper - lower);
+    return lower + Math.random() * (upper - lower)
   }
 
-  return Math.floor(lower + Math.random() * (upper - lower + 1));
+  return Math.floor(lower + Math.random() * (upper - lower + 1))
 }

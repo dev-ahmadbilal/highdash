@@ -18,7 +18,7 @@
  */
 export function upperCase(string: string): string {
   if (typeof string !== 'string') {
-    return '';
+    return ''
   }
 
   return (
@@ -36,5 +36,5 @@ export function upperCase(string: string): string {
       .replace(/\s+/g, ' ')
       .trim()
       .toUpperCase()
-  );
+  )
 }

@@ -25,7 +25,7 @@ function mapValues(object, iteratee) {
         return result;
     }
     for (const key in object) {
-        if (Object.prototype.hasOwnProperty.call(object, key)) {
+        if (Object.hasOwn(object, key)) {
             result[key] = iteratee(object[key], key, object);
         }
     }

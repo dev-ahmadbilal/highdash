@@ -17,17 +17,17 @@
  * // => [1, 2, 3] (iteration order is not guaranteed)
  * ```
  */
-export function valuesIn<T extends Record<string, unknown>>(object: T): T[keyof T][];
+export function valuesIn<T extends Record<string, unknown>>(object: T): T[keyof T][]
 export function valuesIn(object: unknown): unknown[] {
   if (!object || typeof object !== 'object') {
-    return [];
+    return []
   }
 
-  const result: unknown[] = [];
+  const result: unknown[] = []
 
   for (const key in object) {
-    result.push((object as Record<string, unknown>)[key]);
+    result.push((object as Record<string, unknown>)[key])
   }
 
-  return result;
+  return result
 }

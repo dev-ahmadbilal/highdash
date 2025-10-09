@@ -26,7 +26,7 @@ function functions(object) {
     }
     const result = [];
     for (const key in object) {
-        if (Object.prototype.hasOwnProperty.call(object, key)) {
+        if (Object.hasOwn(object, key)) {
             const value = object[key];
             if (typeof value === 'function') {
                 result.push(key);

@@ -30,28 +30,28 @@
  * // => []
  * ```
  */
-import { range } from './range.js';
+import { range } from './range.js'
 
 export function rangeRight(start: number, end?: number, step?: number): number[] {
   if (step === 0) {
-    return [];
+    return []
   }
 
   if (end === undefined) {
     // Single-arg form mirrors range and then reversed
-    return range(start).reverse();
+    return range(start).reverse()
   }
 
   if (step === undefined && start > end) {
     // Tests expect [] in this scenario
-    return [];
+    return []
   }
 
   if (step !== undefined) {
-    const span = Math.abs(end - start);
-    if (span === 0) return [];
-    if (Math.abs(step) >= span) return [];
+    const span = Math.abs(end - start)
+    if (span === 0) return []
+    if (Math.abs(step) >= span) return []
   }
 
-  return range(start, end, step).reverse();
+  return range(start, end, step).reverse()
 }

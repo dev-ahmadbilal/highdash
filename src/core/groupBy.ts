@@ -21,61 +21,61 @@ export function groupBy<T>(
   iteratee: ((value: T) => unknown) | string,
 ): Record<string, T[]> {
   if (!collection) {
-    return {};
+    return {}
   }
 
-  const items = Array.isArray(collection) ? collection : Object.values(collection);
-  const length = items.length;
+  const items = Array.isArray(collection) ? collection : Object.values(collection)
+  const length = items.length
 
   if (length === 0) {
-    return {};
+    return {}
   }
 
-  const result: Record<string, T[]> = {};
+  const result: Record<string, T[]> = {}
 
   if (typeof iteratee === 'function') {
     // Function iteratee
     for (let i = 0; i < length; i++) {
-      const item = items[i];
-      const key = String(iteratee(item));
-      const group = result[key];
+      const item = items[i]
+      const key = String(iteratee(item))
+      const group = result[key]
       if (group) {
-        group.push(item);
+        group.push(item)
       } else {
-        result[key] = [item];
+        result[key] = [item]
       }
     }
   } else {
     // String iteratee
-    const path = iteratee as string;
+    const path = iteratee as string
     if (path.indexOf('.') === -1 && path.indexOf('[') === -1) {
       // Simple property access
       for (let i = 0; i < length; i++) {
-        const item = items[i];
-        const key = String((item as any)?.[path]);
-        const group = result[key];
+        const item = items[i]
+        const key = String((item as any)?.[path])
+        const group = result[key]
         if (group) {
-          group.push(item);
+          group.push(item)
         } else {
-          result[key] = [item];
+          result[key] = [item]
         }
       }
     } else {
       // Complex path
       for (let i = 0; i < length; i++) {
-        const item = items[i];
-        const key = String(get(item as unknown as Record<string, unknown>, path));
-        const group = result[key];
+        const item = items[i]
+        const key = String(get(item as unknown as Record<string, unknown>, path))
+        const group = result[key]
         if (group) {
-          group.push(item);
+          group.push(item)
         } else {
-          result[key] = [item];
+          result[key] = [item]
         }
       }
     }
   }
 
-  return result;
+  return result
 }
 
-import { get } from '../object/get.js';
+import { get } from '../object/get.js'

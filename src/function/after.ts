@@ -17,11 +17,11 @@
  * ```
  */
 export function after<T extends (...args: unknown[]) => unknown>(n: number, func: T): T {
-  let count = 0;
+  let count = 0
   return ((...args: Parameters<T>) => {
-    count++;
+    count++
     if (count >= n) {
-      return func(...args);
+      return func(...args)
     }
-  }) as T;
+  }) as T
 }

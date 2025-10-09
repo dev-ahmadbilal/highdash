@@ -17,7 +17,7 @@
  */
 export function nthArg<T = unknown>(n: number = 0): (...args: T[]) => T | undefined {
   return (...args: T[]): T | undefined => {
-    const index = n < 0 ? args.length + n : n;
-    return args[index];
-  };
+    const index = n < 0 ? args.length + n : n
+    return args[index]
+  }
 }

@@ -14,17 +14,17 @@
  */
 export function invert<T extends Record<string, string | number>>(object: T): Record<string, string> {
   if (!object || typeof object !== 'object') {
-    return {};
+    return {}
   }
 
-  const result: Record<string, string> = {};
+  const result: Record<string, string> = {}
 
   for (const key in object) {
-    if (Object.prototype.hasOwnProperty.call(object, key)) {
-      const value = String(object[key]);
-      result[value] = key;
+    if (Object.hasOwn(object, key)) {
+      const value = String(object[key])
+      result[value] = key
     }
   }
 
-  return result;
+  return result
 }

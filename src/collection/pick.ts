@@ -13,17 +13,17 @@
  * ```
  */
 export function pick<T extends Record<string, unknown>, K extends keyof T>(object: T, paths: K[]): Pick<T, K> {
-  const result = {} as Pick<T, K>;
+  const result = {} as Pick<T, K>
 
   if (!object || typeof object !== 'object') {
-    return result;
+    return result
   }
 
   for (const path of paths) {
-    if (Object.prototype.hasOwnProperty.call(object, path)) {
-      result[path] = object[path];
+    if (Object.hasOwn(object, path)) {
+      result[path] = object[path]
     }
   }
 
-  return result;
+  return result
 }

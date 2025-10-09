@@ -17,17 +17,17 @@
  * // => ['a', 'b', 'c'] (iteration order is not guaranteed)
  * ```
  */
-export function keysIn<T extends Record<string, unknown>>(object: T): string[];
+export function keysIn<T extends Record<string, unknown>>(object: T): string[]
 export function keysIn(object: unknown): string[] {
   if (!object || typeof object !== 'object') {
-    return [];
+    return []
   }
 
-  const result: string[] = [];
+  const result: string[] = []
 
   for (const key in object) {
-    result.push(key);
+    result.push(key)
   }
 
-  return result;
+  return result
 }

@@ -25,22 +25,22 @@ export function forInRight<T extends Record<string, unknown>>(
   iteratee: (value: T[keyof T], key: keyof T, object: T) => void | boolean,
 ): T {
   if (!object || typeof object !== 'object') {
-    return object;
+    return object
   }
 
-  const keys: string[] = [];
+  const keys: string[] = []
   for (const key in object) {
-    keys.push(key);
+    keys.push(key)
   }
 
   for (let i = keys.length - 1; i >= 0; i--) {
-    const key = keys[i];
-    const value = object[key];
-    const result = iteratee(value as T[keyof T], key, object);
+    const key = keys[i]
+    const value = object[key]
+    const result = iteratee(value as T[keyof T], key, object)
     if (result === false) {
-      break;
+      break
     }
   }
 
-  return object;
+  return object
 }

@@ -12,11 +12,11 @@
  */
 export function sum(array: number[]): number {
   if (!Array.isArray(array)) {
-    return 0;
+    return 0
   }
 
   return array.reduce((acc, value) => {
-    const num = Number(value);
-    return acc + (isNaN(num) ? 0 : num);
-  }, 0);
+    const num = Number(value)
+    return acc + (isNaN(num) ? 0 : num)
+  }, 0)
 }

@@ -17,8 +17,8 @@
  */
 export function values<T extends Record<string, unknown>>(object: T): T[keyof T][] {
   if (!object || typeof object !== 'object') {
-    return [];
+    return []
   }
 
-  return Object.values(object) as T[keyof T][];
+  return Object.values(object) as T[keyof T][]
 }

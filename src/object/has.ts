@@ -20,7 +20,7 @@
  */
 export function has(object: unknown, path: string | string[]): boolean {
   if (object === null || typeof object !== 'object') {
-    return false;
+    return false
   }
 
   const pathParts = Array.isArray(path)
@@ -28,17 +28,17 @@ export function has(object: unknown, path: string | string[]): boolean {
     : String(path)
         .replace(/\[(\d+)\]/g, '.$1') // Convert indexes to properties
         .split('.')
-        .filter(Boolean); // Split by dots and remove empty strings
+        .filter(Boolean) // Split by dots and remove empty strings
 
-  let current: unknown = object;
+  let current: unknown = object
 
   for (let i = 0; i < pathParts.length; i++) {
-    const part = pathParts[i];
+    const part = pathParts[i]
     if (current === null || typeof current !== 'object' || !(part in current)) {
-      return false;
+      return false
     }
-    current = (current as Record<string, unknown>)[part];
+    current = (current as Record<string, unknown>)[part]
   }
 
-  return true;
+  return true
 }

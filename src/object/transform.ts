@@ -21,40 +21,40 @@ export function transform<T, R>(
   accumulator?: R,
 ): R {
   if (!object) {
-    return accumulator as R;
+    return accumulator as R
   }
 
-  let result: any = accumulator;
+  let result: any = accumulator
   if (result === undefined) {
-    result = Array.isArray(object) ? [] : {};
+    result = Array.isArray(object) ? [] : {}
   }
 
   if (Array.isArray(object)) {
     for (let i = 0; i < object.length; i++) {
-      const value = object[i];
-      const newResult = iteratee(result, value, i, object);
+      const value = object[i]
+      const newResult = iteratee(result, value, i, object)
       if (newResult === false) {
-        break;
+        break
       }
       // iteratee may mutate result; if it returned a truthy object, update reference
       if (newResult !== undefined && newResult !== true) {
-        result = newResult;
+        result = newResult
       }
     }
   } else if (typeof object === 'object') {
     for (const key in object) {
-      if (Object.prototype.hasOwnProperty.call(object, key)) {
-        const value = object[key];
-        const newResult = iteratee(result, value, key, object);
+      if (Object.hasOwn(object, key)) {
+        const value = object[key]
+        const newResult = iteratee(result, value, key, object)
         if (newResult === false) {
-          break;
+          break
         }
         if (newResult !== undefined && newResult !== true) {
-          result = newResult;
+          result = newResult
         }
       }
     }
   }
 
-  return result as R;
+  return result as R
 }

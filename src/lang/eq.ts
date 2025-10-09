@@ -27,5 +27,5 @@
  * ```
  */
 export function eq(value: unknown, other: unknown): boolean {
-  return value === other || (value !== value && other !== other);
+  return value === other || (value !== value && other !== other)
 }
