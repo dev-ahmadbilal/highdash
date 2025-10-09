@@ -66,24 +66,24 @@ describe('iteratee', () => {
   });
 
   it('should handle complex nested object matching', () => {
-    const matcher = iteratee({ 
-      user: { 
-        profile: { 
+    const matcher = iteratee({
+      user: {
+        profile: {
           name: 'john',
-          age: 30 
-        } 
-      } 
+          age: 30,
+        },
+      },
     });
-    
+
     const obj = {
       user: {
         profile: {
           name: 'john',
-          age: 30
-        }
-      }
+          age: 30,
+        },
+      },
     };
-    
+
     expect(matcher(obj)).toBe(true);
   });
 
@@ -94,20 +94,20 @@ describe('iteratee', () => {
   });
 
   it('should handle mixed type matching', () => {
-    const matcher = iteratee({ 
+    const matcher = iteratee({
       name: 'john',
       age: 30,
       active: true,
-      tags: ['red', 'blue']
+      tags: ['red', 'blue'],
     });
-    
+
     const obj = {
       name: 'john',
       age: 30,
       active: true,
-      tags: ['red', 'blue']
+      tags: ['red', 'blue'],
     };
-    
+
     expect(matcher(obj)).toBe(true);
   });
 });

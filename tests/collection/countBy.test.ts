@@ -18,16 +18,16 @@ describe('countBy', () => {
   });
 
   it('should handle object input', () => {
-    const obj = { 'a': { 'value': 1 }, 'b': { 'value': 2 }, 'c': { 'value': 1 } };
+    const obj = { a: { value: 1 }, b: { value: 2 }, c: { value: 1 } };
     expect(countBy(obj, 'value')).toEqual({ '1': 2, '2': 1 });
   });
 
   it('should handle complex objects', () => {
     const users = [
-      { 'user': 'fred', 'active': false },
-      { 'user': 'barney', 'active': true },
-      { 'user': 'pebbles', 'active': false }
+      { user: 'fred', active: false },
+      { user: 'barney', active: true },
+      { user: 'pebbles', active: false },
     ];
-    expect(countBy(users, 'active')).toEqual({ 'false': 2, 'true': 1 });
+    expect(countBy(users, 'active')).toEqual({ false: 2, true: 1 });
   });
 });

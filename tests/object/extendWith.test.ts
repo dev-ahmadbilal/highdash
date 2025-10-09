@@ -17,9 +17,9 @@ describe('extendWith', () => {
       if (objValue === 0) return srcValue;
       return objValue;
     };
-    
+
     const result = extendWith(object, new Foo(), new Bar(), customizer);
-    
+
     expect(result).toBe(object);
     expect(result.a).toBe(1);
     expect(result.b).toBe(2);
@@ -34,9 +34,9 @@ describe('extendWith', () => {
     const customizer = (objValue: any, srcValue: any) => {
       return objValue === undefined ? srcValue : objValue;
     };
-    
+
     const result = extendWith(object, source1, source2, customizer);
-    
+
     expect(result).toBe(object);
     expect(result.a).toBe(1);
     expect(result.b).toBe(2);
@@ -49,7 +49,7 @@ describe('extendWith', () => {
       return objValue === undefined ? srcValue : objValue;
     };
     const result = extendWith(object, null, undefined, { b: 2 }, customizer);
-    
+
     expect(result).toBe(object);
     expect(result.a).toBe(1);
     expect(result.b).toBe(2);
@@ -58,7 +58,7 @@ describe('extendWith', () => {
   it('returns original object if no sources', () => {
     const object = { a: 1 };
     const result = extendWith(object);
-    
+
     expect(result).toBe(object);
     expect(result.a).toBe(1);
   });
@@ -75,9 +75,9 @@ describe('extendWith', () => {
     const customizer = (objValue: any, srcValue: any) => {
       return objValue === undefined ? srcValue : objValue;
     };
-    
+
     const result = extendWith(object, source1, source2, customizer);
-    
+
     expect(result.b).toBe(3);
     expect(result.c).toBe(5);
     expect(result.d).toBe(6);

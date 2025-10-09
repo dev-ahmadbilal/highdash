@@ -46,6 +46,16 @@ export default [
       '@typescript-eslint/no-unsafe-function-type': 'off',
     },
   },
+  // More permissive rules for test files
+  {
+    files: ['tests/**/*.{js,ts}', '**/*.test.{js,ts}', '**/*.spec.{js,ts}'],
+    rules: {
+      '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+      'no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+      'no-console': 'off', // Allow console in tests
+      'prefer-rest-params': 'off', // Allow arguments in tests
+    },
+  },
   { languageOptions: { globals: globals.browser } },
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,

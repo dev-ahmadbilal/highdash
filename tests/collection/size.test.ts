@@ -12,7 +12,14 @@ describe('size', () => {
   });
 
   it('should return size for maps and sets', () => {
-    expect(size(new Map([['a', 1], ['b', 2]]))).toBe(2);
+    expect(
+      size(
+        new Map([
+          ['a', 1],
+          ['b', 2],
+        ]),
+      ),
+    ).toBe(2);
     expect(size(new Set([1, 2, 3]))).toBe(3);
   });
 

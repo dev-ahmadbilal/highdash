@@ -4,19 +4,19 @@ describe('bindAll', () => {
   it('should bind methods to object', () => {
     const obj = {
       value: 42,
-      getValue: function() {
+      getValue: function () {
         return this.value;
       },
-      setValue: function(val: number) {
+      setValue: function (val: number) {
         this.value = val;
-      }
+      },
     };
 
-    const boundObj = bindAll(obj, 'getValue', 'setValue');
-    
+    bindAll(obj, 'getValue', 'setValue');
+
     const getValue = obj.getValue;
     const setValue = obj.setValue;
-    
+
     expect(getValue()).toBe(42);
     setValue(100);
     expect(getValue()).toBe(100);
@@ -25,20 +25,20 @@ describe('bindAll', () => {
   it('should bind all methods when no method names provided', () => {
     const obj = {
       value: 42,
-      getValue: function() {
+      getValue: function () {
         return this.value;
       },
-      setValue: function(val: number) {
+      setValue: function (val: number) {
         this.value = val;
       },
-      notAMethod: 'string'
+      notAMethod: 'string',
     };
 
-    const boundObj = bindAll(obj);
-    
+    bindAll(obj);
+
     const getValue = obj.getValue;
     const setValue = obj.setValue;
-    
+
     expect(getValue()).toBe(42);
     setValue(100);
     expect(getValue()).toBe(100);
@@ -47,13 +47,13 @@ describe('bindAll', () => {
   it('should work with single method', () => {
     const obj = {
       value: 42,
-      getValue: function() {
+      getValue: function () {
         return this.value;
-      }
+      },
     };
 
-    const boundObj = bindAll(obj, 'getValue');
-    
+    bindAll(obj, 'getValue');
+
     const getValue = obj.getValue;
     expect(getValue()).toBe(42);
   });
@@ -62,14 +62,14 @@ describe('bindAll', () => {
     const obj = {
       value: 42,
       nested: {
-        getValue: function() {
+        getValue: function () {
           return this.value;
-        }
-      }
+        },
+      },
     };
 
-    const boundObj = bindAll(obj, 'nested.getValue');
-    
+    bindAll(obj, 'nested.getValue');
+
     const getValue = obj.nested.getValue;
     expect(getValue()).toBe(42);
   });
@@ -77,14 +77,14 @@ describe('bindAll', () => {
   it('should handle non-function properties', () => {
     const obj = {
       value: 42,
-      getValue: function() {
+      getValue: function () {
         return this.value;
       },
-      notAMethod: 'string'
+      notAMethod: 'string',
     };
 
-    const boundObj = bindAll(obj, 'getValue', 'notAMethod');
-    
+    bindAll(obj, 'getValue', 'notAMethod');
+
     const getValue = obj.getValue;
     expect(getValue()).toBe(42);
   });
@@ -92,13 +92,13 @@ describe('bindAll', () => {
   it('should handle empty method names array', () => {
     const obj = {
       value: 42,
-      getValue: function() {
+      getValue: function () {
         return this.value;
-      }
+      },
     };
 
-    const boundObj = bindAll(obj, ...[]);
-    
+    bindAll(obj, ...[]);
+
     const getValue = obj.getValue;
     expect(getValue()).toBe(42);
   });
@@ -117,11 +117,11 @@ describe('bindAll', () => {
   it('should work with arrow functions', () => {
     const obj = {
       value: 42,
-      getValue: () => this.value // Arrow functions don't have their own this
+      getValue: () => this.value, // Arrow functions don't have their own this
     };
 
-    const boundObj = bindAll(obj, 'getValue');
-    
+    bindAll(obj, 'getValue');
+
     const getValue = obj.getValue;
     expect(getValue()).toBe(undefined); // Arrow function this is not bound
   });
@@ -129,22 +129,22 @@ describe('bindAll', () => {
   it('should work with class methods', () => {
     class TestClass {
       value = 42;
-      
+
       getValue() {
         return this.value;
       }
-      
+
       setValue(val: number) {
         this.value = val;
       }
     }
 
     const obj = new TestClass();
-    const boundObj = bindAll(obj, 'getValue', 'setValue');
-    
+    bindAll(obj, 'getValue', 'setValue');
+
     const getValue = obj.getValue;
     const setValue = obj.setValue;
-    
+
     expect(getValue()).toBe(42);
     setValue(100);
     expect(getValue()).toBe(100);

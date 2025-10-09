@@ -7,7 +7,7 @@ describe('isEqual', () => {
     expect(isEqual(true, true)).toBe(true);
     expect(isEqual(null, null)).toBe(true);
     expect(isEqual(undefined, undefined)).toBe(true);
-    
+
     expect(isEqual(1, 2)).toBe(false);
     expect(isEqual('hello', 'world')).toBe(false);
     expect(isEqual(true, false)).toBe(false);
@@ -31,7 +31,7 @@ describe('isEqual', () => {
     const date1 = new Date('2023-01-01');
     const date2 = new Date('2023-01-01');
     const date3 = new Date('2023-01-02');
-    
+
     expect(isEqual(date1, date2)).toBe(true);
     expect(isEqual(date1, date3)).toBe(false);
   });
@@ -42,10 +42,19 @@ describe('isEqual', () => {
   });
 
   it('should compare maps', () => {
-    const map1 = new Map([['a', 1], ['b', 2]]);
-    const map2 = new Map([['a', 1], ['b', 2]]);
-    const map3 = new Map([['a', 1], ['b', 3]]);
-    
+    const map1 = new Map([
+      ['a', 1],
+      ['b', 2],
+    ]);
+    const map2 = new Map([
+      ['a', 1],
+      ['b', 2],
+    ]);
+    const map3 = new Map([
+      ['a', 1],
+      ['b', 3],
+    ]);
+
     expect(isEqual(map1, map2)).toBe(true);
     expect(isEqual(map1, map3)).toBe(false);
   });
@@ -54,7 +63,7 @@ describe('isEqual', () => {
     const set1 = new Set([1, 2, 3]);
     const set2 = new Set([1, 2, 3]);
     const set3 = new Set([1, 2, 4]);
-    
+
     expect(isEqual(set1, set2)).toBe(true);
     expect(isEqual(set1, set3)).toBe(false);
   });

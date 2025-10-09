@@ -10,8 +10,8 @@ describe('forOwnRight', () => {
 
     const obj = new Foo();
     const result: string[] = [];
-    
-    forOwnRight(obj, function(value, key) {
+
+    forOwnRight(obj, function (value, key) {
       result.push(key as string);
     });
 
@@ -23,7 +23,7 @@ describe('forOwnRight', () => {
   it('should pass correct arguments to iteratee', () => {
     const obj = { a: 1, b: 2 };
     const iteratee = jest.fn();
-    
+
     forOwnRight(obj, iteratee);
 
     expect(iteratee).toHaveBeenCalledWith(1, 'a', obj);
@@ -36,7 +36,7 @@ describe('forOwnRight', () => {
       if (key === 'b') return false;
       return true;
     });
-    
+
     forOwnRight(obj, iteratee);
 
     expect(iteratee).toHaveBeenCalledTimes(2);
@@ -48,7 +48,7 @@ describe('forOwnRight', () => {
   it('should return the original object', () => {
     const obj = { a: 1, b: 2 };
     const result = forOwnRight(obj, () => {});
-    
+
     expect(result).toBe(obj);
   });
 
@@ -65,17 +65,17 @@ describe('forOwnRight', () => {
   it('should handle empty object', () => {
     const obj = {};
     const iteratee = jest.fn();
-    
+
     forOwnRight(obj, iteratee);
-    
+
     expect(iteratee).not.toHaveBeenCalled();
   });
 
   it('should iterate in reverse order', () => {
     const obj = { a: 1, b: 2, c: 3 };
     const result: string[] = [];
-    
-    forOwnRight(obj, function(value, key) {
+
+    forOwnRight(obj, function (value, key) {
       result.push(key as string);
     });
 
@@ -88,8 +88,8 @@ describe('forOwnRight', () => {
     const sym = Symbol('test');
     const obj = { [sym]: 'value', a: 1 };
     const result: any[] = [];
-    
-    forOwnRight(obj, function(value, key) {
+
+    forOwnRight(obj, function (value, key) {
       result.push([value, key]);
     });
 
@@ -103,7 +103,7 @@ describe('forOwnRight', () => {
     child.own = 'value';
 
     const result: string[] = [];
-    forOwnRight(child, function(value, key) {
+    forOwnRight(child, function (value, key) {
       result.push(key as string);
     });
 

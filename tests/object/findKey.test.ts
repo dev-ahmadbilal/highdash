@@ -3,20 +3,20 @@ import { findKey } from '../../src/object/findKey.js';
 describe('findKey', () => {
   it('should find key with function predicate', () => {
     const users = {
-      'barney': { 'age': 36, 'active': true },
-      'fred': { 'age': 40, 'active': false },
-      'pebbles': { 'age': 1, 'active': true }
+      barney: { age: 36, active: true },
+      fred: { age: 40, active: false },
+      pebbles: { age: 1, active: true },
     };
 
-    const result = findKey(users, o => o.age < 40);
+    const result = findKey(users, (o) => o.age < 40);
     expect(result).toBe('barney');
   });
 
   it('should find key with string predicate', () => {
     const users = {
-      'barney': { 'age': 36, 'active': true },
-      'fred': { 'age': 40, 'active': false },
-      'pebbles': { 'age': 1, 'active': true }
+      barney: { age: 36, active: true },
+      fred: { age: 40, active: false },
+      pebbles: { age: 1, active: true },
     };
 
     const result = findKey(users, 'active');
@@ -25,12 +25,12 @@ describe('findKey', () => {
 
   it('should return undefined if no match found', () => {
     const users = {
-      'barney': { 'age': 36, 'active': true },
-      'fred': { 'age': 40, 'active': false },
-      'pebbles': { 'age': 1, 'active': true }
+      barney: { age: 36, active: true },
+      fred: { age: 40, active: false },
+      pebbles: { age: 1, active: true },
     };
 
-    const result = findKey(users, o => o.age > 100);
+    const result = findKey(users, (o) => o.age > 100);
     expect(result).toBeUndefined();
   });
 
@@ -51,25 +51,25 @@ describe('findKey', () => {
 
   it('should pass correct arguments to predicate', () => {
     const users = {
-      'barney': { 'age': 36, 'active': true },
-      'fred': { 'age': 40, 'active': false }
+      barney: { age: 36, active: true },
+      fred: { age: 40, active: false },
     };
 
     const predicate = jest.fn().mockReturnValue(true);
     findKey(users, predicate);
 
-    expect(predicate).toHaveBeenCalledWith({ 'age': 36, 'active': true }, 'barney', users);
+    expect(predicate).toHaveBeenCalledWith({ age: 36, active: true }, 'barney', users);
     expect(predicate).toHaveBeenCalledTimes(1);
   });
 
   it('should find first matching key', () => {
     const users = {
-      'barney': { 'age': 36, 'active': true },
-      'fred': { 'age': 40, 'active': false },
-      'pebbles': { 'age': 1, 'active': true }
+      barney: { age: 36, active: true },
+      fred: { age: 40, active: false },
+      pebbles: { age: 1, active: true },
     };
 
-    const result = findKey(users, o => o.active);
+    const result = findKey(users, (o) => o.active);
     expect(result).toBe('barney'); // First match, not 'pebbles'
   });
 });

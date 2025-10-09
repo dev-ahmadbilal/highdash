@@ -2,11 +2,8 @@ import { matchesProperty } from '../../src/util/matchesProperty';
 
 describe('matchesProperty', () => {
   it('should create function that matches property value', () => {
-    const objects = [
-      { a: { b: 2 } },
-      { a: { b: 1 } }
-    ];
-    
+    const objects = [{ a: { b: 2 } }, { a: { b: 1 } }];
+
     const matcher = matchesProperty('a.b', 2);
     expect(matcher(objects[0])).toBe(true);
     expect(matcher(objects[1])).toBe(false);
@@ -34,7 +31,7 @@ describe('matchesProperty', () => {
     const matcher1 = matchesProperty('active', true);
     const matcher2 = matchesProperty('count', 0);
     const matcher3 = matchesProperty('value', null);
-    
+
     expect(matcher1({ active: true })).toBe(true);
     expect(matcher2({ count: 0 })).toBe(true);
     expect(matcher3({ value: null })).toBe(true);
@@ -73,11 +70,8 @@ describe('matchesProperty', () => {
     const matcher = matchesProperty('data.users.0.profile.name', 'john');
     const obj = {
       data: {
-        users: [
-          { profile: { name: 'john' } },
-          { profile: { name: 'jane' } }
-        ]
-      }
+        users: [{ profile: { name: 'john' } }, { profile: { name: 'jane' } }],
+      },
     };
     expect(matcher(obj)).toBe(true);
   });

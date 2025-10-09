@@ -340,4 +340,70 @@ describe('words', () => {
   it('should split string with letters, numbers, special characters, separators, spaces, tabs, newlines, carriage returns, form feeds, vertical tabs, backspaces, null characters, unicode, and emoji into words', () => {
     expect(words('hello123!@#world456$%^test789,;: \t\n\r\f\v\b\0🚀😀')).toEqual(['hello', 'world', 'test']);
   });
+
+  it('should handle non-string input', () => {
+    expect(words(null as any)).toEqual([]);
+    expect(words(undefined as any)).toEqual([]);
+    expect(words(123 as any)).toEqual([]);
+    expect(words({} as any)).toEqual([]);
+    expect(words([] as any)).toEqual([]);
+  });
+
+  it('should handle empty string', () => {
+    expect(words('')).toEqual([]);
+  });
+
+  it('should handle string with only separators', () => {
+    expect(words('   ')).toEqual([]);
+    expect(words('!!!')).toEqual([]);
+    expect(words('123')).toEqual([]);
+  });
+
+  it('should work with custom RegExp pattern', () => {
+    expect(words('fred, barney, & pebbles', /[^, ]+/g)).toEqual(['fred', 'barney', '&', 'pebbles']);
+    expect(words('hello world', /\w+/g)).toEqual(['hello', 'world']);
+    expect(words('hello123world', /\d+/g)).toEqual(['123']);
+  });
+
+  it('should work with custom string pattern', () => {
+    expect(words('hello world', '\\w+')).toEqual(['hello', 'world']);
+    expect(words('hello123world', '\\d+')).toEqual(['123']);
+    expect(words('hello world test', '\\w+')).toEqual(['hello', 'world', 'test']);
+  });
+
+  it('should handle pattern that matches nothing', () => {
+    expect(words('hello world', /xyz/g)).toEqual([]);
+    expect(words('hello world', 'xyz')).toEqual([]);
+  });
+
+  it('should handle pattern with global flag', () => {
+    expect(words('hello world', /hello/g)).toEqual(['hello']);
+    expect(words('hello hello world', /hello/g)).toEqual(['hello', 'hello']);
+  });
+
+  it('should handle pattern without global flag', () => {
+    const result1 = words('hello world', /hello/);
+    expect(result1[0]).toBe('hello');
+    expect(result1.length).toBe(1);
+    expect(result1).toHaveProperty('index', 0);
+    expect(result1).toHaveProperty('input', 'hello world');
+
+    const result2 = words('hello hello world', /hello/);
+    expect(result2[0]).toBe('hello');
+    expect(result2.length).toBe(1);
+    expect(result2).toHaveProperty('index', 0);
+    expect(result2).toHaveProperty('input', 'hello hello world');
+  });
+
+  it('should handle complex custom patterns', () => {
+    expect(words('hello123world456test', /[a-z]+/g)).toEqual(['hello', 'world', 'test']);
+    expect(words('HELLO123WORLD456TEST', /[A-Z]+/g)).toEqual(['HELLO', 'WORLD', 'TEST']);
+    expect(words('hello123world456test', /[0-9]+/g)).toEqual(['123', '456']);
+  });
+
+  it('should handle edge cases with custom patterns', () => {
+    expect(words('', /hello/g)).toEqual([]);
+    expect(words('hello', /hello/g)).toEqual(['hello']);
+    expect(words('hello world', /hello/g)).toEqual(['hello']);
+  });
 });

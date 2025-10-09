@@ -6,7 +6,7 @@ describe('valuesIn', () => {
       this.a = 1;
     }
     Foo.prototype.b = 2;
-    
+
     const obj = new Foo();
     const result = valuesIn(obj);
     expect(result).toEqual([1, 2]);

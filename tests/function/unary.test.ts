@@ -34,9 +34,9 @@ describe('unary', () => {
   it('should preserve this context', () => {
     const obj = {
       value: 10,
-      add: function(a: number, b: number) {
+      add: function (a: number, b: number) {
         return this.value + a + b;
-      }
+      },
     };
     const unaryAdd = unary(obj.add);
     expect(unaryAdd.call(obj, 1, 2)).toBe(11); // 10 + 1

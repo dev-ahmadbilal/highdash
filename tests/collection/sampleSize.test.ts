@@ -5,7 +5,7 @@ describe('sampleSize', () => {
     const collection = [1, 2, 3, 4];
     const result = sampleSize(collection, 2);
     expect(result).toHaveLength(2);
-    result.forEach(item => {
+    result.forEach((item) => {
       expect(collection).toContain(item);
     });
   });

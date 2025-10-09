@@ -18,7 +18,7 @@ describe('isNative', () => {
   });
 
   it('should return false for user-defined functions', () => {
-    const userFunction = function() {};
+    const userFunction = function () {};
     expect(isNative(userFunction)).toBe(false);
   });
 
@@ -28,7 +28,7 @@ describe('isNative', () => {
   });
 
   it('should return false for bound functions', () => {
-    const boundFunction = function() {}.bind({});
+    const boundFunction = function () {}.bind({});
     expect(isNative(boundFunction)).toBe(false);
   });
 
@@ -51,7 +51,7 @@ describe('isNative', () => {
   });
 
   it('should return false for async functions', () => {
-    const asyncFunction = async function() {};
+    const asyncFunction = async function () {};
     expect(isNative(asyncFunction)).toBe(false);
   });
 

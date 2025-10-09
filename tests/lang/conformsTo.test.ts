@@ -5,9 +5,9 @@ describe('conformsTo', () => {
     const object = { a: 1, b: 2 };
     const source = {
       a: (value: number) => value > 0,
-      b: (value: number) => value < 10
+      b: (value: number) => value < 10,
     };
-    
+
     expect(conformsTo(object, source)).toBe(true);
   });
 
@@ -15,127 +15,127 @@ describe('conformsTo', () => {
     const object = { a: 1, b: 2 };
     const source = {
       a: (value: number) => value > 0,
-      b: (value: number) => value > 10
+      b: (value: number) => value > 10,
     };
-    
+
     expect(conformsTo(object, source)).toBe(false);
   });
 
   it('should work with different data types', () => {
-    const object = { 
-      name: 'John', 
-      age: 30, 
+    const object = {
+      name: 'John',
+      age: 30,
       active: true,
-      tags: ['red', 'blue']
+      tags: ['red', 'blue'],
     };
     const source = {
       name: (value: string) => value.length > 0,
       age: (value: number) => value >= 18,
       active: (value: boolean) => value === true,
-      tags: (value: string[]) => value.length > 0
+      tags: (value: string[]) => value.length > 0,
     };
-    
+
     expect(conformsTo(object, source)).toBe(true);
   });
 
   it('should work with nested objects', () => {
-    const object = { 
-      user: { 
-        name: 'John', 
-        age: 30 
-      } 
+    const object = {
+      user: {
+        name: 'John',
+        age: 30,
+      },
     };
     const source = {
-      user: (value: any) => value.name && value.age > 18
+      user: (value: any) => value.name && value.age > 18,
     };
-    
+
     expect(conformsTo(object, source)).toBe(true);
   });
 
   it('should work with arrays', () => {
-    const object = { 
+    const object = {
       items: [1, 2, 3],
-      count: 3
+      count: 3,
     };
     const source = {
       items: (value: number[]) => value.length > 0,
-      count: (value: number) => value === 3
+      count: (value: number) => value === 3,
     };
-    
+
     expect(conformsTo(object, source)).toBe(true);
   });
 
   it('should work with functions', () => {
-    const object = { 
+    const object = {
       fn: () => 'hello',
-      asyncFn: async () => 'world'
+      asyncFn: async () => 'world',
     };
     const source = {
       fn: (value: any) => typeof value === 'function',
-      asyncFn: (value: any) => typeof value === 'function'
+      asyncFn: (value: any) => typeof value === 'function',
     };
-    
+
     expect(conformsTo(object, source)).toBe(true);
   });
 
   it('should work with dates', () => {
-    const object = { 
+    const object = {
       date: new Date('2023-01-01'),
-      timestamp: 1672531200000
+      timestamp: 1672531200000,
     };
     const source = {
       date: (value: any) => value instanceof Date,
-      timestamp: (value: number) => value > 0
+      timestamp: (value: number) => value > 0,
     };
-    
+
     expect(conformsTo(object, source)).toBe(true);
   });
 
   it('should work with regex', () => {
-    const object = { 
+    const object = {
       pattern: /abc/,
-      flags: 'g'
+      flags: 'g',
     };
     const source = {
       pattern: (value: any) => value instanceof RegExp,
-      flags: (value: string) => value.length > 0
+      flags: (value: string) => value.length > 0,
     };
-    
+
     expect(conformsTo(object, source)).toBe(true);
   });
 
   it('should work with null and undefined values', () => {
-    const object = { 
+    const object = {
       value: null,
-      other: undefined
+      other: undefined,
     };
     const source = {
       value: (value: any) => value === null,
-      other: (value: any) => value === undefined
+      other: (value: any) => value === undefined,
     };
-    
+
     expect(conformsTo(object, source)).toBe(true);
   });
 
   it('should work with empty object', () => {
     const object = {};
     const source = {};
-    
+
     expect(conformsTo(object, source)).toBe(true);
   });
 
   it('should work with empty source', () => {
     const object = { a: 1, b: 2 };
     const source = {};
-    
+
     expect(conformsTo(object, source)).toBe(true);
   });
 
   it('should handle null and undefined object', () => {
     const source = {
-      a: (value: any) => value > 0
+      a: (value: any) => value > 0,
     };
-    
+
     expect(conformsTo(null, source)).toBe(false);
     expect(conformsTo(undefined, source)).toBe(false);
   });
@@ -148,15 +148,15 @@ describe('conformsTo', () => {
           age: 30,
           settings: {
             theme: 'dark',
-            notifications: true
-          }
-        }
-      }
+            notifications: true,
+          },
+        },
+      },
     };
     const source = {
-      user: (value: any) => value.profile && value.profile.name && value.profile.age > 18
+      user: (value: any) => value.profile && value.profile.name && value.profile.age > 18,
     };
-    
+
     expect(conformsTo(object, source)).toBe(true);
   });
 });

@@ -115,22 +115,22 @@ describe('isMatch', () => {
         address: {
           street: '123 Main St',
           city: 'New York',
-          coordinates: [40.7128, -74.0060]
+          coordinates: [40.7128, -74.006],
         },
-        hobbies: ['reading', 'swimming']
+        hobbies: ['reading', 'swimming'],
       },
-      active: true
+      active: true,
     };
-    
+
     const source = {
       user: {
         name: 'John',
         address: {
-          city: 'New York'
-        }
-      }
+          city: 'New York',
+        },
+      },
     };
-    
+
     expect(isMatch(object, source)).toBe(true);
   });
 
@@ -141,20 +141,20 @@ describe('isMatch', () => {
         age: 30,
         address: {
           street: '123 Main St',
-          city: 'New York'
-        }
-      }
+          city: 'New York',
+        },
+      },
     };
-    
+
     const source = {
       user: {
         name: 'Jane',
         address: {
-          city: 'New York'
-        }
-      }
+          city: 'New York',
+        },
+      },
     };
-    
+
     expect(isMatch(object, source)).toBe(false);
   });
 

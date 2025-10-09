@@ -3,7 +3,7 @@ import { isObject } from '../../src/lang/isObject';
 describe('isObject', () => {
   it('should return true for objects', () => {
     expect(isObject({})).toBe(true);
-    expect(isObject({ 'a': 1 })).toBe(true);
+    expect(isObject({ a: 1 })).toBe(true);
     expect(isObject(new Object())).toBe(true);
   });
 
@@ -13,7 +13,7 @@ describe('isObject', () => {
   });
 
   it('should return true for functions', () => {
-    expect(isObject(function() {})).toBe(true);
+    expect(isObject(function () {})).toBe(true);
     expect(isObject(() => {})).toBe(true);
   });
 

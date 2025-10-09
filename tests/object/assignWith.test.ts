@@ -8,9 +8,9 @@ describe('assignWith', () => {
     const customizer = (objValue: any, srcValue: any) => {
       return objValue === undefined ? srcValue : objValue;
     };
-    
+
     const result = assignWith(object, source1, source2, customizer);
-    
+
     expect(result).toBe(object);
     expect(result.a).toBe(1);
     expect(result.b).toBe(2);
@@ -23,7 +23,7 @@ describe('assignWith', () => {
       return objValue === undefined ? srcValue : objValue;
     };
     const result = assignWith(object, null, undefined, { b: 2 }, customizer);
-    
+
     expect(result).toBe(object);
     expect(result.a).toBe(1);
     expect(result.b).toBe(2);
@@ -32,7 +32,7 @@ describe('assignWith', () => {
   it('returns original object if no sources', () => {
     const object = { a: 1 };
     const result = assignWith(object);
-    
+
     expect(result).toBe(object);
     expect(result.a).toBe(1);
   });

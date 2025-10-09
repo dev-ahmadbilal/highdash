@@ -6,7 +6,7 @@ describe('hasIn', () => {
       this.a = 1;
     }
     Foo.prototype.b = 2;
-    
+
     const obj = new Foo();
     expect(hasIn(obj, 'a')).toBe(true);
     expect(hasIn(obj, 'b')).toBe(true);

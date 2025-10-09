@@ -5,10 +5,10 @@ describe('by', () => {
     const users = [
       { name: 'fred', age: 48 },
       { name: 'barney', age: 36 },
-      { name: 'fred', age: 40 }
+      { name: 'fred', age: 40 },
     ];
 
-    const comparator = by(user => user.age);
+    const comparator = by((user) => user.age);
     users.sort(comparator);
 
     expect(users[0].age).toBe(36);
@@ -20,7 +20,7 @@ describe('by', () => {
     const users = [
       { name: 'fred', age: 48 },
       { name: 'barney', age: 36 },
-      { name: 'fred', age: 40 }
+      { name: 'fred', age: 40 },
     ];
 
     const comparator = by('age');
@@ -35,7 +35,7 @@ describe('by', () => {
     const users = [
       { name: 'fred', age: 48 },
       { name: 'barney', age: 36 },
-      { name: 'fred', age: 40 }
+      { name: 'fred', age: 40 },
     ];
 
     const comparator = by('age', { order: 'desc' });
@@ -50,7 +50,7 @@ describe('by', () => {
     const users = [
       { name: 'fred', age: 48 },
       { name: 'barney', age: null },
-      { name: 'fred', age: 40 }
+      { name: 'fred', age: 40 },
     ];
 
     const comparator = by('age', { nulls: 'first' });
@@ -65,7 +65,7 @@ describe('by', () => {
     const users = [
       { name: 'fred', age: 48 },
       { name: 'barney', age: null },
-      { name: 'fred', age: 40 }
+      { name: 'fred', age: 40 },
     ];
 
     const comparator = by('age', { nulls: 'last' });
@@ -77,11 +77,7 @@ describe('by', () => {
   });
 
   it('should handle undefined values', () => {
-    const users = [
-      { name: 'fred', age: 48 },
-      { name: 'barney' },
-      { name: 'fred', age: 40 }
-    ];
+    const users = [{ name: 'fred', age: 48 }, { name: 'barney' }, { name: 'fred', age: 40 }];
 
     const comparator = by('age', { nulls: 'first' });
     users.sort(comparator);
@@ -95,7 +91,7 @@ describe('by', () => {
     const users = [
       { name: 'Ångström', age: 48 },
       { name: 'Zebra', age: 36 },
-      { name: 'apple', age: 40 }
+      { name: 'apple', age: 40 },
     ];
 
     const collator = new Intl.Collator('en');
@@ -110,22 +106,17 @@ describe('by', () => {
   });
 
   it('should handle mixed types', () => {
-    const items = [
-      { value: 'b' },
-      { value: 1 },
-      { value: 'a' },
-      { value: 2 }
-    ];
+    const items = [{ value: 'b' }, { value: 1 }, { value: 'a' }, { value: 2 }];
 
     const comparator = by('value');
     items.sort(comparator);
 
     // Just verify that sorting works with mixed types
     expect(items.length).toBe(4);
-    expect(items.map(item => item.value)).toContain(1);
-    expect(items.map(item => item.value)).toContain(2);
-    expect(items.map(item => item.value)).toContain('a');
-    expect(items.map(item => item.value)).toContain('b');
+    expect(items.map((item) => item.value)).toContain(1);
+    expect(items.map((item) => item.value)).toContain(2);
+    expect(items.map((item) => item.value)).toContain('a');
+    expect(items.map((item) => item.value)).toContain('b');
   });
 });
 
@@ -134,7 +125,7 @@ describe('thenBy', () => {
     const users = [
       { firstName: 'fred', lastName: 'barney' },
       { firstName: 'barney', lastName: 'barney' },
-      { firstName: 'fred', lastName: 'barney' }
+      { firstName: 'fred', lastName: 'barney' },
     ];
 
     const comparator = thenBy(by('lastName'), 'firstName');
@@ -149,7 +140,7 @@ describe('thenBy', () => {
     const users = [
       { firstName: 'fred', lastName: 'barney', age: 40 },
       { firstName: 'barney', lastName: 'barney', age: 36 },
-      { firstName: 'fred', lastName: 'barney', age: 48 }
+      { firstName: 'fred', lastName: 'barney', age: 48 },
     ];
 
     const comparator = thenBy(by('lastName'), 'age');
@@ -167,7 +158,7 @@ describe('thenBy', () => {
     const users = [
       { firstName: 'fred', lastName: 'barney', age: 40 },
       { firstName: 'barney', lastName: 'barney', age: 36 },
-      { firstName: 'fred', lastName: 'barney', age: 40 }
+      { firstName: 'fred', lastName: 'barney', age: 40 },
     ];
 
     const comparator = thenBy(thenBy(by('lastName'), 'firstName'), 'age');
@@ -184,7 +175,7 @@ describe('thenBy', () => {
     const users = [
       { firstName: 'fred', lastName: 'barney', age: null },
       { firstName: 'barney', lastName: 'barney', age: 36 },
-      { firstName: 'fred', lastName: 'barney', age: 40 }
+      { firstName: 'fred', lastName: 'barney', age: 40 },
     ];
 
     const comparator = thenBy(by('lastName'), 'age', { nulls: 'first' });

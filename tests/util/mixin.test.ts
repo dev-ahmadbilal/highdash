@@ -4,13 +4,17 @@ describe('mixin', () => {
   it('should mix functions from source to object', () => {
     const object = {};
     const source = {
-      method1: function() { return 'method1'; },
-      method2: function() { return 'method2'; },
-      property: 'not a function'
+      method1: function () {
+        return 'method1';
+      },
+      method2: function () {
+        return 'method2';
+      },
+      property: 'not a function',
     };
 
     const result = mixin(object, source);
-    
+
     expect(result).toBe(object);
     expect(typeof object.method1).toBe('function');
     expect(typeof object.method2).toBe('function');
@@ -20,11 +24,13 @@ describe('mixin', () => {
   it('should work with chain option', () => {
     const object = {};
     const source = {
-      method: function() { return 'method'; }
+      method: function () {
+        return 'method';
+      },
     };
 
     const result = mixin(object, source, { chain: true });
-    
+
     expect(result).toBe(object);
     expect(typeof object.method).toBe('function');
   });
@@ -32,11 +38,13 @@ describe('mixin', () => {
   it('should work with chain option false', () => {
     const object = {};
     const source = {
-      method: function() { return 'method'; }
+      method: function () {
+        return 'method';
+      },
     };
 
     const result = mixin(object, source, { chain: false });
-    
+
     expect(result).toBe(object);
     expect(typeof object.method).toBe('function');
   });
@@ -44,11 +52,13 @@ describe('mixin', () => {
   it('should work with no options', () => {
     const object = {};
     const source = {
-      method: function() { return 'method'; }
+      method: function () {
+        return 'method';
+      },
     };
 
     const result = mixin(object, source);
-    
+
     expect(result).toBe(object);
     expect(typeof object.method).toBe('function');
   });
@@ -58,7 +68,7 @@ describe('mixin', () => {
     const source = {};
 
     const result = mixin(object, source);
-    
+
     expect(result).toBe(object);
   });
 
@@ -69,11 +79,11 @@ describe('mixin', () => {
       property2: 123,
       property3: true,
       property4: null,
-      property5: undefined
+      property5: undefined,
     };
 
     const result = mixin(object, source);
-    
+
     expect(result).toBe(object);
     expect(object.property1).toBeUndefined();
     expect(object.property2).toBeUndefined();
@@ -84,7 +94,9 @@ describe('mixin', () => {
 
   it('should handle null and undefined object', () => {
     const source = {
-      method: function() { return 'method'; }
+      method: function () {
+        return 'method';
+      },
     };
 
     expect(mixin(null, source)).toBe(null);
@@ -100,16 +112,22 @@ describe('mixin', () => {
 
   it('should work with existing object properties', () => {
     const object = {
-      existingMethod: function() { return 'existing'; },
-      existingProperty: 'existing'
+      existingMethod: function () {
+        return 'existing';
+      },
+      existingProperty: 'existing',
     };
     const source = {
-      newMethod: function() { return 'new'; },
-      existingMethod: function() { return 'overridden'; }
+      newMethod: function () {
+        return 'new';
+      },
+      existingMethod: function () {
+        return 'overridden';
+      },
     };
 
     const result = mixin(object, source);
-    
+
     expect(result).toBe(object);
     expect(typeof object.newMethod).toBe('function');
     expect(object.newMethod()).toBe('new');
@@ -120,15 +138,15 @@ describe('mixin', () => {
   it('should work with nested functions', () => {
     const object = {};
     const source = {
-      outer: function() {
-        return function() {
+      outer: function () {
+        return function () {
           return 'nested';
         };
-      }
+      },
     };
 
     const result = mixin(object, source);
-    
+
     expect(result).toBe(object);
     expect(typeof object.outer).toBe('function');
     expect(object.outer()()).toBe('nested');
@@ -137,11 +155,11 @@ describe('mixin', () => {
   it('should work with arrow functions', () => {
     const object = {};
     const source = {
-      arrow: () => 'arrow'
+      arrow: () => 'arrow',
     };
 
     const result = mixin(object, source);
-    
+
     expect(result).toBe(object);
     expect(typeof object.arrow).toBe('function');
     expect(object.arrow()).toBe('arrow');
@@ -150,11 +168,11 @@ describe('mixin', () => {
   it('should work with async functions', async () => {
     const object = {};
     const source = {
-      asyncMethod: async () => 'async'
+      asyncMethod: async () => 'async',
     };
 
     const result = mixin(object, source);
-    
+
     expect(result).toBe(object);
     expect(typeof object.asyncMethod).toBe('function');
     const asyncResult = await object.asyncMethod();

@@ -4,9 +4,9 @@ describe('bind', () => {
   it('should bind function with this context', () => {
     const obj = {
       value: 42,
-      getValue: function() {
+      getValue: function () {
         return this.value;
-      }
+      },
     };
 
     const boundFunc = bind(obj.getValue, obj);
@@ -22,9 +22,9 @@ describe('bind', () => {
   it('should bind function with this context and partial arguments', () => {
     const obj = {
       multiplier: 2,
-      calculate: function(a: number, b: number) {
+      calculate: function (a: number, b: number) {
         return (a + b) * this.multiplier;
-      }
+      },
     };
 
     const boundCalc = bind(obj.calculate, obj, 5);

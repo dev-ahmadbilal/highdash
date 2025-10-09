@@ -1,7 +1,6 @@
 import { retry } from '../../src/util/retry.js';
 
 describe('retry', () => {
-
   it('should retry on failure', async () => {
     let attempts = 0;
     const fn = jest.fn().mockImplementation(async () => {

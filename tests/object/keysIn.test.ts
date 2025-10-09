@@ -6,7 +6,7 @@ describe('keysIn', () => {
       this.a = 1;
     }
     Foo.prototype.b = 2;
-    
+
     const obj = new Foo();
     const result = keysIn(obj);
     expect(result).toEqual(['a', 'b']);

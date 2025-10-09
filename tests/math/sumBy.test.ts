@@ -2,12 +2,12 @@ import { sumBy } from '../../src/math/sumBy';
 
 describe('sumBy', () => {
   it('should sum by function iteratee', () => {
-    const objects = [{ 'n': 4 }, { 'n': 2 }, { 'n': 8 }, { 'n': 6 }];
-    expect(sumBy(objects, o => o.n)).toBe(20);
+    const objects = [{ n: 4 }, { n: 2 }, { n: 8 }, { n: 6 }];
+    expect(sumBy(objects, (o) => o.n)).toBe(20);
   });
 
   it('should sum by string property', () => {
-    const objects = [{ 'n': 4 }, { 'n': 2 }, { 'n': 8 }, { 'n': 6 }];
+    const objects = [{ n: 4 }, { n: 2 }, { n: 8 }, { n: 6 }];
     expect(sumBy(objects, 'n')).toBe(20);
   });
 
@@ -20,7 +20,7 @@ describe('sumBy', () => {
   });
 
   it('should handle non-numeric values', () => {
-    const objects = [{ 'n': 1 }, { 'n': '2' }, { 'n': 3 }, { 'n': 'invalid' }];
+    const objects = [{ n: 1 }, { n: '2' }, { n: 3 }, { n: 'invalid' }];
     expect(sumBy(objects, 'n')).toBe(6);
   });
 });

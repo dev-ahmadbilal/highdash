@@ -75,7 +75,10 @@ describe('castArray', () => {
   });
 
   it('should work with nested arrays', () => {
-    const nestedArr = [[1, 2], [3, 4]];
+    const nestedArr = [
+      [1, 2],
+      [3, 4],
+    ];
     expect(castArray(nestedArr)).toBe(nestedArr);
   });
 

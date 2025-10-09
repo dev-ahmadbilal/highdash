@@ -3,7 +3,7 @@ import { isPlainObject } from '../../src/lang/isPlainObject';
 describe('isPlainObject', () => {
   it('should return true for plain objects', () => {
     expect(isPlainObject({})).toBe(true);
-    expect(isPlainObject({ 'a': 1 })).toBe(true);
+    expect(isPlainObject({ a: 1 })).toBe(true);
     expect(isPlainObject(Object.create(null))).toBe(true);
   });
 
@@ -13,7 +13,7 @@ describe('isPlainObject', () => {
   });
 
   it('should return false for functions', () => {
-    expect(isPlainObject(function() {})).toBe(false);
+    expect(isPlainObject(function () {})).toBe(false);
     expect(isPlainObject(() => {})).toBe(false);
   });
 

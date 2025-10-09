@@ -4,7 +4,7 @@ describe('flow', () => {
   it('should compose functions from left to right', () => {
     const add = (a: number, b: number) => a + b;
     const square = (n: number) => n * n;
-    
+
     const addSquare = flow([add, square]);
     expect(addSquare(1, 2)).toBe(9);
   });
@@ -24,7 +24,7 @@ describe('flow', () => {
     const add = (a: number, b: number) => a + b;
     const square = (n: number) => n * n;
     const double = (n: number) => n * 2;
-    
+
     const composed = flow([add, square, double]);
     expect(composed(1, 2)).toBe(18); // (1+2)^2 * 2 = 9 * 2 = 18
   });
