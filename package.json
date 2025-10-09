@@ -70,7 +70,8 @@
     }
   },
   "files": [
-    "lib/**/*"
+    "lib/**/*",
+    "cjs/**/*"
   ],
   "scripts": {
     "build": "tsc --project tsconfig.build.json && tsc --project tsconfig.cjs.json",
