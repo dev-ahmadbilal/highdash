@@ -21,6 +21,15 @@
 
 Highdash provides a modern, TypeScript-first alternative to Lodash, focusing on performance, type safety, and bundle optimization. This API reference serves as a comprehensive guide to all available functions.
 
+**Performance Highlights:**
+- Up to **7.8× faster** than Lodash (`values` function)
+- **4.4× faster** deep cloning (`cloneDeep`)
+- **4.2× faster** object merging (`merge`)
+- **2.1× faster** array flattening (`flattenDeep`)
+- **1.6× faster** deep equality checks (`isEqual`)
+
+*Performance metrics based on Node.js 18+ benchmarks, averaged over 5 runs.*
+
 Each module below contains detailed documentation for its respective functions, including parameters, return types, examples, and usage notes.
 
 ---

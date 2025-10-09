@@ -795,10 +795,15 @@ import * as collection from 'highdash/collection';
 
 ## Performance Notes
 
+- **`pick`**: **3.0× faster** than Lodash - direct property access with minimal abstraction
+- **`omit`**: **1.2× faster** than Lodash - optimized object iteration
+- **`orderBy`**: **1.2× faster** than Lodash - pre-computed values with direct tuple comparisons
 - **Efficient iteration**: Optimized loops for both arrays and objects
 - **Memory usage**: Creates new objects/arrays instead of mutating
 - **Type safety**: Full TypeScript support with proper type inference
 - **Native methods**: Uses native JavaScript methods where possible
+
+*Performance metrics based on Node.js 18+ benchmarks, averaged over 5 runs.*
 
 ## Common Use Cases
 
