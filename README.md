@@ -18,7 +18,7 @@
 [![codecov](https://codecov.io/gh/dev-ahmadbilal/highdash/branch/main/graph/badge.svg?token=EENXO9JHEW)](https://codecov.io/gh/dev-ahmadbilal/highdash)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 
-[**Intro**](https://github.com/dev-ahmadbilal/highdash#-why-highdash) • [**Performance Comparison**](https://github.com/dev-ahmadbilal/highdash#-performance-comparison) • [**Examples**](https://github.com/dev-ahmadbilal/highdash#examples) • [**Migration Guide**](https://github.com/dev-ahmadbilal/highdash#migrating-from-lodash)
+[**Intro**](https://github.com/dev-ahmadbilal/highdash#-why-highdash) • [**Performance Comparison**](https://github.com/dev-ahmadbilal/highdash#-performance-comparison) • [**Examples**](https://github.com/dev-ahmadbilal/highdash#examples) • [**API Reference**](docs/API.md) • [**Migration Guide**](https://github.com/dev-ahmadbilal/highdash#migrating-from-lodash)
 
 </div>
 
@@ -333,7 +333,7 @@ npm run benchmark:compare
 
 ### Test Coverage
 
-- **1955+ tests** across all functions
+- **2000+ tests** across all functions
 - **91%+ code coverage** with comprehensive edge cases
 - **Type safety validation** with TypeScript strict mode
 - **Performance benchmarks** against Lodash
@@ -379,7 +379,7 @@ npm run benchmark:compare  # Compare with Lodash
 ## 📈 Roadmap
 
 ### ✅ Completed
-- [x] Core utility functions (200+ functions)
+- [x] Core utility functions (228 functions)
 - [x] TypeScript-first implementation
 - [x] Tree-shaking optimization
 - [x] Performance benchmarks
